@@ -1,0 +1,36 @@
+table,kind,informant,module,tool_label,tsv_bytes,n_rows,n_vars,n_diagnosis,n_item,n_summary,n_meta,n_other,has_json,has_tsv
+mh_p_kbi,background,parent,kbi,KSADS - Background Items [Parent],51885208,80361,167,0,0,0,3,164,True,True
+mh_p_ksads__adhd,ksads,parent,adhd,KSADS - Attention-Deficit/Hyperactivity Disorder [Parent],46061288,77602,164,6,154,2,2,0,True,True
+mh_p_ksads__agor,ksads,parent,agor,KSADS - Agoraphobia [Parent],21100594,77578,62,3,55,2,2,0,True,True
+mh_p_ksads__asd,ksads,parent,asd,KSADS - Autism Spectrum Disorders [Parent],24764572,77588,71,2,65,2,2,0,True,True
+mh_p_ksads__bpd,ksads,parent,bpd,KSADS - Bipolar Disorders [Parent],58975659,77588,194,17,172,2,2,1,True,True
+mh_p_ksads__cond,ksads,parent,cond,KSADS - Conduct Disorder [Parent],123953674,77602,410,4,207,2,2,195,True,True
+mh_p_ksads__dep,ksads,parent,dep,KSADS - Depressive Disorders [Parent],59479399,77588,194,9,172,2,2,9,True,True
+mh_p_ksads__dmdd,ksads,parent,dmdd,KSADS - Disruptive Mood Dysregulation Disorder [Parent],9560720,77573,20,1,0,1,2,16,True,True
+mh_p_ksads__ed,ksads,parent,ed,KSADS - Eating Disorders [Parent],60912026,77602,207,18,185,2,2,0,True,True
+mh_p_ksads__gad,ksads,parent,gad,KSADS - Generalized Anxiety Disorder [Parent],30085504,77588,91,4,83,2,2,0,True,True
+mh_p_ksads__hom,ksads,parent,hom,KSADS - Homicidality [Parent],9310638,77588,20,2,14,2,2,0,True,True
+mh_p_ksads__ocd,ksads,parent,ocd,KSADS - Obsessive Compulsive Disorder [Parent],48795654,77588,155,4,147,2,2,0,True,True
+mh_p_ksads__odd,ksads,parent,odd,KSADS - Oppositional Defiant Disorder [Parent],28526552,77596,91,2,85,2,2,0,True,True
+mh_p_ksads__panic,ksads,parent,panic,KSADS - Panic Disorder [Parent],23274651,77588,68,5,58,2,2,1,True,True
+mh_p_ksads__phobia,ksads,parent,phobia,KSADS - Specific Phobia [Parent],22999155,77588,68,2,62,2,2,0,True,True
+mh_p_ksads__psych,ksads,parent,psych,KSADS - Psychosis [Parent],71094004,77602,238,12,217,2,2,5,True,True
+mh_p_ksads__ptsd,ksads,parent,ptsd,KSADS - Post-Traumatic Stress Disorder [Parent],82534188,77588,275,5,240,2,2,26,True,True
+mh_p_ksads__sepanx,ksads,parent,sepanx,KSADS - Separation Anxiety [Parent],28881325,77588,86,4,77,2,2,1,True,True
+mh_p_ksads__sleep,ksads,parent,sleep,KSADS - Sleep Problems [Parent],7906868,77588,15,2,9,2,2,0,True,True
+mh_p_ksads__socanx,ksads,parent,socanx,KSADS - Social Anxiety Disorder [Parent],34781448,77588,106,4,97,2,2,1,True,True
+mh_p_ksads__suic,ksads,parent,suic,KSADS - Suicidality [Parent],38973405,77588,128,22,102,2,2,0,True,True
+mh_p_ksads__tic,ksads,parent,tic,KSADS - Tic Disorders [Parent],24099051,77575,69,7,29,2,2,29,True,True
+mh_y_kbi,background,youth,kbi,KSADS - Background Items [Youth],22813865,80661,62,0,0,0,2,60,True,True
+mh_y_ksads__bpd,ksads,youth,bpd,KSADS - Bipolar Disorders [Youth],60209946,79268,194,17,172,2,2,1,True,True
+mh_y_ksads__cond,ksads,youth,cond,KSADS - Conduct Disorder [Youth],130753678,79260,410,4,207,2,2,195,True,True
+mh_y_ksads__dep,ksads,youth,dep,KSADS - Depressive Disorders [Youth],60646816,79268,194,9,172,2,2,9,True,True
+mh_y_ksads__dmdd,ksads,youth,dmdd,KSADS - Disruptive Mood Dysregulation Disorder [Youth],9784894,79258,20,1,0,1,2,16,True,True
+mh_y_ksads__ed,ksads,youth,ed,KSADS - Eating Disorders [Youth],66137049,79260,206,18,184,2,2,0,True,True
+mh_y_ksads__gad,ksads,youth,gad,KSADS - Generalized Anxiety Disorder [Youth],30788710,79268,91,4,83,2,2,0,True,True
+mh_y_ksads__ocd,ksads,youth,ocd,KSADS - Obsessive Compulsive Disorder [Youth],52270729,79258,155,4,147,2,2,0,True,True
+mh_y_ksads__panic,ksads,youth,panic,KSADS - Panic Disorder [Youth],25074290,79258,68,5,58,2,2,1,True,True
+mh_y_ksads__ptsd,ksads,youth,ptsd,KSADS - Post-Traumatic Stress Disorder [Youth],87005216,79258,271,5,240,2,2,22,True,True
+mh_y_ksads__sleep,ksads,youth,sleep,KSADS - Sleep Problems [Youth],8079542,79268,15,2,9,2,2,0,True,True
+mh_y_ksads__socanx,ksads,youth,socanx,KSADS - Social Anxiety Disorder [Youth],35609653,79268,106,4,97,2,2,1,True,True
+mh_y_ksads__suic,ksads,youth,suic,KSADS - Suicidality [Youth],36916790,79275,128,22,102,2,2,0,True,True

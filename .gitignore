@@ -1,0 +1,17 @@
+# ABCD data are access-restricted (NDA) — never commit participant data or derivatives
+*.parquet
+*.tsv
+*.docx
+*.pdf
+*.png
+*.svg
+*.log
+
+# keep the codebook CSVs (metadata only); ignore any other CSVs
+*.csv
+!codebooks/*.csv
+
+__pycache__/
+*.pyc
+.DS_Store
+.ipynb_checkpoints/
