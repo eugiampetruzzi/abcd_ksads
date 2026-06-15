@@ -1,0 +1,315 @@
+disorder,module,informant,status,merged_var,proposed_case_definition
+Attention-deficit/hyperactivity disorder,adhd,parent,unknown,mh_p_ksads__adhd__fullrem_dx,mh_p_ksads__adhd__fullrem_dx == 1
+Attention-deficit/hyperactivity disorder,adhd,parent,partial_remission,mh_p_ksads__adhd__partrem_dx,mh_p_ksads__adhd__partrem_dx == 1
+Attention-deficit/hyperactivity disorder,adhd,parent,past,mh_p_ksads__adhd__past_dx,mh_p_ksads__adhd__past_dx == 1
+Attention-deficit/hyperactivity disorder,adhd,parent,present,mh_p_ksads__adhd__pres_dx,mh_p_ksads__adhd__pres_dx == 1
+Attention-deficit/hyperactivity disorder,adhd,parent,lifetime_union,mh_p_ksads__adhd__partrem_dx | mh_p_ksads__adhd__past_dx | mh_p_ksads__adhd__pres_dx,any(present/past/partial_remission _dx == 1)
+Other specified attention-deficit/hyperactivity disorder,adhd,parent,unknown,mh_p_ksads__adhd__oth_dx,mh_p_ksads__adhd__oth_dx == 1
+Unspecified Attention-deficit/hyperactivity disorder,adhd,parent,unknown,mh_p_ksads__adhd__unspec_dx,mh_p_ksads__adhd__unspec_dx == 1
+"Other specified anxiety disorder, agoraphobia",agor,parent,unknown,mh_p_ksads__agor__oth_dx,mh_p_ksads__agor__oth_dx == 1
+Agoraphobia,agor,parent,past,mh_p_ksads__agor__past_dx,mh_p_ksads__agor__past_dx == 1
+Agoraphobia,agor,parent,present,mh_p_ksads__agor__pres_dx,mh_p_ksads__agor__pres_dx == 1
+Agoraphobia,agor,parent,lifetime_union,mh_p_ksads__agor__past_dx | mh_p_ksads__agor__pres_dx,any(present/past/partial_remission _dx == 1)
+"Other specified neurodevelopmental disorder, autism spectrum disorder",asd,parent,unknown,mh_p_ksads__asd__oth_dx,mh_p_ksads__asd__oth_dx == 1
+Autism spectrum disorder,asd,parent,unknown,mh_p_ksads__asd_dx,mh_p_ksads__asd_dx == 1
+"Bipolar I disorder, currently depressed",bpd,parent,partial_remission,mh_p_ksads__bpd__bpd1__curdep__partrem_dx,mh_p_ksads__bpd__bpd1__curdep__partrem_dx == 1
+"Bipolar I disorder, current episode depressed",bpd,parent,present,mh_p_ksads__bpd__bpd1__curdep__pres_dx,mh_p_ksads__bpd__bpd1__curdep__pres_dx == 1
+"Bipolar I disorder, currently hypomanic",bpd,parent,present,mh_p_ksads__bpd__bpd1__curhypo__pres_dx,mh_p_ksads__bpd__bpd1__curhypo__pres_dx == 1
+"Bipolar I disorder, current episode manic",bpd,parent,present,mh_p_ksads__bpd__bpd1__curmanic__pres_dx,mh_p_ksads__bpd__bpd1__curmanic__pres_dx == 1
+"Bipolar I disorder, most recent past episode depressed",bpd,parent,present,mh_p_ksads__bpd__bpd1__rcnt__dep__pres_dx,mh_p_ksads__bpd__bpd1__rcnt__dep__pres_dx == 1
+"Bipolar I disorder, most recent past episode manic",bpd,parent,present,mh_p_ksads__bpd__bpd1__rcnt__manic__pres_dx,mh_p_ksads__bpd__bpd1__rcnt__manic__pres_dx == 1
+"Bipolar I disorder, most recent episode manic/depressed/mixed",bpd,parent,present,mh_p_ksads__bpd__bpd1__rcnt__manicmix__pres_dx,mh_p_ksads__bpd__bpd1__rcnt__manicmix__pres_dx == 1
+"Bipolar II disorder, currently depressed",bpd,parent,partial_remission,mh_p_ksads__bpd__bpd2__curdep__partrem_dx,mh_p_ksads__bpd__bpd2__curdep__partrem_dx == 1
+"Bipolar II disorder, currently depressed",bpd,parent,present,mh_p_ksads__bpd__bpd2__curdep__pres_dx,mh_p_ksads__bpd__bpd2__curdep__pres_dx == 1
+"Bipolar II disorder, currently depressed",bpd,parent,lifetime_union,mh_p_ksads__bpd__bpd2__curdep__partrem_dx | mh_p_ksads__bpd__bpd2__curdep__pres_dx,any(present/past/partial_remission _dx == 1)
+"Bipolar II disorder, currently hypomanic",bpd,parent,present,mh_p_ksads__bpd__bpd2__curhypo__pres_dx,mh_p_ksads__bpd__bpd2__curhypo__pres_dx == 1
+"Other specified bipolar and related disorder, meets criteria for bipolar II disorder",bpd,parent,unknown,mh_p_ksads__bpd__bpd2__oth__nomdd_dx,mh_p_ksads__bpd__bpd2__oth__nomdd_dx == 1
+"Bipolar II disorder, most recent episode hypomanic",bpd,parent,present,mh_p_ksads__bpd__bpd2__rcnt__hypo__pres_dx,mh_p_ksads__bpd__bpd2__rcnt__hypo__pres_dx == 1
+"Bipolar II disorder, most recent episode hypomanic/depressed/mixed",bpd,parent,present,mh_p_ksads__bpd__bpd2__rcnt__hypomix__pres_dx,mh_p_ksads__bpd__bpd2__rcnt__hypomix__pres_dx == 1
+"Other specified bipolar and related disorder, recurrent manic or hypomanic episodes",bpd,parent,unknown,mh_p_ksads__bpd__oth__mindur_dx,mh_p_ksads__bpd__oth__mindur_dx == 1
+Unspecified bipolar and related disorder,bpd,parent,past,mh_p_ksads__bpd__unspec__past_dx,mh_p_ksads__bpd__unspec__past_dx == 1
+Unspecified bipolar and related disorder,bpd,parent,present,mh_p_ksads__bpd__unspec__pres_dx,mh_p_ksads__bpd__unspec__pres_dx == 1
+Unspecified bipolar and related disorder,bpd,parent,lifetime_union,mh_p_ksads__bpd__unspec__past_dx | mh_p_ksads__bpd__unspec__pres_dx,any(present/past/partial_remission _dx == 1)
+"Conduct disorder, adolescent onset",cond,parent,past,mh_p_ksads__cond__onset__adoles__past_dx,mh_p_ksads__cond__onset__adoles__past_dx == 1
+"Conduct disorder, adolescent onset",cond,parent,present,mh_p_ksads__cond__onset__adoles__pres_dx,mh_p_ksads__cond__onset__adoles__pres_dx == 1
+"Conduct disorder, adolescent onset",cond,parent,lifetime_union,mh_p_ksads__cond__onset__adoles__past_dx | mh_p_ksads__cond__onset__adoles__pres_dx,any(present/past/partial_remission _dx == 1)
+"Conduct disorder, childhood onset",cond,parent,past,mh_p_ksads__cond__onset__chld__past_dx,mh_p_ksads__cond__onset__chld__past_dx == 1
+"Conduct disorder, childhood onset",cond,parent,present,mh_p_ksads__cond__onset__chld__pres_dx,mh_p_ksads__cond__onset__chld__pres_dx == 1
+"Conduct disorder, childhood onset",cond,parent,lifetime_union,mh_p_ksads__cond__onset__chld__past_dx | mh_p_ksads__cond__onset__chld__pres_dx,any(present/past/partial_remission _dx == 1)
+Major depressive disorder,dep,parent,partial_remission,mh_p_ksads__dep__mdd__partrem_dx,mh_p_ksads__dep__mdd__partrem_dx == 1
+Major depressive disorder,dep,parent,past,mh_p_ksads__dep__mdd__past_dx,mh_p_ksads__dep__mdd__past_dx == 1
+Major depressive disorder,dep,parent,present,mh_p_ksads__dep__mdd__pres_dx,mh_p_ksads__dep__mdd__pres_dx == 1
+Major depressive disorder,dep,parent,lifetime_union,mh_p_ksads__dep__mdd__partrem_dx | mh_p_ksads__dep__mdd__past_dx | mh_p_ksads__dep__mdd__pres_dx,any(present/past/partial_remission _dx == 1)
+"Other specified depressive disorder, persistent depressive disorder",dep,parent,present,mh_p_ksads__dep__pdd__oth__pres_dx,mh_p_ksads__dep__pdd__oth__pres_dx == 1
+Persistent depressive disorder,dep,parent,partial_remission,mh_p_ksads__dep__pdd__partrem_dx,mh_p_ksads__dep__pdd__partrem_dx == 1
+Persistent depressive disorder,dep,parent,past,mh_p_ksads__dep__pdd__past_dx,mh_p_ksads__dep__pdd__past_dx == 1
+Persistent depressive disorder,dep,parent,present,mh_p_ksads__dep__pdd__pres_dx,mh_p_ksads__dep__pdd__pres_dx == 1
+Persistent depressive disorder,dep,parent,lifetime_union,mh_p_ksads__dep__pdd__partrem_dx | mh_p_ksads__dep__pdd__past_dx | mh_p_ksads__dep__pdd__pres_dx,any(present/past/partial_remission _dx == 1)
+Unspecified depressive disorder,dep,parent,past,mh_p_ksads__dep__unspec__past_dx,mh_p_ksads__dep__unspec__past_dx == 1
+Unspecified depressive disorder,dep,parent,present,mh_p_ksads__dep__unspec__pres_dx,mh_p_ksads__dep__unspec__pres_dx == 1
+Unspecified depressive disorder,dep,parent,lifetime_union,mh_p_ksads__dep__unspec__past_dx | mh_p_ksads__dep__unspec__pres_dx,any(present/past/partial_remission _dx == 1)
+Disruptive mood dysregulation disorder,dmdd,parent,present,mh_p_ksads__dmdd__dmdd__pres_dx,mh_p_ksads__dmdd__dmdd__pres_dx == 1
+"Anorexia nervosa, binge eating/purging subtype",ed,parent,partial_remission,mh_p_ksads__ed__an__bingeprg__partrem_dx,mh_p_ksads__ed__an__bingeprg__partrem_dx == 1
+"Anorexia nervosa, binge eating/purging subtype",ed,parent,past,mh_p_ksads__ed__an__bingeprg__past_dx,mh_p_ksads__ed__an__bingeprg__past_dx == 1
+"Anorexia nervosa, binge eating/purging subtype",ed,parent,present,mh_p_ksads__ed__an__bingeprg__pres_dx,mh_p_ksads__ed__an__bingeprg__pres_dx == 1
+"Anorexia nervosa, binge eating/purging subtype",ed,parent,lifetime_union,mh_p_ksads__ed__an__bingeprg__partrem_dx | mh_p_ksads__ed__an__bingeprg__past_dx | mh_p_ksads__ed__an__bingeprg__pres_dx,any(present/past/partial_remission _dx == 1)
+"Other specified feeding or eating disorder, atypical anorexia nervosa",ed,parent,past,mh_p_ksads__ed__an__oth__past_dx,mh_p_ksads__ed__an__oth__past_dx == 1
+"Other specified feeding or eating disorder, atypical anorexia nervosa",ed,parent,present,mh_p_ksads__ed__an__oth__pres_dx,mh_p_ksads__ed__an__oth__pres_dx == 1
+"Other specified feeding or eating disorder, atypical anorexia nervosa",ed,parent,lifetime_union,mh_p_ksads__ed__an__oth__past_dx | mh_p_ksads__ed__an__oth__pres_dx,any(present/past/partial_remission _dx == 1)
+"Anorexia nervosa, restricting subtype",ed,parent,partial_remission,mh_p_ksads__ed__an__restrict__partrem_dx,mh_p_ksads__ed__an__restrict__partrem_dx == 1
+"Anorexia nervosa, restricting subtype",ed,parent,past,mh_p_ksads__ed__an__restrict__past_dx,mh_p_ksads__ed__an__restrict__past_dx == 1
+"Anorexia nervosa, restricting subtype",ed,parent,present,mh_p_ksads__ed__an__restrict__pres_dx,mh_p_ksads__ed__an__restrict__pres_dx == 1
+"Anorexia nervosa, restricting subtype",ed,parent,lifetime_union,mh_p_ksads__ed__an__restrict__partrem_dx | mh_p_ksads__ed__an__restrict__past_dx | mh_p_ksads__ed__an__restrict__pres_dx,any(present/past/partial_remission _dx == 1)
+"Other specified feeding or eating disorder, binge eating disorder",ed,parent,past,mh_p_ksads__ed__binge__oth__mindur__past_dx,mh_p_ksads__ed__binge__oth__mindur__past_dx == 1
+"Other specified feeding or eating disorder, binge eating disorder",ed,parent,present,mh_p_ksads__ed__binge__oth__mindur__pres_dx,mh_p_ksads__ed__binge__oth__mindur__pres_dx == 1
+"Other specified feeding or eating disorder, binge eating disorder",ed,parent,lifetime_union,mh_p_ksads__ed__binge__oth__mindur__past_dx | mh_p_ksads__ed__binge__oth__mindur__pres_dx,any(present/past/partial_remission _dx == 1)
+Binge eating disorder,ed,parent,partial_remission,mh_p_ksads__ed__binge__partrem_dx,mh_p_ksads__ed__binge__partrem_dx == 1
+Binge eating disorder,ed,parent,past,mh_p_ksads__ed__binge__past_dx,mh_p_ksads__ed__binge__past_dx == 1
+Binge eating disorder,ed,parent,present,mh_p_ksads__ed__binge__pres_dx,mh_p_ksads__ed__binge__pres_dx == 1
+Binge eating disorder,ed,parent,lifetime_union,mh_p_ksads__ed__binge__partrem_dx | mh_p_ksads__ed__binge__past_dx | mh_p_ksads__ed__binge__pres_dx,any(present/past/partial_remission _dx == 1)
+"Other specified feeding or eating disorder, bulimia nervosa",ed,parent,past,mh_p_ksads__ed__bulim__oth__mindur__past_dx,mh_p_ksads__ed__bulim__oth__mindur__past_dx == 1
+"Other specified feeding or eating disorder, bulimia nervosa",ed,parent,present,mh_p_ksads__ed__bulim__oth__mindur__pres_dx,mh_p_ksads__ed__bulim__oth__mindur__pres_dx == 1
+"Other specified feeding or eating disorder, bulimia nervosa",ed,parent,lifetime_union,mh_p_ksads__ed__bulim__oth__mindur__past_dx | mh_p_ksads__ed__bulim__oth__mindur__pres_dx,any(present/past/partial_remission _dx == 1)
+Bulimia nervosa,ed,parent,partial_remission,mh_p_ksads__ed__bulim__partrem_dx,mh_p_ksads__ed__bulim__partrem_dx == 1
+Bulimia nervosa,ed,parent,past,mh_p_ksads__ed__bulim__past_dx,mh_p_ksads__ed__bulim__past_dx == 1
+Bulimia nervosa,ed,parent,present,mh_p_ksads__ed__bulim__pres_dx,mh_p_ksads__ed__bulim__pres_dx == 1
+Bulimia nervosa,ed,parent,lifetime_union,mh_p_ksads__ed__bulim__partrem_dx | mh_p_ksads__ed__bulim__past_dx | mh_p_ksads__ed__bulim__pres_dx,any(present/past/partial_remission _dx == 1)
+"Other specified anxiety disorder, generalized anxiety disorder",gad,parent,past,mh_p_ksads__gad__oth__mindur__past_dx,mh_p_ksads__gad__oth__mindur__past_dx == 1
+"Other specified anxiety disorder, generalized anxiety disorder",gad,parent,present,mh_p_ksads__gad__oth__mindur__pres_dx,mh_p_ksads__gad__oth__mindur__pres_dx == 1
+"Other specified anxiety disorder, generalized anxiety disorder",gad,parent,lifetime_union,mh_p_ksads__gad__oth__mindur__past_dx | mh_p_ksads__gad__oth__mindur__pres_dx,any(present/past/partial_remission _dx == 1)
+Generalized anxiety disorder,gad,parent,past,mh_p_ksads__gad__past_dx,mh_p_ksads__gad__past_dx == 1
+Generalized anxiety disorder,gad,parent,present,mh_p_ksads__gad__pres_dx,mh_p_ksads__gad__pres_dx == 1
+Generalized anxiety disorder,gad,parent,lifetime_union,mh_p_ksads__gad__past_dx | mh_p_ksads__gad__pres_dx,any(present/past/partial_remission _dx == 1)
+Homicidal ideation and behavior,hom,parent,past,mh_p_ksads__hom__past_dx,mh_p_ksads__hom__past_dx == 1
+Homicidal ideation and behavior,hom,parent,present,mh_p_ksads__hom__pres_dx,mh_p_ksads__hom__pres_dx == 1
+Homicidal ideation and behavior,hom,parent,lifetime_union,mh_p_ksads__hom__past_dx | mh_p_ksads__hom__pres_dx,any(present/past/partial_remission _dx == 1)
+Other specified obessive-compulsive and related disorder,ocd,parent,past,mh_p_ksads__ocd__oth__past_dx,mh_p_ksads__ocd__oth__past_dx == 1
+Other specified obessive-compulsive and related disorder,ocd,parent,present,mh_p_ksads__ocd__oth__pres_dx,mh_p_ksads__ocd__oth__pres_dx == 1
+Other specified obessive-compulsive and related disorder,ocd,parent,lifetime_union,mh_p_ksads__ocd__oth__past_dx | mh_p_ksads__ocd__oth__pres_dx,any(present/past/partial_remission _dx == 1)
+Obessive-compulsive disorder,ocd,parent,past,mh_p_ksads__ocd__past_dx,mh_p_ksads__ocd__past_dx == 1
+Obessive-compulsive disorder,ocd,parent,present,mh_p_ksads__ocd__pres_dx,mh_p_ksads__ocd__pres_dx == 1
+Obessive-compulsive disorder,ocd,parent,lifetime_union,mh_p_ksads__ocd__past_dx | mh_p_ksads__ocd__pres_dx,any(present/past/partial_remission _dx == 1)
+Oppositional defiant disorder,odd,parent,past,mh_p_ksads__odd__past_dx,mh_p_ksads__odd__past_dx == 1
+Oppositional defiant disorder,odd,parent,present,mh_p_ksads__odd__pres_dx,mh_p_ksads__odd__pres_dx == 1
+Oppositional defiant disorder,odd,parent,lifetime_union,mh_p_ksads__odd__past_dx | mh_p_ksads__odd__pres_dx,any(present/past/partial_remission _dx == 1)
+"Other specified anxiety disorder, panic disorder",panic,parent,past,mh_p_ksads__panic__oth__past_dx,mh_p_ksads__panic__oth__past_dx == 1
+"Other specified anxiety disorder, panic disorder",panic,parent,present,mh_p_ksads__panic__oth__pres_dx,mh_p_ksads__panic__oth__pres_dx == 1
+"Other specified anxiety disorder, panic disorder",panic,parent,lifetime_union,mh_p_ksads__panic__oth__past_dx | mh_p_ksads__panic__oth__pres_dx,any(present/past/partial_remission _dx == 1)
+Panic disorder,panic,parent,partial_remission,mh_p_ksads__panic__partrem_dx,mh_p_ksads__panic__partrem_dx == 1
+Panic disorder,panic,parent,past,mh_p_ksads__panic__past_dx,mh_p_ksads__panic__past_dx == 1
+Panic disorder,panic,parent,present,mh_p_ksads__panic__pres_dx,mh_p_ksads__panic__pres_dx == 1
+Panic disorder,panic,parent,lifetime_union,mh_p_ksads__panic__partrem_dx | mh_p_ksads__panic__past_dx | mh_p_ksads__panic__pres_dx,any(present/past/partial_remission _dx == 1)
+Specific phobia,phobia,parent,past,mh_p_ksads__phobia__past_dx,mh_p_ksads__phobia__past_dx == 1
+Specific phobia,phobia,parent,present,mh_p_ksads__phobia__pres_dx,mh_p_ksads__phobia__pres_dx == 1
+Specific phobia,phobia,parent,lifetime_union,mh_p_ksads__phobia__past_dx | mh_p_ksads__phobia__pres_dx,any(present/past/partial_remission _dx == 1)
+Associated psychotic symptoms,psych,parent,past,mh_p_ksads__psych__aps__past_dx,mh_p_ksads__psych__aps__past_dx == 1
+Associated psychotic symptoms,psych,parent,present,mh_p_ksads__psych__aps__pres_dx,mh_p_ksads__psych__aps__pres_dx == 1
+Associated psychotic symptoms,psych,parent,lifetime_union,mh_p_ksads__psych__aps__past_dx | mh_p_ksads__psych__aps__pres_dx,any(present/past/partial_remission _dx == 1)
+Delusions,psych,parent,past,mh_p_ksads__psych__delus__past_dx,mh_p_ksads__psych__delus__past_dx == 1
+Delusions,psych,parent,present,mh_p_ksads__psych__delus__pres_dx,mh_p_ksads__psych__delus__pres_dx == 1
+Delusions,psych,parent,lifetime_union,mh_p_ksads__psych__delus__past_dx | mh_p_ksads__psych__delus__pres_dx,any(present/past/partial_remission _dx == 1)
+Hallucinations,psych,parent,past,mh_p_ksads__psych__hlcn__past_dx,mh_p_ksads__psych__hlcn__past_dx == 1
+Hallucinations,psych,parent,present,mh_p_ksads__psych__hlcn__pres_dx,mh_p_ksads__psych__hlcn__pres_dx == 1
+Hallucinations,psych,parent,lifetime_union,mh_p_ksads__psych__hlcn__past_dx | mh_p_ksads__psych__hlcn__pres_dx,any(present/past/partial_remission _dx == 1)
+Other specified psychotic disorder,psych,parent,present,mh_p_ksads__psych__oth__pres_dx,mh_p_ksads__psych__oth__pres_dx == 1
+Unspecified schizophrenia spectrum and other psychotic disorder,psych,parent,past,mh_p_ksads__psych__schiz__oth__past_dx,mh_p_ksads__psych__schiz__oth__past_dx == 1
+Unspecified schizophrenia spectrum and other psychotic disorder,psych,parent,present,mh_p_ksads__psych__schiz__oth__pres_dx,mh_p_ksads__psych__schiz__oth__pres_dx == 1
+Unspecified schizophrenia spectrum and other psychotic disorder,psych,parent,lifetime_union,mh_p_ksads__psych__schiz__oth__past_dx | mh_p_ksads__psych__schiz__oth__pres_dx,any(present/past/partial_remission _dx == 1)
+Schizophrenia,psych,parent,present,mh_p_ksads__psych__schiz__pres_dx,mh_p_ksads__psych__schiz__pres_dx == 1
+Schizoaffective disorder,psych,parent,present,mh_p_ksads__psych__schizaffct__pres_dx,mh_p_ksads__psych__schizaffct__pres_dx == 1
+Schizophreniform disorder,psych,parent,present,mh_p_ksads__psych__schizform__pres_dx,mh_p_ksads__psych__schizform__pres_dx == 1
+"Other specified trauma and stressor related disorder, PTSD",ptsd,parent,past,mh_p_ksads__ptsd__oth__past_dx,mh_p_ksads__ptsd__oth__past_dx == 1
+"Other specified trauma and stressor related disorder, PTSD",ptsd,parent,present,mh_p_ksads__ptsd__oth__pres_dx,mh_p_ksads__ptsd__oth__pres_dx == 1
+"Other specified trauma and stressor related disorder, PTSD",ptsd,parent,lifetime_union,mh_p_ksads__ptsd__oth__past_dx | mh_p_ksads__ptsd__oth__pres_dx,any(present/past/partial_remission _dx == 1)
+Post-traumatic stress disorder,ptsd,parent,partial_remission,mh_p_ksads__ptsd__partrem_dx,mh_p_ksads__ptsd__partrem_dx == 1
+Post-traumatic stress disorder,ptsd,parent,past,mh_p_ksads__ptsd__past_dx,mh_p_ksads__ptsd__past_dx == 1
+Post-traumatic stress disorder,ptsd,parent,present,mh_p_ksads__ptsd__pres_dx,mh_p_ksads__ptsd__pres_dx == 1
+Post-traumatic stress disorder,ptsd,parent,lifetime_union,mh_p_ksads__ptsd__partrem_dx | mh_p_ksads__ptsd__past_dx | mh_p_ksads__ptsd__pres_dx,any(present/past/partial_remission _dx == 1)
+"Other specified anxiety disorder, separation anxiety disorder",sepanx,parent,past,mh_p_ksads__sepanx__oth__past_dx,mh_p_ksads__sepanx__oth__past_dx == 1
+"Other specified anxiety disorder, separation anxiety disorder",sepanx,parent,present,mh_p_ksads__sepanx__oth__pres_dx,mh_p_ksads__sepanx__oth__pres_dx == 1
+"Other specified anxiety disorder, separation anxiety disorder",sepanx,parent,lifetime_union,mh_p_ksads__sepanx__oth__past_dx | mh_p_ksads__sepanx__oth__pres_dx,any(present/past/partial_remission _dx == 1)
+Separation anxiety disorder,sepanx,parent,past,mh_p_ksads__sepanx__past_dx,mh_p_ksads__sepanx__past_dx == 1
+Separation anxiety disorder,sepanx,parent,present,mh_p_ksads__sepanx__pres_dx,mh_p_ksads__sepanx__pres_dx == 1
+Separation anxiety disorder,sepanx,parent,lifetime_union,mh_p_ksads__sepanx__past_dx | mh_p_ksads__sepanx__pres_dx,any(present/past/partial_remission _dx == 1)
+Sleep problems,sleep,parent,past,mh_p_ksads__sleep__prob__past_dx,mh_p_ksads__sleep__prob__past_dx == 1
+Sleep problems,sleep,parent,present,mh_p_ksads__sleep__prob__pres_dx,mh_p_ksads__sleep__prob__pres_dx == 1
+Sleep problems,sleep,parent,lifetime_union,mh_p_ksads__sleep__prob__past_dx | mh_p_ksads__sleep__prob__pres_dx,any(present/past/partial_remission _dx == 1)
+"Other specified anxiety disorder, social anxiety disorder",socanx,parent,past,mh_p_ksads__socanx__oth__mindur__past_dx,mh_p_ksads__socanx__oth__mindur__past_dx == 1
+"Other specified anxiety disorder, social anxiety disorder",socanx,parent,present,mh_p_ksads__socanx__oth__mindur__pres_dx,mh_p_ksads__socanx__oth__mindur__pres_dx == 1
+"Other specified anxiety disorder, social anxiety disorder",socanx,parent,lifetime_union,mh_p_ksads__socanx__oth__mindur__past_dx | mh_p_ksads__socanx__oth__mindur__pres_dx,any(present/past/partial_remission _dx == 1)
+Social anxiety disorder,socanx,parent,past,mh_p_ksads__socanx__past_dx,mh_p_ksads__socanx__past_dx == 1
+Social anxiety disorder,socanx,parent,present,mh_p_ksads__socanx__pres_dx,mh_p_ksads__socanx__pres_dx == 1
+Social anxiety disorder,socanx,parent,lifetime_union,mh_p_ksads__socanx__past_dx | mh_p_ksads__socanx__pres_dx,any(present/past/partial_remission _dx == 1)
+"Suicidal ideation, active intent",suic,parent,past,mh_p_ksads__suic__actv__int__past_dx,mh_p_ksads__suic__actv__int__past_dx == 1
+"Suicidal ideation, active intent",suic,parent,present,mh_p_ksads__suic__actv__int__pres_dx,mh_p_ksads__suic__actv__int__pres_dx == 1
+"Suicidal ideation, active intent",suic,parent,lifetime_union,mh_p_ksads__suic__actv__int__past_dx | mh_p_ksads__suic__actv__int__pres_dx,any(present/past/partial_remission _dx == 1)
+"Suicidal ideation, active method",suic,parent,past,mh_p_ksads__suic__actv__mthd__past_dx,mh_p_ksads__suic__actv__mthd__past_dx == 1
+"Suicidal ideation, active method",suic,parent,present,mh_p_ksads__suic__actv__mthd__pres_dx,mh_p_ksads__suic__actv__mthd__pres_dx == 1
+"Suicidal ideation, active method",suic,parent,lifetime_union,mh_p_ksads__suic__actv__mthd__past_dx | mh_p_ksads__suic__actv__mthd__pres_dx,any(present/past/partial_remission _dx == 1)
+"Suicidal ideation, active non-specific",suic,parent,past,mh_p_ksads__suic__actv__past_dx,mh_p_ksads__suic__actv__past_dx == 1
+"Suicidal ideation, active non-specific",suic,parent,present,mh_p_ksads__suic__actv__pres_dx,mh_p_ksads__suic__actv__pres_dx == 1
+"Suicidal ideation, active non-specific",suic,parent,lifetime_union,mh_p_ksads__suic__actv__past_dx | mh_p_ksads__suic__actv__pres_dx,any(present/past/partial_remission _dx == 1)
+"Suicidal ideation, active plan",suic,parent,past,mh_p_ksads__suic__actv__plan__past_dx,mh_p_ksads__suic__actv__plan__past_dx == 1
+"Suicidal ideation, active plan",suic,parent,present,mh_p_ksads__suic__actv__plan__pres_dx,mh_p_ksads__suic__actv__plan__pres_dx == 1
+"Suicidal ideation, active plan",suic,parent,lifetime_union,mh_p_ksads__suic__actv__plan__past_dx | mh_p_ksads__suic__actv__plan__pres_dx,any(present/past/partial_remission _dx == 1)
+Aborted attempt,suic,parent,past,mh_p_ksads__suic__atmpt__abrt__past_dx,mh_p_ksads__suic__atmpt__abrt__past_dx == 1
+Aborted attempt,suic,parent,present,mh_p_ksads__suic__atmpt__abrt__pres_dx,mh_p_ksads__suic__atmpt__abrt__pres_dx == 1
+Aborted attempt,suic,parent,lifetime_union,mh_p_ksads__suic__atmpt__abrt__past_dx | mh_p_ksads__suic__atmpt__abrt__pres_dx,any(present/past/partial_remission _dx == 1)
+Interrupted attempt,suic,parent,past,mh_p_ksads__suic__atmpt__intr__past_dx,mh_p_ksads__suic__atmpt__intr__past_dx == 1
+Interrupted attempt,suic,parent,present,mh_p_ksads__suic__atmpt__intr__pres_dx,mh_p_ksads__suic__atmpt__intr__pres_dx == 1
+Interrupted attempt,suic,parent,lifetime_union,mh_p_ksads__suic__atmpt__intr__past_dx | mh_p_ksads__suic__atmpt__intr__pres_dx,any(present/past/partial_remission _dx == 1)
+Suicide attempt,suic,parent,past,mh_p_ksads__suic__atmpt__past_dx,mh_p_ksads__suic__atmpt__past_dx == 1
+Suicide attempt,suic,parent,present,mh_p_ksads__suic__atmpt__pres_dx,mh_p_ksads__suic__atmpt__pres_dx == 1
+Suicide attempt,suic,parent,lifetime_union,mh_p_ksads__suic__atmpt__past_dx | mh_p_ksads__suic__atmpt__pres_dx,any(present/past/partial_remission _dx == 1)
+Preparatory actions toward imminent suicidal behavior,suic,parent,past,mh_p_ksads__suic__imnt__past_dx,mh_p_ksads__suic__imnt__past_dx == 1
+Preparatory actions toward imminent suicidal behavior,suic,parent,present,mh_p_ksads__suic__imnt__pres_dx,mh_p_ksads__suic__imnt__pres_dx == 1
+Preparatory actions toward imminent suicidal behavior,suic,parent,lifetime_union,mh_p_ksads__suic__imnt__past_dx | mh_p_ksads__suic__imnt__pres_dx,any(present/past/partial_remission _dx == 1)
+No past suicidal ideation or behavior,suic,parent,past,mh_p_ksads__suic__none__past_dx,mh_p_ksads__suic__none__past_dx == 1
+No suicidal ideation or behavior,suic,parent,present,mh_p_ksads__suic__none__pres_dx,mh_p_ksads__suic__none__pres_dx == 1
+"Suicidal ideation, passive",suic,parent,past,mh_p_ksads__suic__pass__past_dx,mh_p_ksads__suic__pass__past_dx == 1
+"Suicidal ideation, passive",suic,parent,present,mh_p_ksads__suic__pass__pres_dx,mh_p_ksads__suic__pass__pres_dx == 1
+"Suicidal ideation, passive",suic,parent,lifetime_union,mh_p_ksads__suic__pass__past_dx | mh_p_ksads__suic__pass__pres_dx,any(present/past/partial_remission _dx == 1)
+"Self injurious behavior, without suicidal intent",suic,parent,past,mh_p_ksads__suic__slfinj__nosi__past_dx,mh_p_ksads__suic__slfinj__nosi__past_dx == 1
+"Self injurious behavior, without suicidal intent",suic,parent,present,mh_p_ksads__suic__slfinj__nosi__pres_dx,mh_p_ksads__suic__slfinj__nosi__pres_dx == 1
+"Self injurious behavior, without suicidal intent",suic,parent,lifetime_union,mh_p_ksads__suic__slfinj__nosi__past_dx | mh_p_ksads__suic__slfinj__nosi__pres_dx,any(present/past/partial_remission _dx == 1)
+Persistent,tic,parent,remission,mh_p_ksads__tic__perst__nosymp__rem_dx,mh_p_ksads__tic__perst__nosymp__rem_dx == 1
+Persistent,tic,parent,present,mh_p_ksads__tic__perst__pres_dx,mh_p_ksads__tic__perst__pres_dx == 1
+Provisional tic disorder,tic,parent,present,mh_p_ksads__tic__prov__pres_dx,mh_p_ksads__tic__prov__pres_dx == 1
+"Tourette's disorder, no symptoms since X",tic,parent,remission,mh_p_ksads__tic__ts__nosymp__rem_dx,mh_p_ksads__tic__ts__nosymp__rem_dx == 1
+Tourette's disorder,tic,parent,present,mh_p_ksads__tic__ts__pres_dx,mh_p_ksads__tic__ts__pres_dx == 1
+Unspecified tic disorder,tic,parent,past,mh_p_ksads__tic__unspec__past_dx,mh_p_ksads__tic__unspec__past_dx == 1
+Unspecified tic disorder,tic,parent,present,mh_p_ksads__tic__unspec__pres_dx,mh_p_ksads__tic__unspec__pres_dx == 1
+Unspecified tic disorder,tic,parent,lifetime_union,mh_p_ksads__tic__unspec__past_dx | mh_p_ksads__tic__unspec__pres_dx,any(present/past/partial_remission _dx == 1)
+"Bipolar I disorder, currently depressed",bpd,youth,partial_remission,mh_y_ksads__bpd__bpd1__curdep__partrem_dx,mh_y_ksads__bpd__bpd1__curdep__partrem_dx == 1
+"Bipolar I disorder, current episode depressed",bpd,youth,present,mh_y_ksads__bpd__bpd1__curdep__pres_dx,mh_y_ksads__bpd__bpd1__curdep__pres_dx == 1
+"Bipolar I disorder, currently hypomanic",bpd,youth,present,mh_y_ksads__bpd__bpd1__curhypo__pres_dx,mh_y_ksads__bpd__bpd1__curhypo__pres_dx == 1
+"Bipolar I disorder, current episode manic",bpd,youth,present,mh_y_ksads__bpd__bpd1__curmanic__pres_dx,mh_y_ksads__bpd__bpd1__curmanic__pres_dx == 1
+"Bipolar I disorder, most recent past episode depressed",bpd,youth,present,mh_y_ksads__bpd__bpd1__rcnt__dep__pres_dx,mh_y_ksads__bpd__bpd1__rcnt__dep__pres_dx == 1
+"Bipolar I disorder, most recent past episode manic",bpd,youth,present,mh_y_ksads__bpd__bpd1__rcnt__manic__pres_dx,mh_y_ksads__bpd__bpd1__rcnt__manic__pres_dx == 1
+"Bipolar I disorder, most recent episode manic/depressed/mixed",bpd,youth,present,mh_y_ksads__bpd__bpd1__rcnt__manicmix__pres_dx,mh_y_ksads__bpd__bpd1__rcnt__manicmix__pres_dx == 1
+"Bipolar II disorder, currently depressed",bpd,youth,partial_remission,mh_y_ksads__bpd__bpd2__curdep__partrem_dx,mh_y_ksads__bpd__bpd2__curdep__partrem_dx == 1
+"Bipolar II disorder, currently depressed",bpd,youth,present,mh_y_ksads__bpd__bpd2__curdep__pres_dx,mh_y_ksads__bpd__bpd2__curdep__pres_dx == 1
+"Bipolar II disorder, currently depressed",bpd,youth,lifetime_union,mh_y_ksads__bpd__bpd2__curdep__partrem_dx | mh_y_ksads__bpd__bpd2__curdep__pres_dx,any(present/past/partial_remission _dx == 1)
+"Bipolar II disorder, currently hypomanic",bpd,youth,present,mh_y_ksads__bpd__bpd2__curhypo__pres_dx,mh_y_ksads__bpd__bpd2__curhypo__pres_dx == 1
+"Other specified bipolar and related disorder, meets criteria for bipolar II disorder",bpd,youth,unknown,mh_y_ksads__bpd__bpd2__oth__nomdd_dx,mh_y_ksads__bpd__bpd2__oth__nomdd_dx == 1
+"Bipolar II disorder, most recent episode hypomanic",bpd,youth,present,mh_y_ksads__bpd__bpd2__rcnt__hypo__pres_dx,mh_y_ksads__bpd__bpd2__rcnt__hypo__pres_dx == 1
+"Bipolar II disorder, most recent episode hypomanic/depressed/mixed",bpd,youth,present,mh_y_ksads__bpd__bpd2__rcnt__hypomix__pres_dx,mh_y_ksads__bpd__bpd2__rcnt__hypomix__pres_dx == 1
+"Other specified bipolar and related disorder, recurrent manic or hypomanic episodes",bpd,youth,unknown,mh_y_ksads__bpd__oth__mindur_dx,mh_y_ksads__bpd__oth__mindur_dx == 1
+Unspecified bipolar and related disorder,bpd,youth,past,mh_y_ksads__bpd__unspec__past_dx,mh_y_ksads__bpd__unspec__past_dx == 1
+Unspecified bipolar and related disorder,bpd,youth,present,mh_y_ksads__bpd__unspec__pres_dx,mh_y_ksads__bpd__unspec__pres_dx == 1
+Unspecified bipolar and related disorder,bpd,youth,lifetime_union,mh_y_ksads__bpd__unspec__past_dx | mh_y_ksads__bpd__unspec__pres_dx,any(present/past/partial_remission _dx == 1)
+"Conduct disorder, adolescent onset",cond,youth,past,mh_y_ksads__cond__onset__adoles__past_dx,mh_y_ksads__cond__onset__adoles__past_dx == 1
+"Conduct disorder, adolescent onset",cond,youth,present,mh_y_ksads__cond__onset__adoles__pres_dx,mh_y_ksads__cond__onset__adoles__pres_dx == 1
+"Conduct disorder, adolescent onset",cond,youth,lifetime_union,mh_y_ksads__cond__onset__adoles__past_dx | mh_y_ksads__cond__onset__adoles__pres_dx,any(present/past/partial_remission _dx == 1)
+"Conduct disorder, childhood onset",cond,youth,past,mh_y_ksads__cond__onset__chld__past_dx,mh_y_ksads__cond__onset__chld__past_dx == 1
+"Conduct disorder, childhood onset",cond,youth,present,mh_y_ksads__cond__onset__chld__pres_dx,mh_y_ksads__cond__onset__chld__pres_dx == 1
+"Conduct disorder, childhood onset",cond,youth,lifetime_union,mh_y_ksads__cond__onset__chld__past_dx | mh_y_ksads__cond__onset__chld__pres_dx,any(present/past/partial_remission _dx == 1)
+Major depressive disorder,dep,youth,partial_remission,mh_y_ksads__dep__mdd__partrem_dx,mh_y_ksads__dep__mdd__partrem_dx == 1
+Major depressive disorder,dep,youth,past,mh_y_ksads__dep__mdd__past_dx,mh_y_ksads__dep__mdd__past_dx == 1
+Major depressive disorder,dep,youth,present,mh_y_ksads__dep__mdd__pres_dx,mh_y_ksads__dep__mdd__pres_dx == 1
+Major depressive disorder,dep,youth,lifetime_union,mh_y_ksads__dep__mdd__partrem_dx | mh_y_ksads__dep__mdd__past_dx | mh_y_ksads__dep__mdd__pres_dx,any(present/past/partial_remission _dx == 1)
+"Other specified depressive disorder, persistent depressive disorder",dep,youth,present,mh_y_ksads__dep__pdd__oth__pres_dx,mh_y_ksads__dep__pdd__oth__pres_dx == 1
+Persistent depressive disorder,dep,youth,partial_remission,mh_y_ksads__dep__pdd__partrem_dx,mh_y_ksads__dep__pdd__partrem_dx == 1
+Persistent depressive disorder,dep,youth,past,mh_y_ksads__dep__pdd__past_dx,mh_y_ksads__dep__pdd__past_dx == 1
+Persistent depressive disorder,dep,youth,present,mh_y_ksads__dep__pdd__pres_dx,mh_y_ksads__dep__pdd__pres_dx == 1
+Persistent depressive disorder,dep,youth,lifetime_union,mh_y_ksads__dep__pdd__partrem_dx | mh_y_ksads__dep__pdd__past_dx | mh_y_ksads__dep__pdd__pres_dx,any(present/past/partial_remission _dx == 1)
+Unspecified depressive disorder,dep,youth,past,mh_y_ksads__dep__unspec__past_dx,mh_y_ksads__dep__unspec__past_dx == 1
+Unspecified depressive disorder,dep,youth,present,mh_y_ksads__dep__unspec__pres_dx,mh_y_ksads__dep__unspec__pres_dx == 1
+Unspecified depressive disorder,dep,youth,lifetime_union,mh_y_ksads__dep__unspec__past_dx | mh_y_ksads__dep__unspec__pres_dx,any(present/past/partial_remission _dx == 1)
+Disruptive mood dysregulation disorder,dmdd,youth,present,mh_y_ksads__dmdd__dmdd__pres_dx,mh_y_ksads__dmdd__dmdd__pres_dx == 1
+"Anorexia nervosa, binge eating/purging subtype",ed,youth,partial_remission,mh_y_ksads__ed__an__bingeprg__partrem_dx,mh_y_ksads__ed__an__bingeprg__partrem_dx == 1
+"Anorexia nervosa, binge eating/purging subtype",ed,youth,past,mh_y_ksads__ed__an__bingeprg__past_dx,mh_y_ksads__ed__an__bingeprg__past_dx == 1
+"Anorexia nervosa, binge eating/purging subtype",ed,youth,present,mh_y_ksads__ed__an__bingeprg__pres_dx,mh_y_ksads__ed__an__bingeprg__pres_dx == 1
+"Anorexia nervosa, binge eating/purging subtype",ed,youth,lifetime_union,mh_y_ksads__ed__an__bingeprg__partrem_dx | mh_y_ksads__ed__an__bingeprg__past_dx | mh_y_ksads__ed__an__bingeprg__pres_dx,any(present/past/partial_remission _dx == 1)
+"Other specified feeding or eating disorder, atypical anorexia nervosa",ed,youth,past,mh_y_ksads__ed__an__oth__past_dx,mh_y_ksads__ed__an__oth__past_dx == 1
+"Other specified feeding or eating disorder, atypical anorexia nervosa",ed,youth,present,mh_y_ksads__ed__an__oth__pres_dx,mh_y_ksads__ed__an__oth__pres_dx == 1
+"Other specified feeding or eating disorder, atypical anorexia nervosa",ed,youth,lifetime_union,mh_y_ksads__ed__an__oth__past_dx | mh_y_ksads__ed__an__oth__pres_dx,any(present/past/partial_remission _dx == 1)
+"Anorexia nervosa, restricting subtype",ed,youth,partial_remission,mh_y_ksads__ed__an__restrict__partrem_dx,mh_y_ksads__ed__an__restrict__partrem_dx == 1
+"Anorexia nervosa, restricting subtype",ed,youth,past,mh_y_ksads__ed__an__restrict__past_dx,mh_y_ksads__ed__an__restrict__past_dx == 1
+"Anorexia nervosa, restricting subtype",ed,youth,present,mh_y_ksads__ed__an__restrict__pres_dx,mh_y_ksads__ed__an__restrict__pres_dx == 1
+"Anorexia nervosa, restricting subtype",ed,youth,lifetime_union,mh_y_ksads__ed__an__restrict__partrem_dx | mh_y_ksads__ed__an__restrict__past_dx | mh_y_ksads__ed__an__restrict__pres_dx,any(present/past/partial_remission _dx == 1)
+"Other specified feeding or eating disorder, binge eating disorder",ed,youth,past,mh_y_ksads__ed__binge__oth__mindur__past_dx,mh_y_ksads__ed__binge__oth__mindur__past_dx == 1
+"Other specified feeding or eating disorder, binge eating disorder",ed,youth,present,mh_y_ksads__ed__binge__oth__mindur__pres_dx,mh_y_ksads__ed__binge__oth__mindur__pres_dx == 1
+"Other specified feeding or eating disorder, binge eating disorder",ed,youth,lifetime_union,mh_y_ksads__ed__binge__oth__mindur__past_dx | mh_y_ksads__ed__binge__oth__mindur__pres_dx,any(present/past/partial_remission _dx == 1)
+Binge eating disorder,ed,youth,partial_remission,mh_y_ksads__ed__binge__partrem_dx,mh_y_ksads__ed__binge__partrem_dx == 1
+Binge eating disorder,ed,youth,past,mh_y_ksads__ed__binge__past_dx,mh_y_ksads__ed__binge__past_dx == 1
+Binge eating disorder,ed,youth,present,mh_y_ksads__ed__binge__pres_dx,mh_y_ksads__ed__binge__pres_dx == 1
+Binge eating disorder,ed,youth,lifetime_union,mh_y_ksads__ed__binge__partrem_dx | mh_y_ksads__ed__binge__past_dx | mh_y_ksads__ed__binge__pres_dx,any(present/past/partial_remission _dx == 1)
+"Other specified feeding or eating disorder, bulimia nervosa",ed,youth,past,mh_y_ksads__ed__bulim__oth__mindur__past_dx,mh_y_ksads__ed__bulim__oth__mindur__past_dx == 1
+"Other specified feeding or eating disorder, bulimia nervosa",ed,youth,present,mh_y_ksads__ed__bulim__oth__mindur__pres_dx,mh_y_ksads__ed__bulim__oth__mindur__pres_dx == 1
+"Other specified feeding or eating disorder, bulimia nervosa",ed,youth,lifetime_union,mh_y_ksads__ed__bulim__oth__mindur__past_dx | mh_y_ksads__ed__bulim__oth__mindur__pres_dx,any(present/past/partial_remission _dx == 1)
+Bulimia nervosa,ed,youth,partial_remission,mh_y_ksads__ed__bulim__partrem_dx,mh_y_ksads__ed__bulim__partrem_dx == 1
+Bulimia nervosa,ed,youth,past,mh_y_ksads__ed__bulim__past_dx,mh_y_ksads__ed__bulim__past_dx == 1
+Bulimia nervosa,ed,youth,present,mh_y_ksads__ed__bulim__pres_dx,mh_y_ksads__ed__bulim__pres_dx == 1
+Bulimia nervosa,ed,youth,lifetime_union,mh_y_ksads__ed__bulim__partrem_dx | mh_y_ksads__ed__bulim__past_dx | mh_y_ksads__ed__bulim__pres_dx,any(present/past/partial_remission _dx == 1)
+"Other specified anxiety disorder, generalized anxiety disorder",gad,youth,past,mh_y_ksads__gad__oth__mindur__past_dx,mh_y_ksads__gad__oth__mindur__past_dx == 1
+"Other specified anxiety disorder, generalized anxiety disorder",gad,youth,present,mh_y_ksads__gad__oth__mindur__pres_dx,mh_y_ksads__gad__oth__mindur__pres_dx == 1
+"Other specified anxiety disorder, generalized anxiety disorder",gad,youth,lifetime_union,mh_y_ksads__gad__oth__mindur__past_dx | mh_y_ksads__gad__oth__mindur__pres_dx,any(present/past/partial_remission _dx == 1)
+Generalized anxiety disorder,gad,youth,past,mh_y_ksads__gad__past_dx,mh_y_ksads__gad__past_dx == 1
+Generalized anxiety disorder,gad,youth,present,mh_y_ksads__gad__pres_dx,mh_y_ksads__gad__pres_dx == 1
+Generalized anxiety disorder,gad,youth,lifetime_union,mh_y_ksads__gad__past_dx | mh_y_ksads__gad__pres_dx,any(present/past/partial_remission _dx == 1)
+Other specified obessive-compulsive and related disorder,ocd,youth,past,mh_y_ksads__ocd__oth__past_dx,mh_y_ksads__ocd__oth__past_dx == 1
+Other specified obessive-compulsive and related disorder,ocd,youth,present,mh_y_ksads__ocd__oth__pres_dx,mh_y_ksads__ocd__oth__pres_dx == 1
+Other specified obessive-compulsive and related disorder,ocd,youth,lifetime_union,mh_y_ksads__ocd__oth__past_dx | mh_y_ksads__ocd__oth__pres_dx,any(present/past/partial_remission _dx == 1)
+Obessive-compulsive disorder,ocd,youth,past,mh_y_ksads__ocd__past_dx,mh_y_ksads__ocd__past_dx == 1
+Obessive-compulsive disorder,ocd,youth,present,mh_y_ksads__ocd__pres_dx,mh_y_ksads__ocd__pres_dx == 1
+Obessive-compulsive disorder,ocd,youth,lifetime_union,mh_y_ksads__ocd__past_dx | mh_y_ksads__ocd__pres_dx,any(present/past/partial_remission _dx == 1)
+"Other specified anxiety disorder, panic disorder",panic,youth,past,mh_y_ksads__panic__oth__past_dx,mh_y_ksads__panic__oth__past_dx == 1
+"Other specified anxiety disorder, panic disorder",panic,youth,present,mh_y_ksads__panic__oth__pres_dx,mh_y_ksads__panic__oth__pres_dx == 1
+"Other specified anxiety disorder, panic disorder",panic,youth,lifetime_union,mh_y_ksads__panic__oth__past_dx | mh_y_ksads__panic__oth__pres_dx,any(present/past/partial_remission _dx == 1)
+Panic disorder,panic,youth,partial_remission,mh_y_ksads__panic__partrem_dx,mh_y_ksads__panic__partrem_dx == 1
+Panic disorder,panic,youth,past,mh_y_ksads__panic__past_dx,mh_y_ksads__panic__past_dx == 1
+Panic disorder,panic,youth,present,mh_y_ksads__panic__pres_dx,mh_y_ksads__panic__pres_dx == 1
+Panic disorder,panic,youth,lifetime_union,mh_y_ksads__panic__partrem_dx | mh_y_ksads__panic__past_dx | mh_y_ksads__panic__pres_dx,any(present/past/partial_remission _dx == 1)
+"Other specified trauma and stressor related disorder, PTSD",ptsd,youth,past,mh_y_ksads__ptsd__oth__past_dx,mh_y_ksads__ptsd__oth__past_dx == 1
+"Other specified trauma and stressor related disorder, PTSD",ptsd,youth,present,mh_y_ksads__ptsd__oth__pres_dx,mh_y_ksads__ptsd__oth__pres_dx == 1
+"Other specified trauma and stressor related disorder, PTSD",ptsd,youth,lifetime_union,mh_y_ksads__ptsd__oth__past_dx | mh_y_ksads__ptsd__oth__pres_dx,any(present/past/partial_remission _dx == 1)
+Post-traumatic stress disorder,ptsd,youth,partial_remission,mh_y_ksads__ptsd__partrem_dx,mh_y_ksads__ptsd__partrem_dx == 1
+Post-traumatic stress disorder,ptsd,youth,past,mh_y_ksads__ptsd__past_dx,mh_y_ksads__ptsd__past_dx == 1
+Post-traumatic stress disorder,ptsd,youth,present,mh_y_ksads__ptsd__pres_dx,mh_y_ksads__ptsd__pres_dx == 1
+Post-traumatic stress disorder,ptsd,youth,lifetime_union,mh_y_ksads__ptsd__partrem_dx | mh_y_ksads__ptsd__past_dx | mh_y_ksads__ptsd__pres_dx,any(present/past/partial_remission _dx == 1)
+Sleep problems,sleep,youth,past,mh_y_ksads__sleep__prob__past_dx,mh_y_ksads__sleep__prob__past_dx == 1
+Sleep problems,sleep,youth,present,mh_y_ksads__sleep__prob__pres_dx,mh_y_ksads__sleep__prob__pres_dx == 1
+Sleep problems,sleep,youth,lifetime_union,mh_y_ksads__sleep__prob__past_dx | mh_y_ksads__sleep__prob__pres_dx,any(present/past/partial_remission _dx == 1)
+"Other specified anxiety disorder, social anxiety disorder",socanx,youth,past,mh_y_ksads__socanx__oth__mindur__past_dx,mh_y_ksads__socanx__oth__mindur__past_dx == 1
+"Other specified anxiety disorder, social anxiety disorder",socanx,youth,present,mh_y_ksads__socanx__oth__mindur__pres_dx,mh_y_ksads__socanx__oth__mindur__pres_dx == 1
+"Other specified anxiety disorder, social anxiety disorder",socanx,youth,lifetime_union,mh_y_ksads__socanx__oth__mindur__past_dx | mh_y_ksads__socanx__oth__mindur__pres_dx,any(present/past/partial_remission _dx == 1)
+Social anxiety disorder,socanx,youth,past,mh_y_ksads__socanx__past_dx,mh_y_ksads__socanx__past_dx == 1
+Social anxiety disorder,socanx,youth,present,mh_y_ksads__socanx__pres_dx,mh_y_ksads__socanx__pres_dx == 1
+Social anxiety disorder,socanx,youth,lifetime_union,mh_y_ksads__socanx__past_dx | mh_y_ksads__socanx__pres_dx,any(present/past/partial_remission _dx == 1)
+"Suicidal ideation, active intent",suic,youth,past,mh_y_ksads__suic__actv__int__past_dx,mh_y_ksads__suic__actv__int__past_dx == 1
+"Suicidal ideation, active intent",suic,youth,present,mh_y_ksads__suic__actv__int__pres_dx,mh_y_ksads__suic__actv__int__pres_dx == 1
+"Suicidal ideation, active intent",suic,youth,lifetime_union,mh_y_ksads__suic__actv__int__past_dx | mh_y_ksads__suic__actv__int__pres_dx,any(present/past/partial_remission _dx == 1)
+"Suicidal ideation, active method",suic,youth,past,mh_y_ksads__suic__actv__mthd__past_dx,mh_y_ksads__suic__actv__mthd__past_dx == 1
+"Suicidal ideation, active method",suic,youth,present,mh_y_ksads__suic__actv__mthd__pres_dx,mh_y_ksads__suic__actv__mthd__pres_dx == 1
+"Suicidal ideation, active method",suic,youth,lifetime_union,mh_y_ksads__suic__actv__mthd__past_dx | mh_y_ksads__suic__actv__mthd__pres_dx,any(present/past/partial_remission _dx == 1)
+"Suicidal ideation, active non-specific",suic,youth,past,mh_y_ksads__suic__actv__past_dx,mh_y_ksads__suic__actv__past_dx == 1
+"Suicidal ideation, active non-specific",suic,youth,present,mh_y_ksads__suic__actv__pres_dx,mh_y_ksads__suic__actv__pres_dx == 1
+"Suicidal ideation, active non-specific",suic,youth,lifetime_union,mh_y_ksads__suic__actv__past_dx | mh_y_ksads__suic__actv__pres_dx,any(present/past/partial_remission _dx == 1)
+"Suicidal ideation, active plan",suic,youth,past,mh_y_ksads__suic__actv__plan__past_dx,mh_y_ksads__suic__actv__plan__past_dx == 1
+"Suicidal ideation, active plan",suic,youth,present,mh_y_ksads__suic__actv__plan__pres_dx,mh_y_ksads__suic__actv__plan__pres_dx == 1
+"Suicidal ideation, active plan",suic,youth,lifetime_union,mh_y_ksads__suic__actv__plan__past_dx | mh_y_ksads__suic__actv__plan__pres_dx,any(present/past/partial_remission _dx == 1)
+Aborted attempt,suic,youth,past,mh_y_ksads__suic__atmpt__abrt__past_dx,mh_y_ksads__suic__atmpt__abrt__past_dx == 1
+Aborted attempt,suic,youth,present,mh_y_ksads__suic__atmpt__abrt__pres_dx,mh_y_ksads__suic__atmpt__abrt__pres_dx == 1
+Aborted attempt,suic,youth,lifetime_union,mh_y_ksads__suic__atmpt__abrt__past_dx | mh_y_ksads__suic__atmpt__abrt__pres_dx,any(present/past/partial_remission _dx == 1)
+Interrupted attempt,suic,youth,past,mh_y_ksads__suic__atmpt__intr__past_dx,mh_y_ksads__suic__atmpt__intr__past_dx == 1
+Interrupted attempt,suic,youth,present,mh_y_ksads__suic__atmpt__intr__pres_dx,mh_y_ksads__suic__atmpt__intr__pres_dx == 1
+Interrupted attempt,suic,youth,lifetime_union,mh_y_ksads__suic__atmpt__intr__past_dx | mh_y_ksads__suic__atmpt__intr__pres_dx,any(present/past/partial_remission _dx == 1)
+Suicide attempt,suic,youth,past,mh_y_ksads__suic__atmpt__past_dx,mh_y_ksads__suic__atmpt__past_dx == 1
+Suicide attempt,suic,youth,present,mh_y_ksads__suic__atmpt__pres_dx,mh_y_ksads__suic__atmpt__pres_dx == 1
+Suicide attempt,suic,youth,lifetime_union,mh_y_ksads__suic__atmpt__past_dx | mh_y_ksads__suic__atmpt__pres_dx,any(present/past/partial_remission _dx == 1)
+Preparatory actions toward imminent suicidal behavior,suic,youth,past,mh_y_ksads__suic__imnt__past_dx,mh_y_ksads__suic__imnt__past_dx == 1
+Preparatory actions toward imminent suicidal behavior,suic,youth,present,mh_y_ksads__suic__imnt__pres_dx,mh_y_ksads__suic__imnt__pres_dx == 1
+Preparatory actions toward imminent suicidal behavior,suic,youth,lifetime_union,mh_y_ksads__suic__imnt__past_dx | mh_y_ksads__suic__imnt__pres_dx,any(present/past/partial_remission _dx == 1)
+No past suicidal ideation or behavior,suic,youth,past,mh_y_ksads__suic__none__past_dx,mh_y_ksads__suic__none__past_dx == 1
+No suicidal ideation or behavior,suic,youth,present,mh_y_ksads__suic__none__pres_dx,mh_y_ksads__suic__none__pres_dx == 1
+"Suicidal ideation, passive",suic,youth,past,mh_y_ksads__suic__pass__past_dx,mh_y_ksads__suic__pass__past_dx == 1
+"Suicidal ideation, passive",suic,youth,present,mh_y_ksads__suic__pass__pres_dx,mh_y_ksads__suic__pass__pres_dx == 1
+"Suicidal ideation, passive",suic,youth,lifetime_union,mh_y_ksads__suic__pass__past_dx | mh_y_ksads__suic__pass__pres_dx,any(present/past/partial_remission _dx == 1)
+"Self injurious behavior, without suicidal intent",suic,youth,past,mh_y_ksads__suic__slfinj__nosi__past_dx,mh_y_ksads__suic__slfinj__nosi__past_dx == 1
+"Self injurious behavior, without suicidal intent",suic,youth,present,mh_y_ksads__suic__slfinj__nosi__pres_dx,mh_y_ksads__suic__slfinj__nosi__pres_dx == 1
+"Self injurious behavior, without suicidal intent",suic,youth,lifetime_union,mh_y_ksads__suic__slfinj__nosi__past_dx | mh_y_ksads__suic__slfinj__nosi__pres_dx,any(present/past/partial_remission _dx == 1)
+No past suicidal ideation or behavior,suic,parent,past,mh_p_ksads__suic__none__past_dx,REFERENCE LEVEL — NOT a case (denominator/negative)
+No suicidal ideation or behavior,suic,parent,present,mh_p_ksads__suic__none__pres_dx,REFERENCE LEVEL — NOT a case (denominator/negative)
+No past suicidal ideation or behavior,suic,youth,past,mh_y_ksads__suic__none__past_dx,REFERENCE LEVEL — NOT a case (denominator/negative)
+No suicidal ideation or behavior,suic,youth,present,mh_y_ksads__suic__none__pres_dx,REFERENCE LEVEL — NOT a case (denominator/negative)
