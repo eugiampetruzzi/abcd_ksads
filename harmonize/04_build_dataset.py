@@ -60,36 +60,48 @@ nda(keep).to_csv(os.path.join(DSET, "ksads_diagnosis_resolved.csv.gz"),
 base = res[res.session_id.isin(EVEN)]
 
 
-def caseness(status_set, informant):
+def caseness(cwx, status_set, informant):
     if informant == "either":
-        x = pd.concat([L3.build_caseness(base, cw, status_set, False, "parent"),
-                       L3.build_caseness(base, cw, status_set, False, "youth")])
+        x = pd.concat([L3.build_caseness(base, cwx, status_set, False, "parent"),
+                       L3.build_caseness(base, cwx, status_set, False, "youth")])
         x["rk"] = x.status.map(RANK)
         x = x.groupby(["participant_id", "session_id", "category"])["rk"].max().reset_index()
         x["status"] = x.rk.map(INV)
         return x[["participant_id", "session_id", "category", "status"]]
-    return L3.build_caseness(base, cw, status_set, False, informant)
+    return L3.build_caseness(base, cwx, status_set, False, informant)
 
 
-def wide(status_set):
+def wide(cwx, cols, status_set):
     frames = []
     for inf in ["parent", "youth", "either"]:
-        c = caseness(status_set, inf)
-        c = c[c.category.isin(CATS)]
+        c = caseness(cwx, status_set, inf)
+        c = c[c.category.isin(cols)]
         w = c.pivot_table(index=["participant_id", "session_id"], columns="category",
                           values="status", aggfunc="first").reset_index()
-        for cat in CATS:
-            if cat not in w:
-                w[cat] = "not_administered"
-            w[cat] = w[cat].fillna("not_administered")
+        for col in cols:
+            if col not in w:
+                w[col] = "not_administered"
+            w[col] = w[col].fillna("not_administered")
         w["informant"] = inf
-        frames.append(w[["participant_id", "session_id", "informant"] + CATS])
+        frames.append(w[["participant_id", "session_id", "informant"] + cols])
     return pd.concat(frames, ignore_index=True)
 
 
-for status_set, name in [("current", "ksads_categories_current"),
-                         ("ever_met", "ksads_categories_evermet")]:
-    nda(wide(status_set)).to_csv(os.path.join(DSET, f"{name}.csv"), index=False)
+DISORDER = {"dep": "Depression", "gad": "GAD", "sepanx": "Separation anxiety",
+            "socanx": "Social anxiety", "panic": "Panic", "agor": "Agoraphobia",
+            "phobia": "Specific phobia", "ocd": "OCD", "ptsd": "PTSD", "adhd": "ADHD",
+            "odd": "ODD", "cond": "Conduct", "bpd": "Bipolar", "dmdd": "DMDD",
+            "asd": "Autism", "tic": "Tic", "ed": "Eating", "psych": "Psychosis"}
+DCOLS = list(DISORDER.values())
+cw_d = cw.copy()
+cw_d["category"] = cw_d.module.map(DISORDER)
+cw_d = cw_d[cw_d.category.notna()]
+
+for status_set, cat_name, dis_name in [
+        ("current", "ksads_categories_current", "ksads_disorders_current"),
+        ("ever_met", "ksads_categories_evermet", "ksads_disorders_evermet")]:
+    nda(wide(cw, CATS, status_set)).to_csv(os.path.join(DSET, f"{cat_name}.csv"), index=False)
+    nda(wide(cw_d, DCOLS, status_set)).to_csv(os.path.join(DSET, f"{dis_name}.csv"), index=False)
 
 sess = ad[["participant_id", "session_id", "interview_age", "interview_date"]].copy()
 sess["subjectkey"] = ""
