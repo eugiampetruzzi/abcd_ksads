@@ -87,21 +87,51 @@ def wide(cwx, cols, status_set):
     return pd.concat(frames, ignore_index=True)
 
 
-DISORDER = {"dep": "Depression", "gad": "GAD", "sepanx": "Separation anxiety",
-            "socanx": "Social anxiety", "panic": "Panic", "agor": "Agoraphobia",
-            "phobia": "Specific phobia", "ocd": "OCD", "ptsd": "PTSD", "adhd": "ADHD",
-            "odd": "ODD", "cond": "Conduct", "bpd": "Bipolar", "dmdd": "DMDD",
-            "asd": "Autism", "tic": "Tic", "ed": "Eating", "psych": "Psychosis"}
-DCOLS = list(DISORDER.values())
-cw_d = cw.copy()
-cw_d["category"] = cw_d.module.map(DISORDER)
-cw_d = cw_d[cw_d.category.notna()]
+DMAP = pd.read_csv(os.path.join(os.path.dirname(HERE), "codebooks", "ksads_variable_map.csv"),
+                   usecols=["variable", "disorder"]).set_index("variable").disorder
+SINGLE = {"gad": "GAD", "sepanx": "Separation anxiety", "socanx": "Social anxiety",
+          "panic": "Panic", "agor": "Agoraphobia", "phobia": "Specific phobia",
+          "ocd": "OCD", "ptsd": "PTSD", "adhd": "ADHD", "odd": "ODD", "dmdd": "DMDD",
+          "asd": "Autism", "cond": "Conduct"}
 
-for status_set, cat_name, dis_name in [
-        ("current", "ksads_categories_current", "ksads_disorders_current"),
-        ("ever_met", "ksads_categories_evermet", "ksads_disorders_evermet")]:
+
+def subdx(module, dis):
+    dis = "" if pd.isna(dis) else str(dis)
+    if module in SINGLE:
+        return SINGLE[module]
+    if module == "dep":
+        return {"mdd": "Major depressive disorder",
+                "pdd": "Persistent depressive disorder"}.get(dis)
+    if module == "bpd":
+        return "Bipolar I" if dis.startswith("bpd1") else "Bipolar II" if dis.startswith("bpd2") else None
+    if module == "ed":
+        if dis.startswith("an__") and "oth" not in dis:
+            return "Anorexia nervosa"
+        return {"bulim": "Bulimia nervosa", "binge": "Binge-eating disorder"}.get(dis)
+    if module == "psych":
+        return {"schiz": "Schizophrenia", "schiz__oth": "Schizophrenia",
+                "schizaffct": "Schizoaffective", "schizform": "Schizophreniform"}.get(dis)
+    if module == "tic":
+        return {"ts": "Tourette's disorder", "perst": "Persistent tic",
+                "prov": "Provisional tic"}.get(dis)
+    return None
+
+
+SCOLS = ["Major depressive disorder", "Persistent depressive disorder", "GAD",
+         "Separation anxiety", "Social anxiety", "Panic", "Agoraphobia", "Specific phobia",
+         "ADHD", "ODD", "Conduct", "Bipolar I", "Bipolar II", "DMDD", "OCD", "PTSD",
+         "Autism", "Tourette's disorder", "Persistent tic", "Provisional tic",
+         "Anorexia nervosa", "Bulimia nervosa", "Binge-eating disorder",
+         "Schizophrenia", "Schizoaffective", "Schizophreniform"]
+cw_s = cw.copy()
+cw_s["category"] = [subdx(mo, DMAP.get(v)) for v, mo in zip(cw_s.variable, cw_s.module)]
+cw_s = cw_s[cw_s.category.notna()]
+
+for status_set, cat_name, sub_name in [
+        ("current", "ksads_categories_current", "ksads_subdisorders_current"),
+        ("ever_met", "ksads_categories_evermet", "ksads_subdisorders_evermet")]:
     nda(wide(cw, CATS, status_set)).to_csv(os.path.join(DSET, f"{cat_name}.csv"), index=False)
-    nda(wide(cw_d, DCOLS, status_set)).to_csv(os.path.join(DSET, f"{dis_name}.csv"), index=False)
+    nda(wide(cw_s, SCOLS, status_set)).to_csv(os.path.join(DSET, f"{sub_name}.csv"), index=False)
 
 sess = ad[["participant_id", "session_id", "interview_age", "interview_date"]].copy()
 sess["subjectkey"] = ""
