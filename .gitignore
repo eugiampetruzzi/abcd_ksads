@@ -7,8 +7,11 @@
 *.svg
 *.log
 
-# keep the codebook CSVs (metadata only); ignore any other CSVs
+# keep the codebook CSVs (metadata only); ignore any other CSVs and all data outputs
 *.csv
+*.gz
+*.csv.gz
+dataset/
 !codebooks/*.csv
 
 __pycache__/

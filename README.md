@@ -19,7 +19,7 @@ Run in order. Each script reads `codebooks/` and writes to `derivatives/`;
 | `01_resolve_missingness.py` | per-cell state: positive / administered_negative / not_administered / no_record |
 | `02_administration_calendar.py` | module x wave x informant administration map |
 | `03_category_crosswalk.py` | diagnosis to DSM-category crosswalk and caseness engine |
-| `04_build_dataset.py` | current and ever-met category tables (parent / youth / either) + sessions |
+| `04_build_dataset.py` | current and ever-met caseness tables (parent / youth / either), sessions, and participants, with NDA identifier columns |
 
 ## codebooks/
 
