@@ -1,44 +1,62 @@
 # abcd_ksads
 
-Harmonization pipeline and codebooks for the KSADS-COMP diagnostic data in the
-Adolescent Brain Cognitive Development (ABCD) Study, release 7.0.
+Harmonization and analysis code for the ABCD Study KSADS-COMP diagnostic data
+(release 7.0). The pipeline resolves administrative-missingness codes, reconstructs
+the administration calendar, crosswalks the 230 diagnosis variables to DSM
+categories, and tracks instrument-version provenance. It then quantifies how
+diagnostic operationalization changes both the prevalence of disorders and the
+associations of caseness with demographic, psychosocial, and neuroimaging measures.
 
-The pipeline resolves administrative missingness codes, maps the administration
-calendar across waves and informants, crosswalks the 230 diagnosis variables to
-DSM categories, and builds analysis-ready caseness tables. Non-administration
-(555) is never counted as a negative; prevalence is computed over the
-administered denominator.
+## Data access
 
-## harmonize/
+All inputs are access-controlled and are not included in this repository. An approved
+ABCD Data Use Certification is required (https://nbdc-datahub.org/data-access-process).
+The pipeline expects:
 
-Run in order. Each script reads `codebooks/` and writes to `derivatives/`;
-`04` writes the dataset to `dataset/`.
+- Release 7.0: the tabulated KSADS-COMP source (BIDS `rawdata/phenotype`) and the
+  covariate files `4_ELA_final.xlsx` and `5_covariates_extended.xlsx`.
+- Release 5.1 `core`: `imaging/`, `culture-environment/`, and `novel-technologies/`
+  (baseline predictors for the correlate analysis).
 
-| Script | Output |
-|---|---|
-| `01_resolve_missingness.py` | per-cell state: positive / administered_negative / not_administered / no_record |
-| `02_administration_calendar.py` | module x wave x informant administration map |
-| `03_category_crosswalk.py` | diagnosis to DSM-category crosswalk and caseness engine |
-| `04_build_dataset.py` | current and ever-met caseness tables (parent / youth / either), sessions, and participants, with NDA identifier columns |
+## Setup
 
-## codebooks/
+```bash
+pip install -r requirements.txt
+export ABCD_70=/path/to/abcd/release-7.0
+export ABCD_51=/path/to/abcd/release-5.1/core
+```
 
-Structural metadata only, no participant data.
+Paths are centralized in `config.py`; no script hard-codes a location.
 
-| File | Contents |
-|---|---|
-| `ksads_variable_map.csv` | variable names, labels, value/admin codes, module, informant, layer |
-| `ksads_version_crosswalk.csv` | 1.0 vs 2.0 provenance per merged variable |
-| `ksads_administration_calendar.csv` | administered counts and flags by module/wave/informant |
-| `ksads_category_crosswalk.csv` | diagnosis to category and broadband mapping |
-| `ksads_caseness_candidates.csv` | proposed case definition per disorder |
+## Pipeline
 
-## Data
+```
+harmonize/01_resolve_missingness.py      resolve the four missingness states
+harmonize/02_administration_calendar.py  module x wave x informant administration
+harmonize/03_category_crosswalk.py        diagnosis variables to DSM categories
+harmonize/04_version_provenance.py        KSADS-COMP 1.0 / 2.0 flags
+harmonize/06_multiverse_spec.py           prevalence under every operationalization
+harmonize/07_multiverse_summary.py        per-construct fold and range summary
+harmonize/08_single_lever.py              one-decision-at-a-time prevalence shifts
+harmonize/09_inferential_multiverse.py    predictor x construct x spec logistic models
+harmonize/10_informant_discrepancy.py     caregiver vs youth caseness and Cohen's kappa
+harmonize/aux_missingness_audit.py        quantify miscoded non-administration (555)
+harmonize/aux_anxiety_decomposition.py    anxiety prevalence by constituent diagnosis
+harmonize/11_paper_numbers.py             collate manuscript numbers to paper_numbers.json
+harmonize/12_build_bids_dataset.py        BIDS-style harmonized dataset
+harmonize/13_technical_validation.py      data-descriptor validation checks
+harmonize/14_module_overscreening.py      branch-skip diagnostics
+harmonize/15_export_analysis_csv.py       analysis-ready CSV release
 
-ABCD 7.0 KSADS-COMP data are access-restricted through the NIMH Data Archive and
-are not redistributable. Repoint the data path at the top of `01` and `04` to a
-local ABCD mirror.
+figures/   make_fig12, make_fig_informant, make_fig_bwas_style,
+           make_fig_inferential, make_fig_catcalendar
+tables/    build_table1_checklist, build_table_categories
+```
 
-## Requirements
+Scripts 01 through 11 write intermediates to `harmonize/derivatives/` (git-ignored).
+The figure scripts read those intermediates; `11_paper_numbers.py` collates every
+in-text statistic into `paper_numbers.json`.
 
-Python 3.12 with pandas, numpy, and pyarrow.
+## Software
+
+Python 3.12 with pandas, numpy, pyarrow, statsmodels, matplotlib, and openpyxl.
