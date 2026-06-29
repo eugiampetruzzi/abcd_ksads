@@ -13,8 +13,7 @@ All inputs are access-controlled and are not included in this repository. An app
 ABCD Data Use Certification is required (https://nbdc-datahub.org/data-access-process).
 The pipeline expects:
 
-- Release 7.0: the tabulated KSADS-COMP source (BIDS `rawdata/phenotype`) and the
-  covariate files `4_ELA_final.xlsx` and `5_covariates_extended.xlsx`.
+- Release 7.0: the tabulated KSADS-COMP source (BIDS `rawdata/phenotype`).
 - Release 5.1 `core`: `imaging/`, `culture-environment/`, and `novel-technologies/`
   (baseline predictors for the correlate analysis).
 
