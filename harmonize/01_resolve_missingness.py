@@ -6,15 +6,25 @@ import pandas as pd
 
 KS = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import sys
+
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import config
+
 RAW = config.RAW_PHENOTYPE
 MAP = os.path.join(config.CODEBOOKS, "ksads_variable_map.csv")
 DERIV = os.path.join(os.path.dirname(os.path.abspath(__file__)), "derivatives")
 os.makedirs(DERIV, exist_ok=True)
 
-SESSIONS = ["ses-00A", "ses-01A", "ses-02A", "ses-03A",
-            "ses-04A", "ses-05A", "ses-06A", "ses-07A"]
+SESSIONS = [
+    "ses-00A",
+    "ses-01A",
+    "ses-02A",
+    "ses-03A",
+    "ses-04A",
+    "ses-05A",
+    "ses-06A",
+    "ses-07A",
+]
 RESOLVED = ["positive", "administered_negative", "not_administered", "no_record"]
 VALUE_MAP = {"1": "positive", "0": "administered_negative", "555": "not_administered"}
 
@@ -44,58 +54,77 @@ def resolve():
         use = [v for v in wanted if v in avail]
         if not use:
             continue
-        df = pd.read_csv(path, sep="\t", usecols=["participant_id", "session_id"] + use,
-                         dtype=str)
+        df = pd.read_csv(
+            path, sep="\t", usecols=["participant_id", "session_id"] + use, dtype=str
+        )
         df = df[df["session_id"].isin(SESSIONS)]
 
-        long = df.melt(id_vars=["participant_id", "session_id"], value_vars=use,
-                       var_name="variable", value_name="raw")
+        long = df.melt(
+            id_vars=["participant_id", "session_id"],
+            value_vars=use,
+            var_name="variable",
+            value_name="raw",
+        )
         long["resolved"] = long["raw"].map(VALUE_MAP).fillna("no_record")
         m = long["variable"].map(meta)
         long["informant"] = long["variable"].map(lambda v: meta[v]["informant"])
         long["module"] = long["variable"].map(lambda v: meta[v]["module"])
         long["status_layer"] = long["variable"].map(lambda v: meta[v]["status"])
         long["disorder"] = long["variable"].map(
-            lambda v: meta[v]["disorder"] or meta[v]["label"])
+            lambda v: meta[v]["disorder"] or meta[v]["label"]
+        )
         long = long.drop(columns="raw")
         long_parts.append(long)
 
         # summary per variable x session
-        g = (long.groupby(["variable", "session_id", "resolved"]).size()
-                  .unstack("resolved", fill_value=0).reset_index())
+        g = (
+            long.groupby(["variable", "session_id", "resolved"])
+            .size()
+            .unstack("resolved", fill_value=0)
+            .reset_index()
+        )
         for col in RESOLVED:
             if col not in g:
                 g[col] = 0
         for _, rr in g.iterrows():
-            summary_rows.append({
-                "variable": rr["variable"], "session_id": rr["session_id"],
-                "informant": meta[rr["variable"]]["informant"],
-                "module": meta[rr["variable"]]["module"],
-                "status_layer": meta[rr["variable"]]["status"],
-                "n_positive": int(rr["positive"]),
-                "n_administered_negative": int(rr["administered_negative"]),
-                "n_not_administered": int(rr["not_administered"]),
-                "n_no_record": int(rr["no_record"]),
-            })
+            summary_rows.append(
+                {
+                    "variable": rr["variable"],
+                    "session_id": rr["session_id"],
+                    "informant": meta[rr["variable"]]["informant"],
+                    "module": meta[rr["variable"]]["module"],
+                    "status_layer": meta[rr["variable"]]["status"],
+                    "n_positive": int(rr["positive"]),
+                    "n_administered_negative": int(rr["administered_negative"]),
+                    "n_not_administered": int(rr["not_administered"]),
+                    "n_no_record": int(rr["no_record"]),
+                }
+            )
 
     long = pd.concat(long_parts, ignore_index=True)
-    long["resolved"] = pd.Categorical(long["resolved"], categories=RESOLVED, ordered=True)
+    long["resolved"] = pd.Categorical(
+        long["resolved"], categories=RESOLVED, ordered=True
+    )
     for c in ["session_id", "informant", "module", "status_layer", "variable"]:
         long[c] = long[c].astype("category")
     out_long = os.path.join(DERIV, "ksads_resolved_long.parquet")
     long.to_parquet(out_long, index=False)
 
-    summ = pd.DataFrame(summary_rows).sort_values(["informant", "module", "variable", "session_id"])
+    summ = pd.DataFrame(summary_rows).sort_values(
+        ["informant", "module", "variable", "session_id"]
+    )
     out_summ = os.path.join(DERIV, "ksads_resolution_summary.csv")
     summ.to_csv(out_summ, index=False)
 
     # report
     tot = long["resolved"].value_counts()
     n = len(long)
-    print(f"Resolved {n:,} participant x session x diagnosis cells "
-          f"({long['variable'].nunique()} diagnosis variables, {len(SESSIONS)} sessions).")
+    print(
+        f"Resolved {n:,} participant x session x diagnosis cells "
+        f"({long['variable'].nunique()} diagnosis variables, {len(SESSIONS)} sessions)."
+    )
     for s in RESOLVED:
-        print(f"  {s:24} {int(tot.get(s,0)):>12,}  ({100*tot.get(s,0)/n:5.1f}%)")
+        print(f"  {s:24} {int(tot.get(s, 0)):>12,}  ({100 * tot.get(s, 0) / n:5.1f}%)")
     print(f"\nWrote {out_long}")
     print(f"Wrote {out_summ}")
     return long
