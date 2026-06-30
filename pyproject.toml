@@ -1,0 +1,31 @@
+[project]
+name = "abcd-ksads"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "Russell Poldrack", email = "poldrack@gmail.com" }
+]
+requires-python = ">=3.13"
+dependencies = [
+    "matplotlib>=3.11.0",
+    "numpy>=2.5.0",
+    "pandas>=3.0.3",
+    "pyarrow>=24.0.0",
+    "pydantic-settings>=2.14.2",
+    "python-dotenv>=1.2.2",
+    "scikit-learn>=1.9.0",
+    "statsmodels>=0.14.6",
+]
+
+[project.scripts]
+abcd-ksads = "abcd_ksads:main"
+
+[build-system]
+requires = ["uv_build>=0.9.18,<0.10.0"]
+build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "pytest>=9.1.1",
+]
