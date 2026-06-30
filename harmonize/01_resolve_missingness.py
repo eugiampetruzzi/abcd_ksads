@@ -1,19 +1,16 @@
 #!/usr/bin/env python3
 import csv
 import os
-
+import dotenv
 import pandas as pd
 
-KS = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+dotenv.load_dotenv()
+
+# KS = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import config
-
-RAW = config.RAW_PHENOTYPE
-MAP = os.path.join(config.CODEBOOKS, "ksads_variable_map.csv")
-DERIV = os.path.join(os.path.dirname(os.path.abspath(__file__)), "derivatives")
-os.makedirs(DERIV, exist_ok=True)
 
 SESSIONS = [
     "ses-00A",
@@ -25,53 +22,78 @@ SESSIONS = [
     "ses-06A",
     "ses-07A",
 ]
-RESOLVED = ["positive", "administered_negative", "not_administered", "no_record"]
-VALUE_MAP = {"1": "positive", "0": "administered_negative", "555": "not_administered"}
 
 
-def load_diagnosis_vars():
+def load_diagnosis_vars(config):
+    MAP = os.path.join(config.CODEBOOKS, "ksads_variable_map.csv")
     rows = [r for r in csv.DictReader(open(MAP)) if r["layer"] == "diagnosis"]
-    by_file = {}
+    file_metadata = {}
     for r in rows:
         pref = "mh_p" if r["informant"] == "parent" else "mh_y"
         fname = f"{pref}_ksads__{r['module']}.tsv"
-        by_file.setdefault(fname, []).append(r)
-    return rows, by_file
+        file_metadata.setdefault(fname, []).append(r)
+    return rows, file_metadata
+
+
+def load_df_with_wanted_variables(path, file_variable_metadata):
+    wanted = [r["variable"] for r in file_variable_metadata]
+    avail = pd.read_csv(path, sep="\t", nrows=0).columns.tolist()
+    vars_to_use = [v for v in wanted if v in avail]
+    if not vars_to_use:
+        return None
+    df = pd.read_csv(
+        path,
+        sep="\t",
+        usecols=["participant_id", "session_id"] + vars_to_use,
+    )
+    return df[df["session_id"].isin(SESSIONS)], vars_to_use
 
 
 def resolve():
-    rows, by_file = load_diagnosis_vars()
-    meta = {r["variable"]: r for r in rows}
+    RAW = config.RAW_PHENOTYPE
+    DERIV = os.path.join(os.path.dirname(os.path.abspath(__file__)), "derivatives")
+    os.makedirs(DERIV, exist_ok=True)
+
+    RESOLVED = ["positive", "administered_negative", "not_administered", "no_record"]
+    VALUE_MAP = {
+        "1": "positive",
+        "0": "administered_negative",
+        "555": "not_administered",
+        1: "positive",
+        0: "administered_negative",
+        555: "not_administered",
+    }
+
+    rows, file_metadata = load_diagnosis_vars(config)
+    all_var_metadata = {r["variable"]: r for r in rows}
     long_parts = []
     summary_rows = []
 
-    for fname, vrows in sorted(by_file.items()):
+    for fname, file_variable_metadata in sorted(file_metadata.items()):
         path = os.path.join(RAW, fname)
         if not os.path.exists(path):
+            print(f"{fname} not found, skipping")
             continue
-        wanted = [r["variable"] for r in vrows]
-        avail = pd.read_csv(path, sep="\t", nrows=0).columns.tolist()
-        use = [v for v in wanted if v in avail]
-        if not use:
-            continue
-        df = pd.read_csv(
-            path, sep="\t", usecols=["participant_id", "session_id"] + use, dtype=str
-        )
-        df = df[df["session_id"].isin(SESSIONS)]
+
+        df, vars_to_use = load_df_with_wanted_variables(path, file_variable_metadata)
 
         long = df.melt(
             id_vars=["participant_id", "session_id"],
-            value_vars=use,
+            value_vars=vars_to_use,
             var_name="variable",
             value_name="raw",
         )
         long["resolved"] = long["raw"].map(VALUE_MAP).fillna("no_record")
-        m = long["variable"].map(meta)
-        long["informant"] = long["variable"].map(lambda v: meta[v]["informant"])
-        long["module"] = long["variable"].map(lambda v: meta[v]["module"])
-        long["status_layer"] = long["variable"].map(lambda v: meta[v]["status"])
+        m = long["variable"].map(all_var_metadata)
+        long["informant"] = long["variable"].map(
+            lambda v: all_var_metadata[v]["informant"]
+        )
+        long["module"] = long["variable"].map(lambda v: all_var_metadata[v]["module"])
+        long["status_layer"] = long["variable"].map(
+            lambda v: all_var_metadata[v]["status"]
+        )
         long["disorder"] = long["variable"].map(
-            lambda v: meta[v]["disorder"] or meta[v]["label"]
+            lambda v: all_var_metadata[v]["disorder"] or all_var_metadata[v]["label"]
         )
         long = long.drop(columns="raw")
         long_parts.append(long)
@@ -91,9 +113,9 @@ def resolve():
                 {
                     "variable": rr["variable"],
                     "session_id": rr["session_id"],
-                    "informant": meta[rr["variable"]]["informant"],
-                    "module": meta[rr["variable"]]["module"],
-                    "status_layer": meta[rr["variable"]]["status"],
+                    "informant": all_var_metadata[rr["variable"]]["informant"],
+                    "module": all_var_metadata[rr["variable"]]["module"],
+                    "status_layer": all_var_metadata[rr["variable"]]["status"],
                     "n_positive": int(rr["positive"]),
                     "n_administered_negative": int(rr["administered_negative"]),
                     "n_not_administered": int(rr["not_administered"]),
@@ -127,7 +149,7 @@ def resolve():
         print(f"  {s:24} {int(tot.get(s, 0)):>12,}  ({100 * tot.get(s, 0) / n:5.1f}%)")
     print(f"\nWrote {out_long}")
     print(f"Wrote {out_summ}")
-    return long
+    # return long
 
 
 if __name__ == "__main__":
