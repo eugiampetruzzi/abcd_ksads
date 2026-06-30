@@ -44,7 +44,7 @@ for _, row in R.iterrows():
                 edgecolor="none", zorder=2)
 axC.set_xlim(-1, len(cord)); axC.set_ylim(0, R.abslog.max() * 1.05)
 axC.set_xticks([])
-axC.set_xlabel("Predictor × disorder pairs")
+axC.set_xlabel("Correlate × disorder pairs")
 axC.set_ylabel("Association strength  |ln(OR)|")
 
 # ---- Panel D: consolidated effect (median across specs) per pair, same ordering as (a)
@@ -55,7 +55,7 @@ for i, row in dord.iterrows():
                 linewidth=0.4, zorder=3)
 axD.set_xlim(-1, len(dord)); axD.set_ylim(0, R.abslog.max() * 1.05)
 axD.set_xticks([])
-axD.set_xlabel("Predictor × disorder pairs")
+axD.set_xlabel("Correlate × disorder pairs")
 axD.set_ylabel("Consolidated strength  |ln(OR)|")
 
 handles = [Line2D([0], [0], marker="o", ls="", mfc=CMAP[b], mec="white",

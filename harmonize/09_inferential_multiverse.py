@@ -29,7 +29,7 @@ CONSTRUCTS = [("suicidality", "Suicidality"), ("eating", "Eating disorders"),
               ("any-disorder", "Any disorder"), ("ADHD", "ADHD")]
 INFORMANTS = ["parent", "either"]            # caregiver / either, as in the literature
 STATUSES = ["current", "ever_met"]
-THRESH = [False, True]
+THRESH = [False]
 RACE_REF = "White"
 
 
@@ -247,7 +247,7 @@ def main():
         # variance of logOR attributable to each axis (one-way eta^2)
         out = {}
         tot = ((sub.logor - sub.logor.mean()) ** 2).sum()
-        for ax in ["status", "informant", "threshold"]:
+        for ax in ["status", "informant"]:
             ss = sum(len(g) * (g.logor.mean() - sub.logor.mean()) ** 2 for _, g in sub.groupby(ax))
             out[f"eta2_{ax}"] = ss / tot if tot > 0 else np.nan
         return out
@@ -275,7 +275,7 @@ def main():
     print(f"  pairs that flip OR sign:            {100*S.sign_flip.mean():.1f}%")
     print()
     print("Mean variance share by axis (eta^2 of logOR):")
-    for ax in ["status", "informant", "threshold"]:
+    for ax in ["status", "informant"]:
         print(f"  {ax:11}: {S[f'eta2_{ax}'].mean():.2f}")
     print(f"\nWrote inferential_specs.csv ({len(res)} rows) and inferential_summary.csv ({n_pairs} pairs)")
 

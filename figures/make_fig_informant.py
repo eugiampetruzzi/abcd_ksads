@@ -87,10 +87,12 @@ def fig_diverging():
     ax.axvline(0,color="#333",lw=1.0)
     ax.set_yticks(list(y)); ax.set_yticklabels(d.category)
     # diverging layout draws caregiver bars at negative x; label both sides as positive shares
+    M=np.ceil(max(d.p_share.max(),d.y_share.max())/5)*5
+    ax.set_xlim(-M,M)
     xt=np.arange(-75,76,25)
     ax.set_xticks(xt); ax.set_xticklabels([f"{abs(int(t))}" for t in xt])
-    ax.set_xlabel("Share of positive cases (%)        caregiver only   |   youth only")
-    ax.legend(loc="lower right",frameon=False,fontsize=8.5,ncol=1)
+    ax.set_xlabel("Share of positive cases (%)")
+    ax.legend(loc="center left",bbox_to_anchor=(1.0,0.5),frameon=False,fontsize=8.5)
     fig.tight_layout()
     for e in ("png","pdf"): fig.savefig(os.path.join(OUT,f"Figure_informant_diverging.{e}"),dpi=300,bbox_inches="tight")
     print("wrote Figure_informant_diverging.png/pdf")
