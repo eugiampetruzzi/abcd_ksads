@@ -81,7 +81,7 @@ def main():
         print(f"{r.category:12}{r.kappa:>7.2f}{r.both_pos+r.parent_only:>9}{r.both_pos+r.youth_only:>8}"
               f"{r.both_pos:>6}{r.parent_only:>8}{r.youth_only:>8}")
     print(f"\nmean baseline kappa: {base.kappa.mean():.3f}")
-    print(f"Wrote informant_prevalence.csv and informant_concordance.csv")
+    print("Wrote informant_prevalence.csv and informant_concordance.csv")
 
 
 if __name__ == "__main__":

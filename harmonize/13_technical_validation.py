@@ -132,7 +132,7 @@ def main():
     P(kdf.to_string(index=False))
 
     open(os.path.join(DERIV, "technical_validation_report.txt"), "w").write("\n".join(log))
-    P(f"\nWrote validation_*.csv and technical_validation_report.txt")
+    P("\nWrote validation_*.csv and technical_validation_report.txt")
 
 
 if __name__ == "__main__":

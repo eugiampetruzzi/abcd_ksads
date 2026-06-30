@@ -65,7 +65,7 @@ def main():
     sb.to_csv(os.path.join(DERIV, "status_depression_breakdown.csv"), index=False)
     print("\nDepression status breakdown (core criteria, baseline, parent):")
     print(sb.to_string(index=False))
-    print(f"\nWrote module_overscreening.csv and status_depression_breakdown.csv")
+    print("\nWrote module_overscreening.csv and status_depression_breakdown.csv")
 
 
 if __name__ == "__main__":

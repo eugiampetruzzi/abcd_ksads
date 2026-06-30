@@ -3,7 +3,6 @@ import importlib.util
 import json
 import os
 
-import numpy as np
 import pandas as pd
 
 HERE = os.path.dirname(os.path.abspath(__file__))

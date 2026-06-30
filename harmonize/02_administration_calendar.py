@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 import os
 
-import numpy as np
 import pandas as pd
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -85,7 +84,7 @@ def main():
 
     # report
     print("Layer 2 administration calendar")
-    print(f"  X = administered, . = not administered (all 555), blank = absent")
+    print("  X = administered, . = not administered (all 555), blank = absent")
     print(f"  V2 switch at {V2_SWITCH}\n")
     cur = None
     for _, r in grid.iterrows():
