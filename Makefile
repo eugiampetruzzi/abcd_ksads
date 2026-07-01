@@ -1,7 +1,7 @@
 -include .env
 export
 
-.PHONY: all merge_covariates clean ingest
+.PHONY: all merge_covariates clean clean-cache ingest
 
 merge_covariates:
 	uv run python harmonize/merge_covariates.py
@@ -21,28 +21,56 @@ ${ABCD_70}/derivatives/raw_cache/phenotype.parquet:
 ${ABCD_70}/derivatives/ksads_resolution_summary.csv: ${ABCD_70}/derivatives/raw_cache/phenotype.parquet
 	uv run python harmonize/01_resolve_missingness.py
 
-${ABCD_70}/derivatives/ksads_administration_grid.csv:
+${ABCD_70}/derivatives/ksads_administration_grid.csv: ${ABCD_70}/derivatives/ksads_resolution_summary.csv
 	uv run python harmonize/02_administration_calendar.py
 
-${ABCD_70}/derivatives/ksads_caseness_sensitivity.csv:
+${ABCD_70}/derivatives/ksads_caseness_sensitivity.csv: ${ABCD_70}/derivatives/ksads_resolution_summary.csv
 	uv run python harmonize/03_category_crosswalk.py
 
-${ABCD_70}/derivatives/ksads_version_audit.csv:
+${ABCD_70}/derivatives/ksads_version_audit.csv: ${ABCD_70}/derivatives/ksads_resolution_summary.csv
 	uv run python harmonize/04_version_provenance.py
 
-${ABCD_70}/derivatives/multiverse_grid.csv:
+${ABCD_70}/derivatives/multiverse_grid.csv: ${ABCD_70}/derivatives/ksads_resolution_summary.csv ${ABCD_70}/derivatives/ksads_administration_grid.csv
 	uv run python harmonize/06_multiverse_spec.py
 
-${ABCD_70}/derivatives/multiverse_summary.csv:
+${ABCD_70}/derivatives/multiverse_summary.csv: ${ABCD_70}/derivatives/multiverse_grid.csv
 	uv run python harmonize/07_multiverse_summary.py
 
-${ABCD_70}/derivatives/single_lever.csv:
+${ABCD_70}/derivatives/single_lever.csv: ${ABCD_70}/derivatives/ksads_resolution_summary.csv
 	uv run python harmonize/08_single_lever.py
 
 ${ABCD_70}/derivatives/inferential_summary.csv: ${ABCD_70}/derivatives/raw_cache/phenotype.parquet ${ABCD_70}/derivatives/ksads_resolution_summary.csv
 	uv run python harmonize/09_inferential_multiverse.py
 
+${ABCD_70}/derivatives/informant_concordance.csv: ${ABCD_70}/derivatives/ksads_resolution_summary.csv
+	uv run python harmonize/10_informant_discrepancy.py
+
+${ABCD_70}/derivatives/anxiety_decomposition.csv: ${ABCD_70}/derivatives/ksads_resolution_summary.csv
+	uv run python harmonize/10b_aux_anxiety_decomposition.py
+
+${ABCD_70}/derivatives/missingness_error.csv: ${ABCD_70}/derivatives/ksads_resolution_summary.csv
+	uv run python harmonize/10c_aux_missingness_audit.py
+
+${ABCD_70}/derivatives/paper_numbers.json: ${ABCD_70}/derivatives/ksads_resolution_summary.csv ${ABCD_70}/derivatives/ksads_caseness_sensitivity.csv ${ABCD_70}/derivatives/ksads_version_audit.csv ${ABCD_70}/derivatives/multiverse_summary.csv ${ABCD_70}/derivatives/single_lever.csv ${ABCD_70}/derivatives/anxiety_decomposition.csv ${ABCD_70}/derivatives/missingness_error.csv
+	uv run python harmonize/11_paper_numbers.py
+
+${ABCD_70}/abcd_ksads_harmonized/participants.tsv: ${ABCD_70}/derivatives/ksads_version_audit.csv ${ABCD_70}/derivatives/ksads_administration_grid.csv
+	uv run python harmonize/12_build_bids_dataset.py
+
+${ABCD_70}/derivatives/technical_validation_report.txt: ${ABCD_70}/derivatives/raw_cache/phenotype.parquet ${ABCD_70}/derivatives/ksads_resolution_summary.csv
+	uv run python harmonize/13_technical_validation.py
+
+${ABCD_70}/derivatives/module_overscreening.csv: ${ABCD_70}/derivatives/ksads_resolution_summary.csv
+	uv run python harmonize/14_module_overscreening.py
+
+${ABCD_70}/abcd_ksads_harmonized/csv/sessions.csv: ${ABCD_70}/derivatives/raw_cache/phenotype.parquet ${ABCD_70}/abcd_ksads_harmonized/participants.tsv
+	uv run python harmonize/15_export_analysis_csv.py
+
 all: ingest ${ABCD_70}/derivatives/ksads_resolution_summary.csv ${ABCD_70}/derivatives/ksads_administration_grid.csv \
 ${ABCD_70}/derivatives/ksads_caseness_sensitivity.csv ${ABCD_70}/derivatives/ksads_version_audit.csv \
 ${ABCD_70}/derivatives/multiverse_grid.csv ${ABCD_70}/derivatives/multiverse_summary.csv \
-${ABCD_70}/derivatives/single_lever.csv ${ABCD_70}/derivatives/inferential_summary.csv
+${ABCD_70}/derivatives/single_lever.csv ${ABCD_70}/derivatives/inferential_summary.csv \
+${ABCD_70}/derivatives/informant_concordance.csv ${ABCD_70}/derivatives/anxiety_decomposition.csv \
+${ABCD_70}/derivatives/missingness_error.csv ${ABCD_70}/derivatives/paper_numbers.json \
+${ABCD_70}/abcd_ksads_harmonized/participants.tsv ${ABCD_70}/derivatives/technical_validation_report.txt \
+${ABCD_70}/derivatives/module_overscreening.csv ${ABCD_70}/abcd_ksads_harmonized/csv/sessions.csv
