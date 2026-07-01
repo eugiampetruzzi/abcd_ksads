@@ -257,3 +257,60 @@ def test_ingest_with_manifest_all_present_succeeds(pheno_dir, tmp_path):
     cache = tmp_path / "cache"
     ingest.ingest(pheno_dir, cache, manifest_path=manifest_path)
     assert (cache / "phenotype.parquet").is_file()
+
+
+# ---- import only the manifest's files ---------------------------------------
+
+
+@pytest.fixture
+def pheno_dir_with_extra(pheno_dir):
+    """The standard fixture plus a superfluous table absent from the manifest."""
+    (pheno_dir / "junk_extra.tsv").write_text(
+        "Unnamed: 0\tparticipant_id\tsession_id\textra_col\n0\tsub-01\tses-00A\tZ\n"
+    )
+    (pheno_dir / "junk_extra.json").write_text(
+        json.dumps({"extra_col": {"Description": "superfluous"}})
+    )
+    manifest_path = pheno_dir / "manifest.txt"
+    # manifest lists only the three real tables (not junk_extra)
+    manifest_path.write_text(
+        "\n".join(
+            [
+                "ab_g_dyn.tsv", "ab_g_dyn.json",
+                "ab_g_stc.tsv", "ab_g_stc.json",
+                "mh_p_ksads__adhd.tsv", "mh_p_ksads__adhd.json",
+            ]
+        )
+        + "\n"
+    )
+    return pheno_dir, manifest_path
+
+
+def test_consolidate_without_manifest_includes_all_files(pheno_dir_with_extra):
+    pheno_dir, _ = pheno_dir_with_extra
+    wide = ingest.consolidate(pheno_dir)
+    assert "extra_col" in wide.columns
+
+
+def test_consolidate_with_manifest_excludes_superfluous(pheno_dir_with_extra):
+    pheno_dir, manifest_path = pheno_dir_with_extra
+    wide = ingest.consolidate(pheno_dir, manifest_path=manifest_path)
+    assert "extra_col" not in wide.columns
+    assert {"val", "code", "x", "fam"} <= set(wide.columns)
+
+
+def test_build_metadata_dictionary_with_manifest_excludes_superfluous(pheno_dir_with_extra):
+    pheno_dir, manifest_path = pheno_dir_with_extra
+    md = ingest.build_metadata_dictionary(pheno_dir, manifest_path=manifest_path)
+    assert "junk_extra" not in md
+    assert set(md) == {"ab_g_dyn", "ab_g_stc", "mh_p_ksads__adhd"}
+
+
+def test_ingest_imports_only_manifest_files(pheno_dir_with_extra, tmp_path):
+    pheno_dir, manifest_path = pheno_dir_with_extra
+    cache = tmp_path / "cache"
+    ingest.ingest(pheno_dir, cache, manifest_path=manifest_path)
+    cols = pd.read_parquet(cache / "phenotype.parquet").columns
+    assert "extra_col" not in cols
+    md = json.loads((cache / "metadata.json").read_text())
+    assert "junk_extra" not in md

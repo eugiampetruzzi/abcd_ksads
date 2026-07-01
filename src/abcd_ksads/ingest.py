@@ -32,6 +32,17 @@ def discover_tsvs(pheno_dir: Path) -> list[Path]:
     return sorted(Path(pheno_dir).glob("*.tsv"))
 
 
+def source_tsvs(pheno_dir: Path, manifest_path: Path = None) -> list[Path]:
+    """The TSVs to import: the manifest's ``.tsv`` entries, or every TSV if no manifest.
+
+    Restricting to the manifest ignores any superfluous TSVs present in the directory.
+    """
+    pheno_dir = Path(pheno_dir)
+    if manifest_path is None:
+        return discover_tsvs(pheno_dir)
+    return [pheno_dir / name for name in load_manifest(manifest_path) if name.endswith(".tsv")]
+
+
 def write_manifest(pheno_dir: Path, manifest_path: Path) -> list[str]:
     """Record every ``*.tsv``/``*.json`` in ``pheno_dir`` as the required-files manifest."""
     pheno_dir = Path(pheno_dir)
@@ -90,28 +101,30 @@ def load_sidecar_metadata(json_path: Path) -> dict:
     return {_TOOL_KEY: tool, "columns": columns}
 
 
-def build_metadata_dictionary(pheno_dir: Path) -> dict:
-    """Aggregate all JSON sidecars into one dictionary keyed by table name."""
+def build_metadata_dictionary(pheno_dir: Path, manifest_path: Path = None) -> dict:
+    """Aggregate the JSON sidecars into one dictionary keyed by table name."""
     metadata = {}
-    for tsv in discover_tsvs(pheno_dir):
+    for tsv in source_tsvs(pheno_dir, manifest_path):
         sidecar = tsv.with_suffix(".json")
         if sidecar.is_file():
             metadata[tsv.stem] = load_sidecar_metadata(sidecar)
     return metadata
 
 
-def consolidate(pheno_dir: Path) -> pd.DataFrame:
-    """Outer-join every source TSV into one wide table keyed by participant x session.
+def consolidate(pheno_dir: Path, manifest_path: Path = None) -> pd.DataFrame:
+    """Outer-join the source TSVs into one wide table keyed by participant x session.
 
-    Tables carrying both keys align on ``(participant_id, session_id)``. A table with
-    only ``participant_id`` is broadcast across that participant's sessions.
+    Only the manifest's TSVs are imported when ``manifest_path`` is given, else every
+    TSV in the directory. Tables carrying both keys align on
+    ``(participant_id, session_id)``; a table with only ``participant_id`` is broadcast
+    across that participant's sessions.
 
     Variable columns are dictionary-encoded (``category`` dtype) so the wide table
     stays small in memory and on disk; the stored values are unchanged.
     """
     session_frames = []
     participant_frames = []
-    for tsv in discover_tsvs(pheno_dir):
+    for tsv in source_tsvs(pheno_dir, manifest_path):
         df = read_tsv_faithful(tsv)
         if _PID not in df.columns:
             continue
@@ -143,14 +156,14 @@ def ingest(pheno_dir: Path, cache_dir: Path, manifest_path: Path = None) -> dict
         check_manifest(pheno_dir, manifest_path)
     cache_dir.mkdir(parents=True, exist_ok=True)
 
-    wide = consolidate(pheno_dir)
+    wide = consolidate(pheno_dir, manifest_path)
     wide.to_parquet(cache_dir / "phenotype.parquet", index=False)
 
-    metadata = build_metadata_dictionary(pheno_dir)
+    metadata = build_metadata_dictionary(pheno_dir, manifest_path)
     (cache_dir / "metadata.json").write_text(json.dumps(metadata, indent=2))
 
     return {
-        "n_tables": len(discover_tsvs(pheno_dir)),
+        "n_tables": len(source_tsvs(pheno_dir, manifest_path)),
         "n_rows": len(wide),
         "n_columns": wide.shape[1] - 2,  # exclude the two key columns
     }
