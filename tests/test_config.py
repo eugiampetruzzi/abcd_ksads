@@ -79,6 +79,7 @@ def test_repo_internal_paths_compose_from_repo(clean_env):
     assert cfg.CODEBOOKS == cfg.REPO / "codebooks"
     assert cfg.DATASET == cfg.ABCD_70 / "abcd_ksads_harmonized"
     assert cfg.RAW_CACHE == cfg.DERIV / "raw_cache"
+    assert cfg.PHENOTYPE_MANIFEST == cfg.CODEBOOKS / "phenotype_manifest.txt"
 
 
 def test_repo_internal_paths_are_path_objects(clean_env):

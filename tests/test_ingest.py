@@ -190,3 +190,70 @@ def test_ingest_returns_summary(pheno_dir, tmp_path):
     assert summary["n_tables"] == 3
     assert summary["n_rows"] == 4  # 4 unique (participant, session) pairs
     assert summary["n_columns"] == 4  # val, code, x, fam
+
+
+# ---- manifest of required files ---------------------------------------------
+
+
+def test_write_and_load_manifest_roundtrip(pheno_dir, tmp_path):
+    manifest = tmp_path / "manifest.txt"
+    ingest.write_manifest(pheno_dir, manifest)
+    loaded = ingest.load_manifest(manifest)
+    assert set(loaded) == {
+        "ab_g_dyn.tsv", "ab_g_dyn.json",
+        "ab_g_stc.tsv", "ab_g_stc.json",
+        "mh_p_ksads__adhd.tsv", "mh_p_ksads__adhd.json",
+    }
+
+
+def test_load_manifest_ignores_comments_and_blanks(tmp_path):
+    manifest = tmp_path / "manifest.txt"
+    manifest.write_text("# required files\n\nfoo.tsv\n  bar.json  \n")
+    assert ingest.load_manifest(manifest) == ["foo.tsv", "bar.json"]
+
+
+def test_find_missing_files_reports_absent(pheno_dir):
+    manifest = ["ab_g_dyn.tsv", "not_here.tsv", "gone.json"]
+    assert ingest.find_missing_files(pheno_dir, manifest) == ["not_here.tsv", "gone.json"]
+
+
+def test_find_missing_files_empty_when_all_present(pheno_dir, tmp_path):
+    manifest_path = tmp_path / "manifest.txt"
+    ingest.write_manifest(pheno_dir, manifest_path)
+    manifest = ingest.load_manifest(manifest_path)
+    assert ingest.find_missing_files(pheno_dir, manifest) == []
+
+
+def test_check_manifest_passes_when_all_present(pheno_dir, tmp_path):
+    manifest_path = tmp_path / "manifest.txt"
+    ingest.write_manifest(pheno_dir, manifest_path)
+    # should not raise
+    ingest.check_manifest(pheno_dir, manifest_path)
+
+
+def test_check_manifest_raises_readable_report_on_missing(pheno_dir, tmp_path):
+    manifest_path = tmp_path / "manifest.txt"
+    manifest_path.write_text("ab_g_dyn.tsv\nmissing_one.tsv\nmissing_two.json\n")
+    with pytest.raises(ingest.MissingFilesError) as exc:
+        ingest.check_manifest(pheno_dir, manifest_path)
+    report = str(exc.value)
+    assert "2" in report  # count of missing files
+    assert "missing_one.tsv" in report
+    assert "missing_two.json" in report
+
+
+def test_ingest_aborts_and_writes_nothing_when_files_missing(pheno_dir, tmp_path):
+    manifest_path = tmp_path / "manifest.txt"
+    manifest_path.write_text("missing_one.tsv\n")
+    cache = tmp_path / "cache"
+    with pytest.raises(ingest.MissingFilesError):
+        ingest.ingest(pheno_dir, cache, manifest_path=manifest_path)
+    assert not (cache / "phenotype.parquet").exists()
+
+
+def test_ingest_with_manifest_all_present_succeeds(pheno_dir, tmp_path):
+    manifest_path = tmp_path / "manifest.txt"
+    ingest.write_manifest(pheno_dir, manifest_path)
+    cache = tmp_path / "cache"
+    ingest.ingest(pheno_dir, cache, manifest_path=manifest_path)
+    assert (cache / "phenotype.parquet").is_file()

@@ -111,6 +111,11 @@ class Config(BaseSettings):
     def KSADS_VARIABLE_MAP(self) -> Path:
         return self.CODEBOOKS / "ksads_variable_map.csv"
 
+    @computed_field
+    @property
+    def PHENOTYPE_MANIFEST(self) -> Path:
+        return self.CODEBOOKS / "phenotype_manifest.txt"
+
 
 # Module-level singleton plus attribute re-exports so callers can use either
 # ``from abcd_ksads.config import config`` or ``from abcd_ksads import config``.
@@ -129,3 +134,4 @@ CODEBOOKS = config.CODEBOOKS
 DATASET = config.DATASET
 RAW_CACHE = config.RAW_CACHE
 KSADS_VARIABLE_MAP = config.KSADS_VARIABLE_MAP
+PHENOTYPE_MANIFEST = config.PHENOTYPE_MANIFEST
