@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-import csv
 import numpy as np
 import pandas as pd
 from abcd_ksads import config
