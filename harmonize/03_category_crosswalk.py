@@ -1,18 +1,12 @@
 #!/usr/bin/env python3
 import csv
-import os
-
 import numpy as np
 import pandas as pd
-
-import sys
-
-HERE = os.path.dirname(os.path.abspath(__file__))
-sys.path.insert(0, os.path.dirname(HERE))
-import config
-
-DERIV = os.path.join(HERE, "derivatives")
-MAP = os.path.join(config.CODEBOOKS, "ksads_variable_map.csv")
+from abcd_ksads import config
+from abcd_ksads.category_crosswalk import (
+    build_crosswalk,
+    build_caseness,
+)
 
 # module -> (DSM category, [broadband dimensions])
 CATEGORY = {
@@ -43,110 +37,17 @@ FULL = ["present", "past", "partial_remission"]
 EVEN = ["ses-00A", "ses-02A", "ses-04A", "ses-06A"]
 
 
-def build_crosswalk():
-    rows = [r for r in csv.DictReader(open(MAP)) if r["layer"] == "diagnosis"]
-    out = []
-    for r in rows:
-        cat, bands = CATEGORY.get(r["module"], ("Unmapped", []))
-        lab = r["label"].lower()
-        out.append(
-            {
-                "variable": r["variable"],
-                "informant": r["informant"],
-                "module": r["module"],
-                "status_layer": r["status"],
-                "category": cat,
-                "broadband": "|".join(bands),
-                "is_subthreshold": int(
-                    "other specified" in lab or "unspecified" in lab
-                ),
-            }
-        )
-    cw = pd.DataFrame(out)
-    cw.to_csv(os.path.join(DERIV, "ksads_category_crosswalk.csv"), index=False)
-    return cw
+if __name__ == "__main__":
+    #    main()
 
-
-def build_caseness(
-    resolved,
-    crosswalk,
-    *,
-    status_set="ever_met",
-    include_subthreshold=False,
-    informant="parent",
-):
-    """participant x session x category caseness honoring resolved states.
-
-    Returns long df: participant_id, session_id, category, status in
-    {positive, administered_negative, not_administered}.
-    """
-    statuses = FULL if status_set == "ever_met" else ["present"]
-    cw = crosswalk[crosswalk.status_layer.isin(statuses)].copy()
-    if not include_subthreshold:
-        cw = cw[cw.is_subthreshold == 0]
-    if informant in ("parent", "youth"):
-        cw = cw[cw.informant == informant]
-    keep = set(cw.variable)
-
-    r = resolved[resolved.variable.isin(keep)][
-        ["participant_id", "session_id", "variable", "resolved"]
-    ].merge(cw[["variable", "category", "informant"]], on="variable", how="inner")
-    # rank resolved states so the max over constituents = category state
-    rank = {
-        "positive": 3,
-        "administered_negative": 2,
-        "not_administered": 1,
-        "no_record": 0,
-    }
-    r["rk"] = r.resolved.map(rank)
-
-    if informant == "both":
-        # require positive on BOTH informants; collapse per informant first
-        per = (
-            r.groupby(["participant_id", "session_id", "category", "informant"])["rk"]
-            .max()
-            .reset_index()
-        )
-        piv = per.pivot_table(
-            index=["participant_id", "session_id", "category"],
-            columns="informant",
-            values="rk",
-            fill_value=0,
-        )
-        both_pos = (piv.get("parent", 0) == 3) & (piv.get("youth", 0) == 3)
-        admin = piv.max(axis=1) >= 2
-        st = np.where(
-            both_pos,
-            "positive",
-            np.where(admin, "administered_negative", "not_administered"),
-        )
-        res = piv.reset_index()[["participant_id", "session_id", "category"]].copy()
-        res["status"] = st
-        return res
-
-    g = (
-        r.groupby(["participant_id", "session_id", "category"])["rk"]
-        .max()
-        .reset_index()
-    )
-    inv = {
-        3: "positive",
-        2: "administered_negative",
-        1: "not_administered",
-        0: "not_administered",
-    }
-    g["status"] = g["rk"].map(inv)
-    return g[["participant_id", "session_id", "category", "status"]]
-
-
-def main():
+    # def main():
     cw = build_crosswalk()
     print(
         f"Crosswalk: {len(cw)} diagnosis variables -> {cw.category.nunique()} categories "
         f"({cw.is_subthreshold.sum()} subthreshold)."
     )
 
-    resolved = pd.read_parquet(os.path.join(DERIV, "ksads_resolved_long.parquet"))
+    resolved = pd.read_parquet(config.DERIV / "ksads_resolved_long.parquet")
     for c in [
         "session_id",
         "variable",
@@ -234,7 +135,7 @@ def main():
                 }
             )
     sens = pd.DataFrame(rows)
-    sens.to_csv(os.path.join(DERIV, "ksads_caseness_sensitivity.csv"), index=False)
+    sens.to_csv(config.DERIV / "ksads_caseness_sensitivity.csv", index=False)
 
     print("\nLifetime (any even wave) prevalence by operationalization:")
     piv = sens.pivot_table(
@@ -243,9 +144,5 @@ def main():
         values="prevalence_pct",
     )
     print(piv[CATS].to_string())
-    print(f"\nWrote {DERIV}/ksads_category_crosswalk.csv")
-    print(f"Wrote {DERIV}/ksads_caseness_sensitivity.csv")
-
-
-if __name__ == "__main__":
-    main()
+    print(f"\nWrote {config.DERIV.as_posix()}/ksads_category_crosswalk.csv")
+    print(f"Wrote {config.DERIV.as_posix()}/ksads_caseness_sensitivity.csv")
