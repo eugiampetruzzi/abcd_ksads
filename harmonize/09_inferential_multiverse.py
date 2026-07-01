@@ -19,7 +19,6 @@ from abcd_ksads.multiverse import (
 )
 from abcd_ksads.predictors import (
     load_predictors,
-    FC_COLS,
     RACE_REF,
     RACE_LVES,
 )
