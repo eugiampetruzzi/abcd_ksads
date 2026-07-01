@@ -1,16 +1,13 @@
 #!/usr/bin/env python3
-import os
-
 import numpy as np
 import pandas as pd
+from abcd_ksads import config
 
-HERE = os.path.dirname(os.path.abspath(__file__))
-DERIV = os.path.join(HERE, "derivatives")
 TINY = 0.1  # min-prevalence floor below which fold-range is flagged unstable
 
 
 def main():
-    grid = pd.read_csv(os.path.join(DERIV, "multiverse_grid.csv"))
+    grid = pd.read_csv(config.DERIV / "multiverse_grid.csv")
     rows = []
     for con, sub in grid.groupby("construct"):
         p = sub.prevalence_pct
@@ -31,7 +28,7 @@ def main():
             }
         )
     summ = pd.DataFrame(rows).sort_values("fold_range", ascending=False)
-    summ.to_csv(os.path.join(DERIV, "multiverse_summary.csv"), index=False)
+    summ.to_csv(config.DERIV / "multiverse_summary.csv", index=False)
 
     print(summ.to_string(index=False))
 
@@ -56,7 +53,7 @@ def main():
         f"{raw.prev_min:.2f}-{raw.prev_max:.1f}% "
         f"(fold off a {raw.prev_min:.2f}% base; pp-span {raw.pp_span:.1f} points)"
     )
-    print(f"\nWrote {DERIV}/multiverse_summary.csv")
+    print(f"\nWrote {config.DERIV.as_posix()}/multiverse_summary.csv")
 
 
 if __name__ == "__main__":
