@@ -77,8 +77,12 @@ mh_y_ksads__socanx.json
 mh_y_ksads__socanx.tsv
 mh_y_ksads__suic.json
 mh_y_ksads__suic.tsv
+mr_y_adm__info.json
+mr_y_adm__info.tsv
 mr_y_qc__incl.json
 mr_y_qc__incl.tsv
+mr_y_qc__mot.json
+mr_y_qc__mot.tsv
 mr_y_rsfmri__corr__gpnet.json
 mr_y_rsfmri__corr__gpnet.tsv
 mr_y_rsfmri__corr__gpnet__aseg.json
