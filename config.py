@@ -5,6 +5,7 @@ or by exporting the matching environment variables (ABCD_70, ABCD_51,
 ABCD_RAW_PHENOTYPE, ABCD_DEMOGRAPHICS). All ABCD source data are access-controlled
 (an ABCD Data Use Certification is required) and are not distributed here.
 """
+
 import os
 
 # Release 7.0 root: tabulated KSADS-COMP source, the BIDS rawdata/phenotype tables,
@@ -16,10 +17,14 @@ ABCD_70 = os.environ.get("ABCD_70", "/path/to/abcd/release-7.0")
 ABCD_51_CORE = os.environ.get("ABCD_51", "/path/to/abcd/release-5.1/core")
 
 # BIDS-converted raw KSADS phenotype tables (input to the dataset-export step).
-RAW_PHENOTYPE = os.environ.get("ABCD_RAW_PHENOTYPE", os.path.join(ABCD_70, "rawdata", "phenotype"))
+RAW_PHENOTYPE = os.environ.get(
+    "ABCD_RAW_PHENOTYPE", os.path.join(ABCD_70, "rawdata", "phenotype")
+)
 
 # Per-participant demographics (sex), merged into the released analysis CSVs.
-DEMOGRAPHICS = os.environ.get("ABCD_DEMOGRAPHICS", os.path.join(ABCD_70, "subject_demographics.tsv"))
+DEMOGRAPHICS = os.environ.get(
+    "ABCD_DEMOGRAPHICS", os.path.join(ABCD_70, "subject_demographics.tsv")
+)
 
 # repo-internal (do not edit)
 REPO = os.path.dirname(os.path.abspath(__file__))
