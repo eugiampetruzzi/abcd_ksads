@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
+"""Collect the summary numbers reported in the paper into paper_numbers.json."""
+
 import json
-import os
 
 import numpy as np
 import pandas as pd
 
-HERE = os.path.dirname(os.path.abspath(__file__))
-DERIV = os.path.join(HERE, "derivatives")
+from abcd_ksads import config
 
 
 def _num(x):
@@ -18,19 +18,19 @@ def _num(x):
 
 
 def main():
-    rs = pd.read_csv(os.path.join(DERIV, "ksads_resolution_summary.csv"))
+    rs = pd.read_csv(config.DERIV / "ksads_resolution_summary.csv")
     tot = rs[
         ["n_positive", "n_administered_negative", "n_not_administered", "n_no_record"]
     ].sum()
     n_cells = int(tot.sum())
 
-    cw = pd.read_csv(os.path.join(DERIV, "ksads_category_crosswalk.csv"))
-    msum = pd.read_csv(os.path.join(DERIV, "multiverse_summary.csv"))
-    lev = pd.read_csv(os.path.join(DERIV, "single_lever.csv"))
-    anx = pd.read_csv(os.path.join(DERIV, "anxiety_decomposition.csv"))
-    miss = pd.read_csv(os.path.join(DERIV, "missingness_error.csv")).iloc[0]
+    cw = pd.read_csv(config.DERIV / "ksads_category_crosswalk.csv")
+    msum = pd.read_csv(config.DERIV / "multiverse_summary.csv")
+    lev = pd.read_csv(config.DERIV / "single_lever.csv")
+    anx = pd.read_csv(config.DERIV / "anxiety_decomposition.csv")
+    miss = pd.read_csv(config.DERIV / "missingness_error.csv").iloc[0]
     ver = pd.read_parquet(
-        os.path.join(DERIV, "ksads_resolved_versioned.parquet"),
+        config.DERIV / "ksads_resolved_versioned.parquet",
         columns=["ksads_version", "version_valid"],
     )
 
@@ -112,7 +112,7 @@ def main():
             "two_zero_only_under_one": int((~ver.version_valid).sum()),
         },
     }
-    path = os.path.join(DERIV, "paper_numbers.json")
+    path = config.DERIV / "paper_numbers.json"
     with open(path, "w") as f:
         json.dump(out, f, indent=2)
     print(json.dumps(out, indent=2))
