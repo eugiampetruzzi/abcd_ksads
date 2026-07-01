@@ -1,64 +1,59 @@
 #!/usr/bin/env python3
-import csv
 import numpy as np
 import pandas as pd
 from abcd_ksads import config
 
-# module -> (DSM category, [broadband dimensions])
+# KSADS module -> DSM category
 CATEGORY = {
-    "dep": ("Depression", ["Internalizing", "Mood"]),
-    "bpd": ("Bipolar", ["Mood"]),
-    "dmdd": ("DMDD", ["Mood"]),
-    "gad": ("Anxiety", ["Internalizing"]),
-    "sepanx": ("Anxiety", ["Internalizing"]),
-    "socanx": ("Anxiety", ["Internalizing"]),
-    "panic": ("Anxiety", ["Internalizing"]),
-    "agor": ("Anxiety", ["Internalizing"]),
-    "phobia": ("Anxiety", ["Internalizing"]),
-    "ocd": ("OCD", ["Internalizing"]),
-    "ptsd": ("PTSD", ["Internalizing"]),
-    "adhd": ("ADHD", ["Externalizing", "Neurodevelopmental"]),
-    "odd": ("ODD", ["Externalizing"]),
-    "cond": ("Conduct", ["Externalizing"]),
-    "asd": ("Autism", ["Neurodevelopmental"]),
-    "tic": ("Tic", ["Neurodevelopmental"]),
-    "ed": ("Eating", ["Other"]),
-    "psych": ("Psychosis", ["Other"]),
-    "sleep": ("Sleep", ["Other"]),
-    "suic": ("Suicidality", ["Other"]),
-    "hom": ("Homicidality", ["Other"]),
+    "dep": "Depression",
+    "bpd": "Bipolar",
+    "dmdd": "DMDD",
+    "gad": "Anxiety",
+    "sepanx": "Anxiety",
+    "socanx": "Anxiety",
+    "panic": "Anxiety",
+    "agor": "Anxiety",
+    "phobia": "Anxiety",
+    "ocd": "OCD",
+    "ptsd": "PTSD",
+    "adhd": "ADHD",
+    "odd": "ODD",
+    "cond": "Conduct",
+    "asd": "Autism",
+    "tic": "Tic",
+    "ed": "Eating",
+    "psych": "Psychosis",
+    "sleep": "Sleep",
+    "suic": "Suicidality",
+    "hom": "Homicidality",
 }
+
+COLUMNS = [
+    "variable",
+    "informant",
+    "module",
+    "status_layer",
+    "category",
+    "is_subthreshold",
+]
 
 FULL = ["present", "past", "partial_remission"]
 EVEN = ["ses-00A", "ses-02A", "ses-04A", "ses-06A"]
 
 
 def build_crosswalk():
-    rows = [
-        r
-        for r in csv.DictReader(open(config.KSADS_VARIABLE_MAP))
-        if r["layer"] == "diagnosis"
-    ]
-    out = []
-    for r in rows:
-        cat, bands = CATEGORY.get(r["module"], ("Unmapped", []))
-        lab = r["label"].lower()
-        out.append(
-            {
-                "variable": r["variable"],
-                "informant": r["informant"],
-                "module": r["module"],
-                "status_layer": r["status"],
-                "category": cat,
-                "broadband": "|".join(bands),
-                "is_subthreshold": int(
-                    "other specified" in lab or "unspecified" in lab
-                ),
-            }
-        )
-    cw = pd.DataFrame(out)
-    cw.to_csv(config.DERIV / "ksads_category_crosswalk.csv", index=False)
-    return cw
+    cw = pd.read_csv(config.KSADS_VARIABLE_MAP)
+    cw = cw[cw.layer == "diagnosis"].copy()
+    cw["category"] = cw.module.map(CATEGORY)
+    missing = sorted(cw.loc[cw.category.isna(), "module"].unique())
+    if missing:
+        raise ValueError(f"modules missing from CATEGORY: {missing}")
+    label = cw.label.str.lower()
+    cw["is_subthreshold"] = (
+        label.str.contains("other specified", regex=False, na=False)
+        | label.str.contains("unspecified", regex=False, na=False)
+    ).astype(int)
+    return cw.rename(columns={"status": "status_layer"})[COLUMNS]
 
 
 def build_caseness(
