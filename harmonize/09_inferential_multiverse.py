@@ -1,4 +1,11 @@
 #!/usr/bin/env python3
+"""Inferential multiverse: predictors are read from the consolidated phenotype cache.
+
+The required predictor columns (SOURCES) and their recoding into analysis variables
+live in abcd_ksads.predictors; this script reads the cached diagnosis outcomes and
+fits the specification grid.
+"""
+
 import numpy as np
 import pandas as pd
 import statsmodels.api as sm
@@ -10,9 +17,12 @@ from abcd_ksads.multiverse import (
     construct_status,
     BASE_SES,
 )
-
-DERIV = config.DERIV
-BASE = config.ABCD_70
+from abcd_ksads.predictors import (
+    load_predictors,
+    FC_COLS,
+    RACE_REF,
+    RACE_LVES,
+)
 
 CONSTRUCTS = [
     ("suicidality", "Suicidality"),
@@ -25,160 +35,6 @@ CONSTRUCTS = [
 INFORMANTS = ["parent", "either"]  # caregiver / either, as in the literature
 STATUSES = ["current", "ever_met"]
 THRESH = [False, True]
-RACE_REF = "White"
-
-BASELINE_EVENT = "baseline_year_1_arm_1"
-
-
-def _nda_to_sub(s):
-    return s.str.replace("NDAR_INV", "sub-", regex=False)
-
-
-def load_culture_env():
-    """3 release-5.1 culture/environment predictors at baseline, IDs mapped to sub-XXXX."""
-    ce = BASE / "culture-environment"
-    nt = BASE / "novel-technologies"
-    # screen time: total of weekday + weekend item hours
-    st = pd.read_csv(nt / "nt_y_st.csv")
-    st = st[st.eventname == BASELINE_EVENT]
-    sc = [
-        c
-        for c in st.columns
-        if c.startswith("screen") and ("_wkdy_y" in c or "_wknd_y" in c)
-    ]
-    st["screentime"] = (
-        st[sc].apply(pd.to_numeric, errors="coerce").sum(axis=1, min_count=1)
-    )
-    fes = pd.read_csv(ce / "ce_y_fes.csv")
-    fes = fes[fes.eventname == BASELINE_EVENT][["src_subject_id", "fes_y_ss_fc"]]
-    dm = pd.read_csv(ce / "ce_y_dm.csv")
-    dm = dm[dm.eventname == BASELINE_EVENT][["src_subject_id", "dim_y_ss_mean"]]
-    out = (
-        st[["src_subject_id", "screentime"]]
-        .merge(fes, on="src_subject_id", how="outer")
-        .merge(dm, on="src_subject_id", how="outer")
-        .rename(
-            columns={"fes_y_ss_fc": "fam_conflict", "dim_y_ss_mean": "discrimination"}
-        )
-    )
-    out["participant_id"] = _nda_to_sub(out.src_subject_id)
-    return out.set_index("participant_id")[
-        ["screentime", "fam_conflict", "discrimination"]
-    ]
-
-
-def load_imaging():
-    """Two commonly-used resting-state network FC measures (release 5.1, baseline)."""
-    f = BASE / "imaging" / "mri_y_rsfmr_cor_gp_gp.csv"
-    cols = [
-        "src_subject_id",
-        "eventname",
-        "rsfmri_c_ngd_dt_ngd_dt",
-        "rsfmri_c_ngd_sa_ngd_sa",
-        "rsfmri_c_ngd_fo_ngd_fo",
-        "rsfmri_c_ngd_dt_ngd_sa",
-        "rsfmri_c_ngd_dt_ngd_fo",
-        "rsfmri_c_ngd_sa_ngd_fo",
-    ]
-    d = pd.read_csv(f, usecols=cols)
-    d = d[d.eventname == BASELINE_EVENT].rename(
-        columns={
-            "rsfmri_c_ngd_dt_ngd_dt": "fc_dmn_within",
-            "rsfmri_c_ngd_sa_ngd_sa": "fc_sal_within",
-            "rsfmri_c_ngd_fo_ngd_fo": "fc_fpn_within",
-            "rsfmri_c_ngd_dt_ngd_sa": "fc_dmn_salience",
-            "rsfmri_c_ngd_dt_ngd_fo": "fc_dmn_fpn",
-            "rsfmri_c_ngd_sa_ngd_fo": "fc_sal_fpn",
-        }
-    )
-    d["participant_id"] = _nda_to_sub(d.src_subject_id)
-    return d.set_index("participant_id")[
-        [
-            "fc_dmn_within",
-            "fc_sal_within",
-            "fc_fpn_within",
-            "fc_dmn_salience",
-            "fc_dmn_fpn",
-            "fc_sal_fpn",
-        ]
-    ]
-
-
-FC_COLS = [
-    "fc_dmn_within",
-    "fc_sal_within",
-    "fc_fpn_within",
-    "fc_dmn_salience",
-    "fc_dmn_fpn",
-    "fc_sal_fpn",
-]
-
-
-def load_qc_nuisance():
-    """Nuisance covariates and rsfMRI QC: site, scanner, family from the covariate file;
-    the ABCD rsfMRI inclusion flag from the imaging QC table. fc_qc_pass marks the
-    ABCD-standard RSFC inclusion (imgincl==1, mean FD<0.5 mm, >=375 frames retained)."""
-    cov = pd.read_excel(BASE / "5_covariates_extended.xlsx")[
-        [
-            "sub_ID",
-            "study_site_baseline",
-            "scanner_manufacturer_baseline",
-            "family_id",
-            "rest_mean_FD_baseline",
-            "rest_total_frames_post_scrubbing_baseline",
-        ]
-    ].rename(
-        columns={
-            "sub_ID": "participant_id",
-            "study_site_baseline": "site",
-            "scanner_manufacturer_baseline": "scanner",
-            "rest_mean_FD_baseline": "mean_fd",
-            "rest_total_frames_post_scrubbing_baseline": "frames_kept",
-        }
-    )
-    inc = pd.read_csv(
-        BASE / "imaging" / "mri_y_qc_incl.csv",
-        usecols=["src_subject_id", "eventname", "imgincl_rsfmri_include"],
-    )
-    inc = inc[inc.eventname == BASELINE_EVENT]
-    inc["participant_id"] = _nda_to_sub(inc.src_subject_id)
-    cov = cov.merge(
-        inc[["participant_id", "imgincl_rsfmri_include"]],
-        on="participant_id",
-        how="left",
-    )
-    fd = pd.to_numeric(cov.mean_fd, errors="coerce")
-    fr = pd.to_numeric(cov.frames_kept, errors="coerce")
-    cov["fc_qc_pass"] = (cov.imgincl_rsfmri_include == 1) & (fd < 0.5) & (fr >= 375)
-    return cov.set_index("participant_id")
-
-
-def load_predictors():
-    ela = pd.read_excel(BASE / "4_ELA_final.xlsx")[["sub_ID", "interview_age", "sex"]]
-    cov = pd.read_excel(BASE / "5_covariates_extended.xlsx")[
-        ["sub_ID", "Race", "Income"]
-    ]
-    d = ela.merge(cov, on="sub_ID", how="outer").rename(
-        columns={"sub_ID": "participant_id"}
-    )
-    d["sex_f"] = d.sex.map({"F": 1, "M": 0})
-    d["age_z"] = (d.interview_age - d.interview_age.mean()) / d.interview_age.std()
-    d["income_z"] = (d.Income - d.Income.mean()) / d.Income.std()
-    d = d.set_index("participant_id")
-    d = d.join(load_culture_env(), how="left").join(load_imaging(), how="left")
-    d = d.join(
-        load_qc_nuisance()[["site", "scanner", "family_id", "mean_fd", "fc_qc_pass"]],
-        how="left",
-    )
-    # apply ABCD-standard RSFC QC: blank FC for participants failing inclusion/motion/frames
-    d.loc[not d.fc_qc_pass, FC_COLS] = np.nan
-    fdq = pd.to_numeric(d.loc[not d.fc_qc_pass, "mean_fd"], errors="coerce")
-    d["mean_fd_z"] = (
-        pd.to_numeric(d.mean_fd, errors="coerce") - fdq.mean()
-    ) / fdq.std()
-    for col in ["screentime", "fam_conflict", "discrimination"] + FC_COLS:
-        d[col + "_z"] = (d[col] - d[col].mean()) / d[col].std()
-    return d
 
 
 def fit_adj(d, focal, imaging=False):
@@ -219,8 +75,6 @@ def main():
     base = resolved[resolved.session_id == BASE_SES].copy()
     cache = build_primitive_cache(base, cw)
     P = load_predictors()
-
-    RACE_LVES = ["Black/AA", "Hispanic", "Asian", "Other/Multiracial"]
 
     def enough(yv, mask=None):
         """outcome usable: >=100 rows, >=10 positives (in subgroup if given)."""
@@ -273,7 +127,6 @@ def main():
                     for col, lab in [
                         ("screentime_z", "Screen time (per SD)"),
                         ("fam_conflict_z", "Family conflict (per SD)"),
-                        ("discrimination_z", "Discrimination (per SD)"),
                     ]:
                         d = df[["y", col, "sex_f", "age_z"] + NUIS].dropna()
                         if enough(d.y):
