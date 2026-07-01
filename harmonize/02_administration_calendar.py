@@ -2,9 +2,8 @@
 import os
 
 import pandas as pd
+from abcd_ksads import config
 
-HERE = os.path.dirname(os.path.abspath(__file__))
-DERIV = os.path.join(HERE, "derivatives")
 
 SESSIONS = [
     "ses-00A",
@@ -37,7 +36,7 @@ def classify(pos, neg, not_admin, no_rec):
 
 
 def main():
-    s = pd.read_csv(os.path.join(DERIV, "ksads_resolution_summary.csv"))
+    s = pd.read_csv(config.DERIV / "ksads_resolution_summary.csv")
     pres = s[s.status_layer == "present"].copy()
     # modules whose only diagnosis layer is not "present" (e.g. some have past-only)
     have_present = set(zip(pres.informant, pres.module))
@@ -98,7 +97,7 @@ def main():
         "flag",
     ]
     g[long_cols].sort_values(["informant", "module", "session_id"]).to_csv(
-        os.path.join(DERIV, "ksads_administration_calendar.csv"), index=False
+        config.DERIV / "ksads_administration_calendar.csv", index=False
     )
 
     # readable grid
@@ -110,7 +109,7 @@ def main():
         fill_value="",
     )
     grid = grid.reindex(columns=SESSIONS).reset_index()
-    grid.to_csv(os.path.join(DERIV, "ksads_administration_grid.csv"), index=False)
+    grid.to_csv(config.DERIV / "ksads_administration_grid.csv", index=False)
 
     # report
     print("Layer 2 administration calendar")
@@ -127,8 +126,8 @@ def main():
     nadd = grid.flag.str.contains("added@").sum()
     ndrop = grid.flag.str.contains("dropped_after@").sum()
     print(f"\nFlagged: {nadd} added mid-study, {ndrop} dropped before the final wave.")
-    print(f"\nWrote {DERIV}/ksads_administration_calendar.csv")
-    print(f"Wrote {DERIV}/ksads_administration_grid.csv")
+    print(f"\nWrote {config.DERIV.as_posix()}/ksads_administration_calendar.csv")
+    print(f"Wrote {config.DERIV.as_posix()}/ksads_administration_grid.csv")
 
 
 if __name__ == "__main__":
