@@ -1,27 +1,16 @@
 #!/usr/bin/env python3
-import importlib.util
+"""Build the harmonized BIDS-style KSADS dataset from the resolved/versioned cache."""
+
 import json
-import os
 
 import pandas as pd
 
-HERE = os.path.dirname(os.path.abspath(__file__))
-DERIV = os.path.join(HERE, "derivatives")
-ROOT = os.path.join(os.path.dirname(HERE), "abcd_ksads_harmonized")
-PHENO = os.path.join(ROOT, "phenotype")
-os.makedirs(PHENO, exist_ok=True)
+from abcd_ksads import config
+from abcd_ksads.category_crosswalk import build_crosswalk, build_caseness
 
+ROOT = config.DATASET
+PHENO = ROOT / "phenotype"
 
-def _load(f):
-    spec = importlib.util.spec_from_file_location(
-        f[:-3].replace(".", "_"), os.path.join(HERE, f)
-    )
-    m = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(m)
-    return m
-
-
-L3 = _load("03_category_crosswalk.py")
 EVEN = ["ses-00A", "ses-02A", "ses-04A", "ses-06A"]
 ALL_SES = [
     "ses-00A",
@@ -56,8 +45,9 @@ def write_json(path, obj):
 
 
 def main():
-    cw = L3.build_crosswalk()
-    ver = pd.read_parquet(os.path.join(DERIV, "ksads_resolved_versioned.parquet"))
+    PHENO.mkdir(parents=True, exist_ok=True)
+    cw = build_crosswalk()
+    ver = pd.read_parquet(config.DERIV / "ksads_resolved_versioned.parquet")
     for c in [
         "session_id",
         "variable",
@@ -89,7 +79,7 @@ def main():
     ].copy()
     res = res.sort_values(["participant_id", "session_id", "informant", "variable"])
     res.to_csv(
-        os.path.join(PHENO, "ksads_diagnosis_resolved.tsv.gz"),
+        PHENO / "ksads_diagnosis_resolved.tsv.gz",
         sep="\t",
         index=False,
         compression="gzip",
@@ -102,14 +92,14 @@ def main():
 
     def caseness_informant(status_set, informant):
         if informant == "either":
-            cp = L3.build_caseness(
+            cp = build_caseness(
                 base,
                 cw,
                 status_set=status_set,
                 include_subthreshold=False,
                 informant="parent",
             )
-            cy = L3.build_caseness(
+            cy = build_caseness(
                 base,
                 cw,
                 status_set=status_set,
@@ -125,7 +115,7 @@ def main():
             )
             c["status"] = c.rk.map(INV)
             return c[["participant_id", "session_id", "category", "status"]]
-        return L3.build_caseness(
+        return build_caseness(
             base,
             cw,
             status_set=status_set,
@@ -156,21 +146,13 @@ def main():
 
     cur = caseness_wide("current")
     eve = caseness_wide("ever_met")
-    cur.to_csv(
-        os.path.join(PHENO, "ksads_categories_current.tsv"), sep="\t", index=False
-    )
-    eve.to_csv(
-        os.path.join(PHENO, "ksads_categories_evermet.tsv"), sep="\t", index=False
-    )
+    cur.to_csv(PHENO / "ksads_categories_current.tsv", sep="\t", index=False)
+    eve.to_csv(PHENO / "ksads_categories_evermet.tsv", sep="\t", index=False)
 
     # ---- 3. metadata tables ----
-    cal = pd.read_csv(os.path.join(DERIV, "ksads_administration_calendar.csv"))
-    cal.to_csv(
-        os.path.join(PHENO, "ksads_administration_calendar.tsv"), sep="\t", index=False
-    )
-    cw.to_csv(
-        os.path.join(PHENO, "ksads_category_crosswalk.tsv"), sep="\t", index=False
-    )
+    cal = pd.read_csv(config.DERIV / "ksads_administration_calendar.csv")
+    cal.to_csv(PHENO / "ksads_administration_calendar.tsv", sep="\t", index=False)
+    cw.to_csv(PHENO / "ksads_category_crosswalk.tsv", sep="\t", index=False)
 
     # ---- 4. participants.tsv ----
     adm = res[res.resolved.isin(["positive", "administered_negative"])]
@@ -187,7 +169,7 @@ def main():
         columns={"parent": "n_waves_parent_kSADS", "youth": "n_waves_youth_kSADS"}
     )
     parts = parts[["participant_id", "n_waves_parent_kSADS", "n_waves_youth_kSADS"]]
-    parts.to_csv(os.path.join(ROOT, "participants.tsv"), sep="\t", index=False)
+    parts.to_csv(ROOT / "participants.tsv", sep="\t", index=False)
 
     # ---- 5. JSON data dictionaries ----
     RESOLVED_LEVELS = {
@@ -196,7 +178,7 @@ def main():
         "not_administered": "Module/wave not administered to this participant (value 555)",
     }
     write_json(
-        os.path.join(PHENO, "ksads_diagnosis_resolved.json"),
+        PHENO / "ksads_diagnosis_resolved.json",
         {
             "participant_id": {"Description": "ABCD participant identifier"},
             "session_id": {
@@ -256,7 +238,7 @@ def main():
             "Levels": RESOLVED_LEVELS,
         }
     write_json(
-        os.path.join(PHENO, "ksads_categories_current.json"),
+        PHENO / "ksads_categories_current.json",
         {
             **cat_dict,
             "_config": {
@@ -268,7 +250,7 @@ def main():
         },
     )
     write_json(
-        os.path.join(PHENO, "ksads_categories_evermet.json"),
+        PHENO / "ksads_categories_evermet.json",
         {
             **cat_dict,
             "_config": {
@@ -280,7 +262,7 @@ def main():
         },
     )
     write_json(
-        os.path.join(PHENO, "ksads_administration_calendar.json"),
+        PHENO / "ksads_administration_calendar.json",
         {
             "informant": {"Description": "parent or youth"},
             "module": {"Description": "KSADS-COMP module"},
@@ -300,7 +282,7 @@ def main():
         },
     )
     write_json(
-        os.path.join(PHENO, "ksads_category_crosswalk.json"),
+        PHENO / "ksads_category_crosswalk.json",
         {
             "variable": {"Description": "ABCD 7.0 diagnosis variable"},
             "informant": {"Description": "parent or youth"},
@@ -316,7 +298,7 @@ def main():
         },
     )
     write_json(
-        os.path.join(ROOT, "participants.json"),
+        ROOT / "participants.json",
         {
             "participant_id": {"Description": "ABCD participant identifier"},
             "n_waves_parent_kSADS": {
@@ -330,7 +312,7 @@ def main():
 
     # ---- 6. BIDS descriptors ----
     write_json(
-        os.path.join(ROOT, "dataset_description.json"),
+        ROOT / "dataset_description.json",
         {
             "Name": "Harmonized ABCD KSADS-COMP diagnostic dataset",
             "BIDSVersion": "1.9.0",
@@ -371,19 +353,15 @@ def main():
         "Data are access-restricted (NDA). This folder contains derived values for credentialed\n"
         "ABCD users only.\n"
     )
-    open(os.path.join(ROOT, "README"), "w").write(readme)
-    open(os.path.join(ROOT, "CHANGES"), "w").write(
-        "1.0\n  - Initial harmonized release (ABCD 7.0).\n"
-    )
+    (ROOT / "README").write_text(readme)
+    (ROOT / "CHANGES").write_text("1.0\n  - Initial harmonized release (ABCD 7.0).\n")
 
     # ---- report ----
     print("Built harmonized BIDS dataset at:")
     print(f"  {ROOT}\n")
-    for dp, _, fs in os.walk(ROOT):
-        for f in sorted(fs):
-            p = os.path.join(dp, f)
-            kb = os.path.getsize(p) / 1024
-            print(f"  {os.path.relpath(p, ROOT):48} {kb:8.1f} KB")
+    for p in sorted(f for f in ROOT.rglob("*") if f.is_file()):
+        kb = p.stat().st_size / 1024
+        print(f"  {str(p.relative_to(ROOT)):48} {kb:8.1f} KB")
     print(
         f"\n  resolved rows: {len(res):,}  | participants: {parts.participant_id.nunique():,}"
     )
