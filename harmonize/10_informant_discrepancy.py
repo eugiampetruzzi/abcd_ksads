@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 """Informant discrepancy: caregiver vs youth prevalence and concordance by category."""
 
-import numpy as np
 import pandas as pd
 
 from abcd_ksads import config
 from abcd_ksads.category_crosswalk import build_crosswalk, build_caseness
 from abcd_ksads.multiverse import _agg
+from abcd_ksads.informant import prevalence, concordance
 
 # Categories assessed in both the caregiver and youth interviews.
 CATS = [
@@ -65,48 +65,21 @@ def main():
             ps = per_person(cp, cat)
             ys = per_person(cy, cat)
             for inf, s in (("parent", ps), ("youth", ys)):
-                den = int((s != "not_administered").sum())
-                pos = int((s == "positive").sum())
+                p = prevalence(s)
                 prev_rows.append(
                     {
                         "session": ses,
                         "category": cat,
                         "informant": inf,
-                        "prevalence_pct": (100 * pos / den) if den else np.nan,
-                        "n_positive": pos,
-                        "n_denominator": den,
+                        "prevalence_pct": p["prevalence_pct"],
+                        "n_positive": p["n_positive"],
+                        "n_denominator": p["n_denominator"],
                     }
                 )
-            # concordance among participants administered BOTH
-            df = pd.concat([ps.rename("p"), ys.rename("y")], axis=1).dropna()
-            df = df[(df.p != "not_administered") & (df.y != "not_administered")]
-            if df.empty:
+            conc = concordance(ps, ys)
+            if conc is None:
                 continue
-            pp = df.p == "positive"
-            yy = df.y == "positive"
-            both = int((pp & yy).sum())
-            ponly = int((pp & ~yy).sum())
-            yonly = int((~pp & yy).sum())
-            neither = int((~pp & ~yy).sum())
-            n = len(df)
-            # Cohen's kappa
-            po = (both + neither) / n
-            pe = ((both + ponly) / n) * ((both + yonly) / n) + (
-                (yonly + neither) / n
-            ) * ((ponly + neither) / n)
-            kappa = (po - pe) / (1 - pe) if (1 - pe) else np.nan
-            conc_rows.append(
-                {
-                    "session": ses,
-                    "category": cat,
-                    "n_both_admin": n,
-                    "both_pos": both,
-                    "parent_only": ponly,
-                    "youth_only": yonly,
-                    "union_pos": both + ponly + yonly,
-                    "kappa": kappa,
-                }
-            )
+            conc_rows.append({"session": ses, "category": cat, **conc})
 
     pd.DataFrame(prev_rows).to_csv(
         config.DERIV / "informant_prevalence.csv", index=False
