@@ -1,0 +1,109 @@
+"""Ingest the raw ABCD phenotype sources into one consolidated Parquet table.
+
+Every ``*.tsv`` in the phenotype directory is read faithfully (all values kept as
+their exact source strings, no numeric or NA coercion) and outer-joined on
+``(participant_id, session_id)`` into a single wide table: one row per
+participant x session, one column per variable. Any variable can then be looked up
+by column name without knowing which source file it came from. The JSON sidecars
+are aggregated into one ``metadata.json`` data dictionary.
+
+Session-invariant tables (a ``participant_id`` but no ``session_id``, e.g.
+``ab_g_stc``) are broadcast across all of a participant's sessions.
+"""
+
+import json
+from pathlib import Path
+
+import pandas as pd
+
+# The pandas-index artifact present as the first column of every source TSV.
+_INDEX_ARTIFACT = "Unnamed: 0"
+_TOOL_KEY = "MeasurementToolMetadata"
+_PID = "participant_id"
+_SID = "session_id"
+
+
+def discover_tsvs(pheno_dir: Path) -> list[Path]:
+    """Return every ``*.tsv`` in ``pheno_dir``, sorted by name."""
+    return sorted(Path(pheno_dir).glob("*.tsv"))
+
+
+def read_tsv_faithful(path: Path) -> pd.DataFrame:
+    """Read a source TSV preserving every value as its exact source string.
+
+    ``dtype=str`` with ``na_filter=False`` keeps sentinel codes, leading zeros, and
+    empty cells verbatim (empty stays ``""``, never ``NaN``). The pandas-index
+    artifact column is dropped.
+    """
+    df = pd.read_csv(path, sep="\t", dtype=str, na_filter=False)
+    return df.drop(columns=_INDEX_ARTIFACT, errors="ignore")
+
+
+def load_sidecar_metadata(json_path: Path) -> dict:
+    """Split a JSON sidecar into tool-level metadata and per-column metadata."""
+    raw = json.loads(Path(json_path).read_text())
+    tool = raw.get(_TOOL_KEY, {})
+    columns = {k: v for k, v in raw.items() if k != _TOOL_KEY}
+    return {_TOOL_KEY: tool, "columns": columns}
+
+
+def build_metadata_dictionary(pheno_dir: Path) -> dict:
+    """Aggregate all JSON sidecars into one dictionary keyed by table name."""
+    metadata = {}
+    for tsv in discover_tsvs(pheno_dir):
+        sidecar = tsv.with_suffix(".json")
+        if sidecar.is_file():
+            metadata[tsv.stem] = load_sidecar_metadata(sidecar)
+    return metadata
+
+
+def consolidate(pheno_dir: Path) -> pd.DataFrame:
+    """Outer-join every source TSV into one wide table keyed by participant x session.
+
+    Tables carrying both keys align on ``(participant_id, session_id)``. A table with
+    only ``participant_id`` is broadcast across that participant's sessions.
+
+    Variable columns are dictionary-encoded (``category`` dtype) so the wide table
+    stays small in memory and on disk; the stored values are unchanged.
+    """
+    session_frames = []
+    participant_frames = []
+    for tsv in discover_tsvs(pheno_dir):
+        df = read_tsv_faithful(tsv)
+        if _PID not in df.columns:
+            continue
+        keys = [_PID, _SID] if _SID in df.columns else [_PID]
+        df = df.drop_duplicates(keys)
+        variables = [c for c in df.columns if c not in (_PID, _SID)]
+        df[variables] = df[variables].astype("category")
+        df = df.set_index(keys)
+        (session_frames if _SID in keys else participant_frames).append(df)
+
+    wide = pd.concat(session_frames, axis=1)
+    for pf in participant_frames:
+        wide = wide.join(pf, on=_PID)
+
+    return wide.reset_index().sort_values([_PID, _SID]).reset_index(drop=True)
+
+
+def ingest(pheno_dir: Path, cache_dir: Path) -> dict:
+    """Write the consolidated wide table and the metadata dictionary.
+
+    Idempotent: overwrites the cache on each run. Returns a summary with the number
+    of source tables, rows (participant x session), and variable columns.
+    """
+    pheno_dir = Path(pheno_dir)
+    cache_dir = Path(cache_dir)
+    cache_dir.mkdir(parents=True, exist_ok=True)
+
+    wide = consolidate(pheno_dir)
+    wide.to_parquet(cache_dir / "phenotype.parquet", index=False)
+
+    metadata = build_metadata_dictionary(pheno_dir)
+    (cache_dir / "metadata.json").write_text(json.dumps(metadata, indent=2))
+
+    return {
+        "n_tables": len(discover_tsvs(pheno_dir)),
+        "n_rows": len(wide),
+        "n_columns": wide.shape[1] - 2,  # exclude the two key columns
+    }

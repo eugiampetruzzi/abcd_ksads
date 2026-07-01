@@ -19,6 +19,15 @@ SESSIONS = [
     "ses-06A",
     "ses-07A",
 ]
+RESOLVED = ["positive", "administered_negative", "not_administered", "no_record"]
+VALUE_MAP = {
+    "1": "positive",
+    "0": "administered_negative",
+    "555": "not_administered",
+    1: "positive",
+    0: "administered_negative",
+    555: "not_administered",
+}
 
 
 def load_diagnosis_vars(config):
@@ -50,19 +59,6 @@ def load_df_with_wanted_variables(path, file_variable_metadata):
 
 
 def resolve():
-    RAW = config.RAW_PHENOTYPE
-    DERIV = os.path.join(os.path.dirname(os.path.abspath(__file__)), "derivatives")
-    os.makedirs(DERIV, exist_ok=True)
-
-    RESOLVED = ["positive", "administered_negative", "not_administered", "no_record"]
-    VALUE_MAP = {
-        "1": "positive",
-        "0": "administered_negative",
-        "555": "not_administered",
-        1: "positive",
-        0: "administered_negative",
-        555: "not_administered",
-    }
 
     rows, file_metadata = load_diagnosis_vars(config)
     all_var_metadata = {r["variable"]: r for r in rows}
@@ -70,7 +66,7 @@ def resolve():
     summary_rows = []
 
     for fname, file_variable_metadata in sorted(file_metadata.items()):
-        path = os.path.join(RAW, fname)
+        path = os.path.join(config.RAW_PHENOTYPE, fname)
         if not os.path.exists(path):
             print(f"{fname} not found, skipping")
             continue
@@ -129,13 +125,13 @@ def resolve():
     )
     for c in ["session_id", "informant", "module", "status_layer", "variable"]:
         long[c] = long[c].astype("category")
-    out_long = os.path.join(DERIV, "ksads_resolved_long.parquet")
+    out_long = config.DERIV / "ksads_resolved_long.parquet"
     long.to_parquet(out_long, index=False)
 
     summ = pd.DataFrame(summary_rows).sort_values(
         ["informant", "module", "variable", "session_id"]
     )
-    out_summ = os.path.join(DERIV, "ksads_resolution_summary.csv")
+    out_summ = config.DERIV / "ksads_resolution_summary.csv"
     summ.to_csv(out_summ, index=False)
 
     # report

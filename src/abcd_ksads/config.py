@@ -79,7 +79,7 @@ class Config(BaseSettings):
     @computed_field
     @property
     def DERIV(self) -> Path:
-        return self.HARMONIZE / "derivatives"
+        return self.ABCD_70 / "derivatives"
 
     @computed_field
     @property
@@ -99,7 +99,12 @@ class Config(BaseSettings):
     @computed_field
     @property
     def DATASET(self) -> Path:
-        return self.REPO / "abcd_ksads_harmonized"
+        return self.ABCD_70 / "abcd_ksads_harmonized"
+
+    @computed_field
+    @property
+    def RAW_CACHE(self) -> Path:
+        return self.DERIV / "raw_cache"
 
     @computed_field
     @property
@@ -122,4 +127,5 @@ FIGURES = config.FIGURES
 TABLES = config.TABLES
 CODEBOOKS = config.CODEBOOKS
 DATASET = config.DATASET
+RAW_CACHE = config.RAW_CACHE
 KSADS_VARIABLE_MAP = config.KSADS_VARIABLE_MAP

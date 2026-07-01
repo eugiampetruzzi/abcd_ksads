@@ -1,7 +1,7 @@
 -include .env
 export
 
-.PHONY: all merge_covariates clean
+.PHONY: all merge_covariates clean ingest
 
 merge_covariates:
 	uv run python harmonize/merge_covariates.py
@@ -9,6 +9,11 @@ merge_covariates:
 clean:
 	-rm harmonize/derivatives/*
 	-rm ${ABCD_70}/subject_demographics.tsv
+
+ingest: ${ABCD_70}/derivatives/raw_cache/phenotype.parquet
+
+${ABCD_70}/derivatives/raw_cache/phenotype.parquet:
+	uv run python harmonize/00_ingest.py
 
 harmonize/derivatives/ksads_resolution_summary.csv:
 	uv run python harmonize/01_resolve_missingness.py
