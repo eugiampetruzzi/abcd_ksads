@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-import os
+"""Decompose the anxiety construct into sub-disorders and the effect of specific phobia."""
 
 import matplotlib
 
@@ -8,8 +8,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 
-HERE = os.path.dirname(os.path.abspath(__file__))
-DERIV = os.path.join(HERE, "derivatives")
+from abcd_ksads import config
+
 plt.rcParams.update(
     {
         "font.family": "Arial",
@@ -30,7 +30,7 @@ SUBS = [
 
 
 def main():
-    r = pd.read_parquet(os.path.join(DERIV, "ksads_resolved_long.parquet"))
+    r = pd.read_parquet(config.DERIV / "ksads_resolved_long.parquet")
     for c in ["session_id", "module", "informant", "status_layer", "resolved"]:
         r[c] = r[c].astype(str)
     base = r[
@@ -96,7 +96,7 @@ def main():
         ],
         ignore_index=True,
     )
-    dec_out.to_csv(os.path.join(DERIV, "anxiety_decomposition.csv"), index=False)
+    dec_out.to_csv(config.DERIV / "anxiety_decomposition.csv", index=False)
 
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(9, 3.6))
     labs = [l for _, l in SUBS]
@@ -120,7 +120,7 @@ def main():
     )
     fig.tight_layout()
     fig.savefig(
-        os.path.join(DERIV, "fig_anxiety_decomposition.png"),
+        config.DERIV / "fig_anxiety_decomposition.png",
         dpi=300,
         bbox_inches="tight",
     )
@@ -132,7 +132,7 @@ def main():
         f"-> including specific phobia changes the anxiety construct "
         f"{any_with / any_without_phobia:.1f}x."
     )
-    print(f"\nWrote {DERIV}/fig_anxiety_decomposition.png")
+    print(f"\nWrote {config.DERIV.as_posix()}/fig_anxiety_decomposition.png")
 
 
 if __name__ == "__main__":

@@ -1,15 +1,15 @@
 #!/usr/bin/env python3
-import os
+"""Quantify the 555-as-0 missingness error for parent MDD present-diagnosis."""
 
 import pandas as pd
 
-HERE = os.path.dirname(os.path.abspath(__file__))
-DERIV = os.path.join(HERE, "derivatives")
+from abcd_ksads import config
+
 VAR = "mh_p_ksads__dep__mdd__pres_dx"
 
 
 def main():
-    r = pd.read_parquet(os.path.join(DERIV, "ksads_resolved_long.parquet"))
+    r = pd.read_parquet(config.DERIV / "ksads_resolved_long.parquet")
     r["variable"] = r["variable"].astype(str)
     r["resolved"] = r["resolved"].astype(str)
     d = r[r.variable == VAR]
@@ -37,14 +37,14 @@ def main():
             }
         ]
     )
-    out.to_csv(os.path.join(DERIV, "missingness_error.csv"), index=False)
+    out.to_csv(config.DERIV / "missingness_error.csv", index=False)
 
     print("555-as-0 error (parent MDD present, person-wave over 8 sessions):")
     print(f"  correct (555 excluded):    {correct:.3f}%  ({n_pos:,}/{n_assessed:,})")
     print(f"  error   (555 -> 0):        {error:.3f}%  ({n_pos:,}/{n_all:,})")
     print(f"  fold-deflation:            {fold:.2f}x")
     print(f"  fabricated assessed-neg person-waves: {n_not_admin:,}")
-    print(f"\nWrote {DERIV}/missingness_error.csv")
+    print(f"\nWrote {config.DERIV.as_posix()}/missingness_error.csv")
 
 
 if __name__ == "__main__":
