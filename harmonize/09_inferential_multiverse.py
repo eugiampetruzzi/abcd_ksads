@@ -6,6 +6,8 @@ live in abcd_ksads.predictors; this script reads the cached diagnosis outcomes a
 fits the specification grid.
 """
 
+import warnings
+
 import numpy as np
 import pandas as pd
 import statsmodels.api as sm
@@ -23,6 +25,8 @@ from abcd_ksads.predictors import (
     RACE_LVES,
 )
 
+warnings.filterwarnings("ignore")
+
 CONSTRUCTS = [
     ("suicidality", "Suicidality"),
     ("eating", "Eating disorders"),
@@ -31,9 +35,19 @@ CONSTRUCTS = [
     ("any-disorder", "Any disorder"),
     ("ADHD", "ADHD"),
 ]
-INFORMANTS = ["parent", "either"]  # caregiver / either, as in the literature
+INFORMANTS = ["parent", "youth", "either", "both"]
 STATUSES = ["current", "ever_met"]
-THRESH = [False, True]
+THRESH = [False]
+
+NEURAL = [
+    ("fc_dmn_within_z", "DMN within-network FC (per SD)"),
+    ("fc_sal_within_z", "Salience within-network FC (per SD)"),
+    ("fc_fpn_within_z", "FPN within-network FC (per SD)"),
+    ("fc_dmn_salience_z", "DMN-salience FC (per SD)"),
+    ("fc_dmn_fpn_z", "DMN-FPN FC (per SD)"),
+    ("fc_sal_fpn_z", "Salience-FPN FC (per SD)"),
+]
+NUIS = ["site", "family_id"]
 
 
 def fit_adj(d, focal, imaging=False):
@@ -66,6 +80,40 @@ def fit_adj(d, focal, imaging=False):
     return out
 
 
+def enough(yv, mask=None):
+    """outcome usable: >=100 rows, >=10 positives (in subgroup if given)."""
+    if len(yv) < 100 or yv.sum() < 10:
+        return False
+    if mask is not None and (mask & (yv == 1)).sum() < 10:
+        return False
+    return True
+
+
+def eta2(sub):
+    """Variance of logOR attributable to each axis (one-way eta^2)."""
+    out = {}
+    tot = ((sub.logor - sub.logor.mean()) ** 2).sum()
+    for ax in ["status", "informant"]:
+        ss = sum(
+            len(g) * (g.logor.mean() - sub.logor.mean()) ** 2
+            for _, g in sub.groupby(ax)
+        )
+        out[f"eta2_{ax}"] = ss / tot if tot > 0 else np.nan
+    return out
+
+
+def bucket_of(lab):
+    if lab.startswith("Female"):
+        return "Sex"
+    if lab.startswith("Income"):
+        return "Income"
+    if lab.startswith("Race"):
+        return "Race/ethnicity"
+    if "FC" in lab:
+        return "Neuroimaging"
+    return "Culture/environment"
+
+
 def main():
     cw = build_crosswalk()
     resolved = pd.read_parquet(config.DERIV / "ksads_resolved_long.parquet")
@@ -74,14 +122,6 @@ def main():
     base = resolved[resolved.session_id == BASE_SES].copy()
     cache = build_primitive_cache(base, cw)
     P = load_predictors()
-
-    def enough(yv, mask=None):
-        """outcome usable: >=100 rows, >=10 positives (in subgroup if given)."""
-        if len(yv) < 100 or yv.sum() < 10:
-            return False
-        if mask is not None and (mask & (yv == 1)).sum() < 10:
-            return False
-        return True
 
     rows = []
     for con, conlab in CONSTRUCTS:
@@ -106,11 +146,9 @@ def main():
                         construct_label=conlab,
                         informant=inf,
                         status=status,
-                        threshold="with_subthreshold" if subthr else "full",
+                        threshold="full",
                     )
                     out = {}  # predictor label -> (OR, p)
-
-                    NUIS = ["site", "family_id"]
 
                     # --- Sex bucket: y ~ sex + age (+ site, family-clustered) ---
                     d = df[["y", "sex_f", "age_z"] + NUIS].dropna()
@@ -132,14 +170,7 @@ def main():
                             out[lab] = fit_adj(d, [col])[col]
 
                     # --- Neuroimaging bucket: + scanner + mean FD; QC already applied to FC ---
-                    for col, lab in [
-                        ("fc_dmn_within_z", "DMN within-network FC (per SD)"),
-                        ("fc_sal_within_z", "Salience within-network FC (per SD)"),
-                        ("fc_fpn_within_z", "FPN within-network FC (per SD)"),
-                        ("fc_dmn_salience_z", "DMN-salience FC (per SD)"),
-                        ("fc_dmn_fpn_z", "DMN-FPN FC (per SD)"),
-                        ("fc_sal_fpn_z", "Salience-FPN FC (per SD)"),
-                    ]:
+                    for col, lab in NEURAL:
                         d = df[
                             ["y", col, "sex_f", "age_z", "scanner", "mean_fd_z"] + NUIS
                         ].dropna()
@@ -166,21 +197,10 @@ def main():
                             out[f"Race: {lvl} vs {RACE_REF}"] = fit[lvl]
 
                     for lab, (orr, p) in out.items():
-                        bucket = (
-                            "Sex"
-                            if lab.startswith("Female")
-                            else "Income"
-                            if lab.startswith("Income")
-                            else "Race/ethnicity"
-                            if lab.startswith("Race")
-                            else "Neuroimaging"
-                            if "FC" in lab
-                            else "Culture/environment"
-                        )
                         rows.append(
                             {
                                 **spec,
-                                "bucket": bucket,
+                                "bucket": bucket_of(lab),
                                 "predictor": lab,
                                 "OR": orr,
                                 "p": p,
@@ -193,18 +213,6 @@ def main():
     res.to_csv(config.DERIV / "inferential_specs.csv", index=False)
 
     # per predictor x construct summary
-    def eta2(sub):
-        # variance of logOR attributable to each axis (one-way eta^2)
-        out = {}
-        tot = ((sub.logor - sub.logor.mean()) ** 2).sum()
-        for ax in ["status", "informant", "threshold"]:
-            ss = sum(
-                len(g) * (g.logor.mean() - sub.logor.mean()) ** 2
-                for _, g in sub.groupby(ax)
-            )
-            out[f"eta2_{ax}"] = ss / tot if tot > 0 else np.nan
-        return out
-
     summ = []
     for (bucket, con, conlab, pred), sub in res.groupby(
         ["bucket", "construct", "construct_label", "predictor"]
@@ -241,7 +249,7 @@ def main():
     print(f"  pairs that flip OR sign:            {100 * S.sign_flip.mean():.1f}%")
     print()
     print("Mean variance share by axis (eta^2 of logOR):")
-    for ax in ["status", "informant", "threshold"]:
+    for ax in ["status", "informant"]:
         print(f"  {ax:11}: {S[f'eta2_{ax}'].mean():.2f}")
     print(
         f"\nWrote inferential_specs.csv ({len(res)} rows) and inferential_summary.csv ({n_pairs} pairs)"
