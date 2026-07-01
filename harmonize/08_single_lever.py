@@ -1,38 +1,28 @@
 #!/usr/bin/env python3
-import importlib.util
-import os
-
 import pandas as pd
-
-HERE = os.path.dirname(os.path.abspath(__file__))
-DERIV = os.path.join(HERE, "derivatives")
-
-
-def _load(f):
-    spec = importlib.util.spec_from_file_location(
-        f[:-3].replace(".", "_"), os.path.join(HERE, f)
-    )
-    m = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(m)
-    return m
-
-
-MV = _load("06_multiverse_spec.py")
+from abcd_ksads import config
+from abcd_ksads.category_crosswalk import build_crosswalk
+from abcd_ksads.multiverse import (
+    build_primitive_cache,
+    prevalence,
+    construct_status,
+    BASE_SES,
+)
 
 
 def main():
-    cw = MV.L3.build_crosswalk()
-    resolved = pd.read_parquet(os.path.join(DERIV, "ksads_resolved_long.parquet"))
+    cw = build_crosswalk()
+    resolved = pd.read_parquet(config.DERIV / "ksads_resolved_long.parquet")
     for c in ["session_id", "variable", "resolved"]:
         resolved[c] = resolved[c].astype(str)
-    base = resolved[resolved.session_id == MV.BASE_SES].copy()
-    cache = MV.build_primitive_cache(base, cw)
+    base = resolved[resolved.session_id == BASE_SES].copy()
+    cache = build_primitive_cache(base, cw)
 
     def prev(status, informant, subthr, phobia):
-        stat = MV.construct_status(
+        stat = construct_status(
             cache, "any-disorder", status, informant, subthr, phobia
         )
-        return MV.prevalence(stat)[0]
+        return prevalence(stat)[0]
 
     base_cfg = dict(
         status="current", informant="parent", subthr=False, phobia="phobia_in"
@@ -67,10 +57,10 @@ def main():
         df.iloc[1:].delta_pts.abs().sort_values(ascending=False).index
     )
     df = pd.concat([df.iloc[[0]], body], ignore_index=True)
-    df.to_csv(os.path.join(DERIV, "single_lever.csv"), index=False)
+    df.to_csv(config.DERIV / "single_lever.csv", index=False)
 
     print(df.to_string(index=False))
-    print(f"\nWrote {DERIV}/single_lever.csv")
+    print(f"\nWrote {config.DERIV.as_posix()}/single_lever.csv")
 
 
 if __name__ == "__main__":
