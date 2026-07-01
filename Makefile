@@ -6,9 +6,12 @@ export
 merge_covariates:
 	uv run python harmonize/merge_covariates.py
 
-clean:
+clean-cache:
 	-rm ${ABCD_70}/derivatives/raw_cache/*
+
+clean:
 	-rm ${ABCD_70}/subject_demographics.tsv
+	-rm ${ABCD_70}/derivatives/ksads*
 
 ingest: ${ABCD_70}/derivatives/raw_cache/phenotype.parquet
 
