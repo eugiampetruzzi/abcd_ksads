@@ -39,7 +39,7 @@ ${ABCD_70}/derivatives/multiverse_summary.csv:
 ${ABCD_70}/derivatives/single_lever.csv:
 	uv run python harmonize/08_single_lever.py
 
-${ABCD_70}/derivatives/inferential_summary.csv:
+${ABCD_70}/derivatives/inferential_summary.csv: ${ABCD_70}/derivatives/raw_cache/phenotype.parquet ${ABCD_70}/derivatives/ksads_resolution_summary.csv
 	uv run python harmonize/09_inferential_multiverse.py
 
 all: ingest ${ABCD_70}/derivatives/ksads_resolution_summary.csv ${ABCD_70}/derivatives/ksads_administration_grid.csv \
