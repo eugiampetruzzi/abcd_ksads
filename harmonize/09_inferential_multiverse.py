@@ -1,31 +1,18 @@
 #!/usr/bin/env python3
-import importlib.util
-import os
-import warnings
-
 import numpy as np
 import pandas as pd
 import statsmodels.api as sm
 
-import sys
+from abcd_ksads import config
+from abcd_ksads.category_crosswalk import build_crosswalk
+from abcd_ksads.multiverse import (
+    build_primitive_cache,
+    construct_status,
+    BASE_SES,
+)
 
-warnings.filterwarnings("ignore")
-HERE = os.path.dirname(os.path.abspath(__file__))
-sys.path.insert(0, os.path.dirname(HERE))
-import config
-
-DERIV = os.path.join(HERE, "derivatives")
+DERIV = config.DERIV
 BASE = config.ABCD_70
-
-
-def _load(f):
-    spec = importlib.util.spec_from_file_location(f[:-3], os.path.join(HERE, f))
-    m = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(m)
-    return m
-
-
-M6 = _load("06_multiverse_spec.py")
 
 CONSTRUCTS = [
     ("suicidality", "Suicidality"),
@@ -40,8 +27,6 @@ STATUSES = ["current", "ever_met"]
 THRESH = [False, True]
 RACE_REF = "White"
 
-
-BOX = config.ABCD_51_CORE
 BASELINE_EVENT = "baseline_year_1_arm_1"
 
 
@@ -51,10 +36,10 @@ def _nda_to_sub(s):
 
 def load_culture_env():
     """3 release-5.1 culture/environment predictors at baseline, IDs mapped to sub-XXXX."""
-    ce = os.path.join(BOX, "culture-environment")
-    nt = os.path.join(BOX, "novel-technologies")
+    ce = BASE / "culture-environment"
+    nt = BASE / "novel-technologies"
     # screen time: total of weekday + weekend item hours
-    st = pd.read_csv(os.path.join(nt, "nt_y_st.csv"))
+    st = pd.read_csv(nt / "nt_y_st.csv")
     st = st[st.eventname == BASELINE_EVENT]
     sc = [
         c
@@ -64,9 +49,9 @@ def load_culture_env():
     st["screentime"] = (
         st[sc].apply(pd.to_numeric, errors="coerce").sum(axis=1, min_count=1)
     )
-    fes = pd.read_csv(os.path.join(ce, "ce_y_fes.csv"))
+    fes = pd.read_csv(ce / "ce_y_fes.csv")
     fes = fes[fes.eventname == BASELINE_EVENT][["src_subject_id", "fes_y_ss_fc"]]
-    dm = pd.read_csv(os.path.join(ce, "ce_y_dm.csv"))
+    dm = pd.read_csv(ce / "ce_y_dm.csv")
     dm = dm[dm.eventname == BASELINE_EVENT][["src_subject_id", "dim_y_ss_mean"]]
     out = (
         st[["src_subject_id", "screentime"]]
@@ -84,7 +69,7 @@ def load_culture_env():
 
 def load_imaging():
     """Two commonly-used resting-state network FC measures (release 5.1, baseline)."""
-    f = os.path.join(BOX, "imaging", "mri_y_rsfmr_cor_gp_gp.csv")
+    f = BASE / "imaging" / "mri_y_rsfmr_cor_gp_gp.csv"
     cols = [
         "src_subject_id",
         "eventname",
@@ -133,7 +118,7 @@ def load_qc_nuisance():
     """Nuisance covariates and rsfMRI QC: site, scanner, family from the covariate file;
     the ABCD rsfMRI inclusion flag from the imaging QC table. fc_qc_pass marks the
     ABCD-standard RSFC inclusion (imgincl==1, mean FD<0.5 mm, >=375 frames retained)."""
-    cov = pd.read_excel(os.path.join(BASE, "5_covariates_extended.xlsx"))[
+    cov = pd.read_excel(BASE / "5_covariates_extended.xlsx")[
         [
             "sub_ID",
             "study_site_baseline",
@@ -152,7 +137,7 @@ def load_qc_nuisance():
         }
     )
     inc = pd.read_csv(
-        os.path.join(BOX, "imaging", "mri_y_qc_incl.csv"),
+        BASE / "imaging" / "mri_y_qc_incl.csv",
         usecols=["src_subject_id", "eventname", "imgincl_rsfmri_include"],
     )
     inc = inc[inc.eventname == BASELINE_EVENT]
@@ -169,10 +154,8 @@ def load_qc_nuisance():
 
 
 def load_predictors():
-    ela = pd.read_excel(os.path.join(BASE, "4_ELA_final.xlsx"))[
-        ["sub_ID", "interview_age", "sex"]
-    ]
-    cov = pd.read_excel(os.path.join(BASE, "5_covariates_extended.xlsx"))[
+    ela = pd.read_excel(BASE / "4_ELA_final.xlsx")[["sub_ID", "interview_age", "sex"]]
+    cov = pd.read_excel(BASE / "5_covariates_extended.xlsx")[
         ["sub_ID", "Race", "Income"]
     ]
     d = ela.merge(cov, on="sub_ID", how="outer").rename(
@@ -188,8 +171,8 @@ def load_predictors():
         how="left",
     )
     # apply ABCD-standard RSFC QC: blank FC for participants failing inclusion/motion/frames
-    d.loc[d.fc_qc_pass != True, FC_COLS] = np.nan
-    fdq = pd.to_numeric(d.loc[d.fc_qc_pass == True, "mean_fd"], errors="coerce")
+    d.loc[not d.fc_qc_pass, FC_COLS] = np.nan
+    fdq = pd.to_numeric(d.loc[not d.fc_qc_pass, "mean_fd"], errors="coerce")
     d["mean_fd_z"] = (
         pd.to_numeric(d.mean_fd, errors="coerce") - fdq.mean()
     ) / fdq.std()
@@ -229,12 +212,12 @@ def fit_adj(d, focal, imaging=False):
 
 
 def main():
-    cw = M6.L3.build_crosswalk()
-    resolved = pd.read_parquet(os.path.join(DERIV, "ksads_resolved_long.parquet"))
+    cw = build_crosswalk()
+    resolved = pd.read_parquet(config.DERIV / "ksads_resolved_long.parquet")
     for c in ["session_id", "variable", "resolved"]:
         resolved[c] = resolved[c].astype(str)
-    base = resolved[resolved.session_id == M6.BASE_SES].copy()
-    cache = M6.build_primitive_cache(base, cw)
+    base = resolved[resolved.session_id == BASE_SES].copy()
+    cache = build_primitive_cache(base, cw)
     P = load_predictors()
 
     RACE_LVES = ["Black/AA", "Hispanic", "Asian", "Other/Multiracial"]
@@ -252,7 +235,7 @@ def main():
         for inf in INFORMANTS:
             for status in STATUSES:
                 for subthr in THRESH:
-                    stat = M6.construct_status(
+                    stat = construct_status(
                         cache, con, status, inf, subthr, "phobia_in"
                     )
                     if stat is None or len(stat) == 0:
@@ -355,7 +338,7 @@ def main():
     res = pd.DataFrame(rows)
     res["sig"] = res.p < 0.05
     res["logor"] = np.log(res.OR)
-    res.to_csv(os.path.join(DERIV, "inferential_specs.csv"), index=False)
+    res.to_csv(config.DERIV / "inferential_specs.csv", index=False)
 
     # per predictor x construct summary
     def eta2(sub):
@@ -394,7 +377,7 @@ def main():
         row.update(eta2(sub))
         summ.append(row)
     S = pd.DataFrame(summ)
-    S.to_csv(os.path.join(DERIV, "inferential_summary.csv"), index=False)
+    S.to_csv(config.DERIV / "inferential_summary.csv", index=False)
 
     n_pairs = len(S)
     print(
