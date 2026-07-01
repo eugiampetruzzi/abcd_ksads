@@ -3,14 +3,8 @@ import csv
 import os
 
 import pandas as pd
+from abcd_ksads import config
 
-HERE = os.path.dirname(os.path.abspath(__file__))
-import sys
-
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-import config
-
-DERIV = os.path.join(HERE, "derivatives")
 XWALK = os.path.join(config.CODEBOOKS, "ksads_version_crosswalk.csv")
 
 V1_WAVES = {"ses-00A", "ses-01A", "ses-02A"}  # KSADS-COMP 1.0
@@ -18,7 +12,7 @@ V2_SWITCH = "ses-03A"  # 2.0 from here on
 
 
 def main():
-    resolved = pd.read_parquet(os.path.join(DERIV, "ksads_resolved_long.parquet"))
+    resolved = pd.read_parquet(config.DERIV / "ksads_resolved_long.parquet")
     for c in ["session_id", "variable", "resolved"]:
         resolved[c] = resolved[c].astype(str)
 
@@ -37,7 +31,7 @@ def main():
         resolved.two_zero_only & (resolved.ksads_version == "1.0")
     )
 
-    out = os.path.join(DERIV, "ksads_resolved_versioned.parquet")
+    out = config.DERIV / "ksads_resolved_versioned.parquet"
     resolved.to_parquet(out, index=False)
 
     # audit: do the documented 2.0-only diagnoses actually have administered cells
@@ -54,7 +48,7 @@ def main():
             audit[col] = 0
     audit["administered_pre_switch"] = audit.positive + audit.administered_negative
     audit = audit[audit.administered_pre_switch > 0]
-    audit.to_csv(os.path.join(DERIV, "ksads_version_audit.csv"), index=False)
+    audit.to_csv(config.DERIV / "ksads_version_audit.csv", index=False)
 
     n = len(resolved)
     print("Layer 4 version provenance")
@@ -87,7 +81,7 @@ def main():
             "  No 2.0-only diagnoses administered before the switch (matches the notes)."
         )
     print(f"\nWrote {out}")
-    print(f"Wrote {DERIV}/ksads_version_audit.csv")
+    print(f"Wrote {config.DERIV.as_posix()}/ksads_version_audit.csv")
 
 
 if __name__ == "__main__":
