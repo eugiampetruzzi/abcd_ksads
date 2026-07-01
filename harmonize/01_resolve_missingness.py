@@ -4,13 +4,10 @@ import os
 import dotenv
 import pandas as pd
 
+from abcd_ksads import config
+
+
 dotenv.load_dotenv()
-
-# KS = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-import sys
-
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-import config
 
 SESSIONS = [
     "ses-00A",
@@ -25,8 +22,11 @@ SESSIONS = [
 
 
 def load_diagnosis_vars(config):
-    MAP = os.path.join(config.CODEBOOKS, "ksads_variable_map.csv")
-    rows = [r for r in csv.DictReader(open(MAP)) if r["layer"] == "diagnosis"]
+    rows = [
+        r
+        for r in csv.DictReader(open(config.KSADS_VARIABLE_MAP))
+        if r["layer"] == "diagnosis"
+    ]
     file_metadata = {}
     for r in rows:
         pref = "mh_p" if r["informant"] == "parent" else "mh_y"
@@ -84,7 +84,7 @@ def resolve():
             value_name="raw",
         )
         long["resolved"] = long["raw"].map(VALUE_MAP).fillna("no_record")
-        m = long["variable"].map(all_var_metadata)
+        # m = long["variable"].map(all_var_metadata)
         long["informant"] = long["variable"].map(
             lambda v: all_var_metadata[v]["informant"]
         )
