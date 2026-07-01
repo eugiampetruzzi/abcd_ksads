@@ -1,22 +1,12 @@
 #!/usr/bin/env python3
-import importlib.util
-import os
+"""Informant discrepancy: caregiver vs youth prevalence and concordance by category."""
+
 import numpy as np
 import pandas as pd
 
-HERE = os.path.dirname(os.path.abspath(__file__))
-DERIV = os.path.join(HERE, "derivatives")
-
-
-def _load(f):
-    spec = importlib.util.spec_from_file_location(f[:-3], os.path.join(HERE, f))
-    m = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(m)
-    return m
-
-
-M6 = _load("06_multiverse_spec.py")
-L3 = M6.L3
+from abcd_ksads import config
+from abcd_ksads.category_crosswalk import build_crosswalk, build_caseness
+from abcd_ksads.multiverse import _agg
 
 # Categories assessed in both the caregiver and youth interviews.
 CATS = [
@@ -34,13 +24,13 @@ SESSIONS = ["ses-00A", "ses-02A", "ses-04A", "ses-06A"]  # full battery, both in
 
 
 def per_person(caseobj, cat):
-    return M6._agg(
+    return _agg(
         caseobj, [cat]
     )  # Series: participant_id -> positive/administered_negative/not_administered
 
 
 def main():
-    cw = L3.build_crosswalk()
+    cw = build_crosswalk()
     # Fair informant comparison: keep only modules assessed in BOTH interviews,
     # so e.g. Anxiety is compared on its shared modules (gad/socanx/panic), not
     # the caregiver-only agoraphobia/separation/phobia modules.
@@ -48,7 +38,7 @@ def main():
         cw[cw.informant == "youth"].module
     )
     cw = cw[cw.module.isin(both_mods)].copy()
-    resolved = pd.read_parquet(os.path.join(DERIV, "ksads_resolved_long.parquet"))
+    resolved = pd.read_parquet(config.DERIV / "ksads_resolved_long.parquet")
     for c in ["session_id", "variable", "resolved"]:
         resolved[c] = resolved[c].astype(str)
 
@@ -57,14 +47,14 @@ def main():
         base = resolved[resolved.session_id == ses].copy()
         if base.empty:
             continue
-        cp = L3.build_caseness(
+        cp = build_caseness(
             base,
             cw,
             status_set="current",
             include_subthreshold=False,
             informant="parent",
         )
-        cy = L3.build_caseness(
+        cy = build_caseness(
             base,
             cw,
             status_set="current",
@@ -119,10 +109,10 @@ def main():
             )
 
     pd.DataFrame(prev_rows).to_csv(
-        os.path.join(DERIV, "informant_prevalence.csv"), index=False
+        config.DERIV / "informant_prevalence.csv", index=False
     )
     C = pd.DataFrame(conc_rows)
-    C.to_csv(os.path.join(DERIV, "informant_concordance.csv"), index=False)
+    C.to_csv(config.DERIV / "informant_concordance.csv", index=False)
 
     base = C[C.session == "ses-00A"].copy()
     print("Baseline (ses-00A) informant discrepancy by category:")
