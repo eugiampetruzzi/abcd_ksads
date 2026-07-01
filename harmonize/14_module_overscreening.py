@@ -1,23 +1,11 @@
 #!/usr/bin/env python3
-import importlib.util
-import os
+"""Module over-screening: baseline parent present-diagnosis prevalence by module."""
 
 import pandas as pd
 
-HERE = os.path.dirname(os.path.abspath(__file__))
-DERIV = os.path.join(HERE, "derivatives")
+from abcd_ksads import config
+from abcd_ksads.category_crosswalk import build_crosswalk
 
-
-def _load(f):
-    spec = importlib.util.spec_from_file_location(
-        f[:-3].replace(".", "_"), os.path.join(HERE, f)
-    )
-    m = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(m)
-    return m
-
-
-L3 = _load("03_category_crosswalk.py")
 # approximate childhood (≈9-10 yr) prevalence context, for flagging only
 EPI = {
     "phobia": "~5",
@@ -50,10 +38,10 @@ LABEL = {
 
 
 def main():
-    cw = L3.build_crosswalk()
+    cw = build_crosswalk()
     sub = cw.set_index("variable")["is_subthreshold"].to_dict()
     r = pd.read_parquet(
-        os.path.join(DERIV, "ksads_resolved_long.parquet"),
+        config.DERIV / "ksads_resolved_long.parquet",
         columns=[
             "participant_id",
             "session_id",
@@ -99,7 +87,7 @@ def main():
             }
         )
     tab = pd.DataFrame(rows).sort_values("present_core_pct", ascending=False)
-    tab.to_csv(os.path.join(DERIV, "module_overscreening.csv"), index=False)
+    tab.to_csv(config.DERIV / "module_overscreening.csv", index=False)
     print("Core-criteria baseline parent PRESENT prevalence (subthreshold excluded):\n")
     print(tab.to_string(index=False))
 
@@ -119,7 +107,7 @@ def main():
             }
         ]
     )
-    sb.to_csv(os.path.join(DERIV, "status_depression_breakdown.csv"), index=False)
+    sb.to_csv(config.DERIV / "status_depression_breakdown.csv", index=False)
     print("\nDepression status breakdown (core criteria, baseline, parent):")
     print(sb.to_string(index=False))
     print("\nWrote module_overscreening.csv and status_depression_breakdown.csv")
