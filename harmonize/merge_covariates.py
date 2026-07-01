@@ -6,13 +6,13 @@ import dotenv
 # Load environment variables
 dotenv.load_dotenv()
 
-ROOT = os.environ.get("ABCD_PHENO", ".")
+ROOT = os.environ.get("ABCD_70", ".")
 EXT = "tsv"
 SEP = "\t" if EXT == "tsv" else ","
 
 
 def load(name, cols):
-    path = os.path.join(ROOT, f"{name}.{EXT}")
+    path = os.path.join(ROOT, "rawdata/phenotype", f"{name}.{EXT}")
     have = pd.read_csv(path, sep=SEP, nrows=0).columns
     use = [c for c in cols if c in have]
     missing = [c for c in cols if c not in have]
