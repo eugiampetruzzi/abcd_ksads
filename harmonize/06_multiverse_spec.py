@@ -1,44 +1,18 @@
 #!/usr/bin/env python3
+"""Enumerate the prevalence multiverse; the enumeration logic lives in
+abcd_ksads.multiverse (build_multiverse_grid)."""
+
 import numpy as np
 import pandas as pd
 
-from abcd_ksads.category_crosswalk import build_crosswalk
 from abcd_ksads import config
+from abcd_ksads.category_crosswalk import build_crosswalk
 from abcd_ksads.multiverse import (
+    BASE_SES,
+    build_multiverse_grid,
     build_primitive_cache,
-    construct_status,
-    prevalence,
     informant_validity,
 )
-
-CATS_FOR = {
-    "depression": ["Depression"],
-    "anxiety": ["Anxiety"],
-    "externalizing": ["ADHD", "ODD", "Conduct"],
-    "ADHD": ["ADHD"],
-    "ODD": ["ODD"],
-    "conduct": ["Conduct"],
-    "eating": ["Eating"],
-    "suicidality": ["Suicidality"],
-    "any-disorder": [
-        "Depression",
-        "Anxiety",
-        "ADHD",
-        "ODD",
-        "Conduct",
-        "Bipolar",
-        "DMDD",
-        "OCD",
-        "PTSD",
-        "Autism",
-        "Tic",
-        "Eating",
-        "Psychosis",
-    ],
-}
-RANK = {"positive": 3, "administered_negative": 2, "not_administered": 1}
-INV = {3: "positive", 2: "administered_negative", 1: "not_administered"}
-BASE_SES = "ses-00A"
 
 
 def main():
@@ -51,42 +25,7 @@ def main():
 
     cache = build_primitive_cache(base, cw)
     valid = informant_validity(cw, cal)
-
-    rows, skipped, sid = [], 0, 0
-    for con in CATS_FOR:
-        phobia_levels = (
-            ("phobia_in", "phobia_out") if con == "anxiety" else ("phobia_in",)
-        )
-        for status_set in ("current", "ever_met"):
-            for informant in ("parent", "youth", "either", "both"):
-                if not valid[con][informant]:
-                    skipped += 1
-                    continue
-                for subthr in (False, True):
-                    for phobia in phobia_levels:
-                        stat = construct_status(
-                            cache, con, status_set, informant, subthr, phobia
-                        )
-                        prev, num, den = prevalence(stat)
-                        if den == 0:
-                            skipped += 1
-                            continue
-                        sid += 1
-                        rows.append(
-                            {
-                                "construct": con,
-                                "status": status_set,
-                                "informant": informant,
-                                "threshold": "with_subthreshold" if subthr else "full",
-                                "phobia": phobia,
-                                "window": "single_wave_baseline",
-                                "spec_id": sid,
-                                "prevalence_pct": round(prev, 3),
-                                "n_numerator": num,
-                                "n_denominator": den,
-                            }
-                        )
-    grid = pd.DataFrame(rows)
+    grid, skipped = build_multiverse_grid(cache, valid)
     grid.to_csv(config.DERIV / "multiverse_grid.csv", index=False)
 
     print(

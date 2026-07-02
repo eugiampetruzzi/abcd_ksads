@@ -107,3 +107,115 @@ def informant_validity(cw, cal):
         vy = bool(mods_y & adm_y)
         valid[con] = {"parent": vp, "youth": vy, "either": vp or vy, "both": vp and vy}
     return valid
+
+
+TINY = 0.1  # min-prevalence floor below which a fold-range is flagged unstable
+
+
+def build_multiverse_grid(cache, valid, cats_for=CATS_FOR):
+    """Enumerate every valid operationalization and its baseline prevalence.
+
+    Varies construct x timeframe x informant x threshold x (phobia, anxiety only);
+    skips informant/construct pairs whose modules were never administered, and specs
+    with an empty administered denominator. Returns ``(grid, n_skipped)``."""
+    rows, skipped, sid = [], 0, 0
+    for con in cats_for:
+        phobia_levels = ("phobia_in", "phobia_out") if con == "anxiety" else ("phobia_in",)
+        for status_set in ("current", "ever_met"):
+            for informant in ("parent", "youth", "either", "both"):
+                if not valid[con][informant]:
+                    skipped += 1
+                    continue
+                for subthr in (False, True):
+                    for phobia in phobia_levels:
+                        stat = construct_status(
+                            cache, con, status_set, informant, subthr, phobia
+                        )
+                        prev, num, den = prevalence(stat)
+                        if den == 0:
+                            skipped += 1
+                            continue
+                        sid += 1
+                        rows.append(
+                            {
+                                "construct": con,
+                                "status": status_set,
+                                "informant": informant,
+                                "threshold": "with_subthreshold" if subthr else "full",
+                                "phobia": phobia,
+                                "window": "single_wave_baseline",
+                                "spec_id": sid,
+                                "prevalence_pct": round(prev, 3),
+                                "n_numerator": num,
+                                "n_denominator": den,
+                            }
+                        )
+    return pd.DataFrame(rows), skipped
+
+
+def summarize_multiverse(grid, tiny=TINY):
+    """Per-construct spread of prevalence across specifications (fold-range et al.)."""
+    rows = []
+    for con, sub in grid.groupby("construct"):
+        p = sub.prevalence_pct
+        lo, hi = p.min(), p.max()
+        fold = hi / lo if lo > 0 else np.inf
+        rows.append(
+            {
+                "construct": con,
+                "n_specs": len(sub),
+                "prev_min": round(lo, 3),
+                "prev_max": round(hi, 3),
+                "fold_range": round(fold, 1) if np.isfinite(fold) else np.inf,
+                "pp_span": round(hi - lo, 2),
+                "prev_median": round(p.median(), 3),
+                "prev_iqr_low": round(p.quantile(0.25), 3),
+                "prev_iqr_high": round(p.quantile(0.75), 3),
+                "unstable_fold": bool(lo < tiny),
+            }
+        )
+    return pd.DataFrame(rows).sort_values("fold_range", ascending=False)
+
+
+DEFAULT_LEVER_BASE = dict(status="current", informant="parent", subthr=False, phobia="phobia_in")
+DEFAULT_LEVERS = [
+    ("current -> ever-met", dict(status="ever_met")),
+    ("parent -> youth-only", dict(informant="youth")),
+    ("parent -> either", dict(informant="either")),
+    ("+ subthreshold dx", dict(subthr=True)),
+    ("anxiety: drop phobia", dict(phobia="phobia_out")),
+]
+
+
+def single_lever_table(cache, construct="any-disorder", base_cfg=None, flips=None):
+    """One-decision-at-a-time prevalence shifts from a base operationalization.
+
+    Flips each lever singly from ``base_cfg`` and reports the prevalence delta,
+    ordered by absolute effect. Returns a DataFrame (base row first)."""
+    base_cfg = base_cfg or DEFAULT_LEVER_BASE
+    flips = flips or DEFAULT_LEVERS
+
+    def prev(status, informant, subthr, phobia):
+        stat = construct_status(cache, construct, status, informant, subthr, phobia)
+        return prevalence(stat)[0]
+
+    base_prev = prev(**base_cfg)
+    rows = [
+        {
+            "lever": "base (current, parent, full, phobia-in)",
+            "prevalence_pct": round(base_prev, 3),
+            "delta_pts": 0.0,
+        }
+    ]
+    for name, override in flips:
+        p = prev(**dict(base_cfg, **override))
+        rows.append(
+            {
+                "lever": name,
+                "prevalence_pct": round(p, 3),
+                "delta_pts": round(p - base_prev, 3),
+            }
+        )
+    df = pd.DataFrame(rows)
+    body = df.iloc[1:].reindex(df.iloc[1:].delta_pts.abs().sort_values(ascending=False).index)
+    return pd.concat([df.iloc[[0]], body], ignore_index=True)

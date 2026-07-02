@@ -1,33 +1,17 @@
 #!/usr/bin/env python3
+"""Per-construct fold-range summary of the prevalence multiverse; the summary logic
+lives in abcd_ksads.multiverse (summarize_multiverse)."""
+
 import numpy as np
 import pandas as pd
-from abcd_ksads import config
 
-TINY = 0.1  # min-prevalence floor below which fold-range is flagged unstable
+from abcd_ksads import config
+from abcd_ksads.multiverse import summarize_multiverse
 
 
 def main():
     grid = pd.read_csv(config.DERIV / "multiverse_grid.csv")
-    rows = []
-    for con, sub in grid.groupby("construct"):
-        p = sub.prevalence_pct
-        lo, hi = p.min(), p.max()
-        fold = hi / lo if lo > 0 else np.inf
-        rows.append(
-            {
-                "construct": con,
-                "n_specs": len(sub),
-                "prev_min": round(lo, 3),
-                "prev_max": round(hi, 3),
-                "fold_range": round(fold, 1) if np.isfinite(fold) else np.inf,
-                "pp_span": round(hi - lo, 2),
-                "prev_median": round(p.median(), 3),
-                "prev_iqr_low": round(p.quantile(0.25), 3),
-                "prev_iqr_high": round(p.quantile(0.75), 3),
-                "unstable_fold": bool(lo < TINY),
-            }
-        )
-    summ = pd.DataFrame(rows).sort_values("fold_range", ascending=False)
+    summ = summarize_multiverse(grid)
     summ.to_csv(config.DERIV / "multiverse_summary.csv", index=False)
 
     print(summ.to_string(index=False))

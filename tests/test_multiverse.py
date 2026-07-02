@@ -132,6 +132,93 @@ def test_informant_validity_uses_baseline_administration_only():
 # ---- build_primitive_cache (orchestration smoke test) -----------------------
 
 
+# ---- summarize_multiverse ---------------------------------------------------
+
+
+def test_summarize_multiverse_fold_range_and_instability():
+    grid = pd.DataFrame({
+        "construct": ["A", "A", "A", "B", "B"],
+        "prevalence_pct": [2.0, 4.0, 8.0, 0.05, 5.0],
+    })
+    summ = mv.summarize_multiverse(grid).set_index("construct")
+    assert summ.loc["A", "fold_range"] == 4.0        # 8 / 2
+    assert summ.loc["A", "pp_span"] == 6.0
+    assert bool(summ.loc["A", "unstable_fold"]) is False
+    assert bool(summ.loc["B", "unstable_fold"]) is True   # min 0.05 < TINY
+    # sorted by fold_range descending -> B (fold 100) first
+    assert mv.summarize_multiverse(grid).construct.iloc[0] == "B"
+
+
+# ---- build_multiverse_grid --------------------------------------------------
+
+
+def _valid(**flags):
+    return {"parent": False, "youth": False, "either": False, "both": False, **flags}
+
+
+def test_build_multiverse_grid_gates_informants_and_phobia(monkeypatch):
+    monkeypatch.setattr(
+        mv, "construct_status",
+        lambda *a, **k: pd.Series(["positive"] * 5 + ["administered_negative"] * 45),
+    )
+    monkeypatch.setattr(mv, "prevalence", lambda stat: (10.0, 5, 50))
+    cats_for = {"depression": ["Depression"], "anxiety": ["Anxiety"]}
+    valid = {
+        "depression": _valid(parent=True, either=True),          # youth/both invalid
+        "anxiety": _valid(parent=True, youth=True, either=True, both=True),
+    }
+    grid, skipped = mv.build_multiverse_grid(cache={}, valid=valid, cats_for=cats_for)
+    # depression: 2 valid informants x 2 statuses x 2 thresholds x 1 phobia = 8
+    # anxiety:    4 informants x 2 statuses x 2 thresholds x 2 phobias      = 32
+    assert len(grid) == 40
+    assert skipped == 4                                          # depression youth/both x 2 statuses
+    # phobia_out only exists for anxiety
+    assert set(grid[grid.phobia == "phobia_out"].construct) == {"anxiety"}
+    assert set(grid.threshold) == {"full", "with_subthreshold"}
+
+
+def test_build_multiverse_grid_skips_empty_denominator(monkeypatch):
+    monkeypatch.setattr(mv, "construct_status", lambda *a, **k: pd.Series(["not_administered"]))
+    monkeypatch.setattr(mv, "prevalence", lambda stat: (float("nan"), 0, 0))
+    valid = {"depression": _valid(parent=True)}
+    grid, skipped = mv.build_multiverse_grid(
+        cache={}, valid=valid, cats_for={"depression": ["Depression"]}
+    )
+    assert len(grid) == 0
+    assert skipped > 0
+
+
+# ---- single_lever_table -----------------------------------------------------
+
+
+def test_single_lever_table_deltas_and_ordering(monkeypatch):
+    def fake_cs(cache, con, status, informant, subthr, phobia):
+        if status == "ever_met":
+            k = 20
+        elif informant == "youth":
+            k = 5
+        elif informant == "either":
+            k = 15
+        elif subthr:
+            k = 12
+        elif phobia == "phobia_out":
+            k = 8
+        else:
+            k = 10  # base
+        return pd.Series(["positive"] * k + ["administered_negative"] * (100 - k))
+
+    monkeypatch.setattr(mv, "construct_status", fake_cs)  # real prevalence -> pct == k
+    df = mv.single_lever_table(cache={})
+    assert df.iloc[0].lever.startswith("base")
+    assert df.iloc[0].prevalence_pct == 10.0 and df.iloc[0].delta_pts == 0.0
+    deltas = dict(zip(df.lever, df.delta_pts))
+    assert deltas["current -> ever-met"] == 10.0
+    assert deltas["parent -> youth-only"] == -5.0
+    assert deltas["anxiety: drop phobia"] == -2.0
+    # body ordered by absolute delta -> the +10 flip is the first non-base row
+    assert df.iloc[1].lever == "current -> ever-met"
+
+
 def test_build_primitive_cache_has_expected_keys():
     cw = pd.DataFrame(
         [("v_dep_p", "parent", "dep", "present", "Depression", 0),
