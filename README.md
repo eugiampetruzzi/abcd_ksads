@@ -85,12 +85,13 @@ make docker-run TARGET=figures
 
 ### Apptainer
 
-Build a `.sif` image from the local Docker image, then run it. Apptainer
-executes as your own user (so outputs are owned correctly) and mounts the image
-read-only:
+You can build the `.sif` image **directly from the definition file, with no
+Docker involved**, using `--fakeroot` (works as an unprivileged user on most HPC
+systems). Then run it — Apptainer executes as your own user (so outputs are owned
+correctly) and mounts the image read-only:
 
 ```bash
-apptainer build abcd_ksads.sif docker-daemon://abcd_ksads:latest
+apptainer build --fakeroot abcd_ksads.sif apptainer.def
 
 apptainer run --bind /path/to/ABCD/basedir:/data --env ABCD_70=/data \
     abcd_ksads.sif all
@@ -99,9 +100,17 @@ apptainer run --bind /path/to/ABCD/basedir:/data --env ABCD_70=/data \
 Or via the Makefile wrappers (with `ABCD_70` set in `.env`):
 
 ```bash
-make apptainer-build
+make apptainer-build            # native --fakeroot build from apptainer.def
 make apptainer-run              # runs `all`
 make apptainer-run TARGET=tables
+```
+
+`apptainer.def` mirrors the `Dockerfile`, so the two images are equivalent.
+If you would rather reuse a Docker image you already built, you can convert it
+instead of building natively:
+
+```bash
+apptainer build abcd_ksads.sif docker-daemon://abcd_ksads:latest
 ```
 
 ## Pipeline

@@ -14,6 +14,7 @@ coverage:
 # directory is bind-mounted to /data, and ABCD_70=/data inside the container.
 IMAGE ?= abcd_ksads:latest
 SIF ?= abcd_ksads.sif
+DEF ?= apptainer.def
 TARGET ?= all
 
 docker-build:
@@ -23,8 +24,9 @@ docker-run:
 	docker run --rm --user $$(id -u):$$(id -g) \
 		-v "${ABCD_70}":/data -e ABCD_70=/data ${IMAGE} ${TARGET}
 
+# Native build straight from the definition file (no Docker needed).
 apptainer-build:
-	apptainer build ${SIF} docker-daemon://${IMAGE}
+	apptainer build --fakeroot ${SIF} ${DEF}
 
 apptainer-run:
 	apptainer run --bind "${ABCD_70}":/data --env ABCD_70=/data ${SIF} ${TARGET}
