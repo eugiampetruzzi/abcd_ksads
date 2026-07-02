@@ -1,13 +1,13 @@
-import os
 from docx import Document
 from docx.shared import Pt, Inches
 from docx.enum.text import WD_ALIGN_PARAGRAPH
 from docx.oxml.ns import qn
 from docx.oxml import OxmlElement
 
-OUT = os.path.join(
-    os.path.dirname(os.path.abspath(__file__)), "Table2_categories_subdiagnoses.docx"
-)
+from abcd_ksads import config
+
+config.TABLES_OUT.mkdir(parents=True, exist_ok=True)
+OUT = config.TABLES_OUT / "Table2_categories_subdiagnoses.docx"
 FONT, SIZE = "Arial", 12
 
 HEADER = ["DSM category", "Diagnoses (n)", "Constituent diagnoses"]

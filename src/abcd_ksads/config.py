@@ -99,6 +99,12 @@ class Config(BaseSettings):
 
     @computed_field
     @property
+    def TABLES_OUT(self) -> Path:
+        """Rendered table outputs, written alongside the derivatives directory."""
+        return self.DERIV.parent / "tables"
+
+    @computed_field
+    @property
     def CODEBOOKS(self) -> Path:
         return self.REPO / "codebooks"
 
@@ -137,6 +143,7 @@ DERIV = config.DERIV
 FIGURES = config.FIGURES
 FIGURES_OUT = config.FIGURES_OUT
 TABLES = config.TABLES
+TABLES_OUT = config.TABLES_OUT
 CODEBOOKS = config.CODEBOOKS
 DATASET = config.DATASET
 RAW_CACHE = config.RAW_CACHE

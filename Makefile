@@ -1,7 +1,7 @@
 -include .env
 export
 
-.PHONY: all merge_covariates clean clean-cache ingest figures
+.PHONY: all merge_covariates clean clean-cache ingest figures tables
 
 merge_covariates:
 	uv run python harmonize/merge_covariates.py
@@ -91,6 +91,14 @@ figures: ${ABCD_70}/figures/Figure1_2_combined.png ${ABCD_70}/figures/Figure_bwa
 ${ABCD_70}/figures/Figure_category_calendar.png ${ABCD_70}/figures/Figure_inferential.png \
 ${ABCD_70}/figures/Figure_informant_trajectories.png
 
+${ABCD_70}/tables/Table1_reporting_checklist.docx: tables/build_table1_checklist.py
+	uv run python tables/build_table1_checklist.py
+
+${ABCD_70}/tables/Table2_categories_subdiagnoses.docx: tables/build_table_categories.py
+	uv run python tables/build_table_categories.py
+
+tables: ${ABCD_70}/tables/Table1_reporting_checklist.docx ${ABCD_70}/tables/Table2_categories_subdiagnoses.docx
+
 all: ingest ${ABCD_70}/derivatives/ksads_resolution_summary.csv ${ABCD_70}/derivatives/ksads_administration_grid.csv \
 ${ABCD_70}/derivatives/ksads_caseness_sensitivity.csv ${ABCD_70}/derivatives/ksads_version_audit.csv \
 ${ABCD_70}/derivatives/multiverse_grid.csv ${ABCD_70}/derivatives/multiverse_summary.csv \
@@ -99,4 +107,4 @@ ${ABCD_70}/derivatives/informant_concordance.csv ${ABCD_70}/derivatives/anxiety_
 ${ABCD_70}/derivatives/missingness_error.csv ${ABCD_70}/derivatives/paper_numbers.json \
 ${ABCD_70}/abcd_ksads_harmonized/participants.tsv ${ABCD_70}/derivatives/technical_validation_report.txt \
 ${ABCD_70}/derivatives/module_overscreening.csv ${ABCD_70}/abcd_ksads_harmonized/csv/sessions.csv \
-figures
+figures tables
