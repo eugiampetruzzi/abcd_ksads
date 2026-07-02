@@ -21,6 +21,9 @@ htmlcov/
 coverage.xml
 public/
 
+# built Apptainer image
+*.sif
+
 .DS_Store
 .Rhistory
 .env

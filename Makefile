@@ -2,7 +2,7 @@
 export
 
 .PHONY: all merge_covariates clean clean-cache ingest figures tables validate \
-	coverage docker-build docker-run apptainer-build apptainer-run
+	coverage docker-build docker-run apptainer-build apptainer-run apptainer
 
 # Run the test suite with a line-coverage report for the abcd_ksads package.
 coverage:
@@ -24,12 +24,18 @@ docker-run:
 	docker run --rm --user $$(id -u):$$(id -g) \
 		-v "${ABCD_70}":/data -e ABCD_70=/data ${IMAGE} ${TARGET}
 
-# Native build straight from the definition file (no Docker needed).
-apptainer-build:
+# Native build straight from the definition file (no Docker needed). The image
+# is a real file target, so it is only rebuilt when apptainer.def changes.
+${SIF}: ${DEF}
 	apptainer build --fakeroot ${SIF} ${DEF}
+
+apptainer-build: ${SIF}
 
 apptainer-run:
 	apptainer run --bind "${ABCD_70}":/data --env ABCD_70=/data ${SIF} ${TARGET}
+
+# Build (if needed) then run the pipeline in one step.
+apptainer: apptainer-build apptainer-run
 
 merge_covariates:
 	uv run python harmonize/merge_covariates.py
