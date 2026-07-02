@@ -13,5 +13,17 @@ abcd_ksads_harmonized/
 
 __pycache__/
 *.pyc
+.pytest_cache/
+
+# test-coverage artifacts
+.coverage
+htmlcov/
+coverage.xml
+public/
+
 .DS_Store
 .Rhistory
+.env
+
+paper
+

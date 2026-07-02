@@ -1,0 +1,27 @@
+# Keep the build context small and free of local state, data, and secrets.
+.git
+.gitignore
+
+# Local virtualenv and Python caches (recreated inside the image).
+.venv
+**/__pycache__
+**/*.py[cod]
+.pytest_cache
+.ruff_cache
+.mypy_cache
+
+# Dotenv files may point at (or contain) access-controlled data locations.
+.env
+.env.*
+
+# Not needed to run the pipeline.
+tests
+claude_code_audit
+docs
+LICENSE.md
+
+# Never ship data or generated outputs.
+derivatives
+figures/*.png
+figures/*.pdf
+tables/*.docx
