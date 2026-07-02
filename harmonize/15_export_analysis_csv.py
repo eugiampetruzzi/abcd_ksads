@@ -8,40 +8,25 @@ interview date is not available (the dtt columns were removed for deidentificati
 import pandas as pd
 
 from abcd_ksads import config
+from abcd_ksads.export import AGE_COLS, interview_ages
 
 DSET = config.DATASET
 PHENO = DSET / "phenotype"
 CSV = DSET / "csv"
-V1 = {"ses-00A", "ses-01A", "ses-02A"}
-
-# youngest reported age wins; parent then youth KSADS dep interview age
-AGE_COLS = {"mh_p": "mh_p_ksads__dep_age", "mh_y": "mh_y_ksads__dep_age"}
 
 
 def main():
     CSV.mkdir(parents=True, exist_ok=True)
 
-    # ---- per-session interview age (years -> months), parent then youth, from cache ----
+    # ---- per-session interview age (years -> months), youngest wins, from cache ----
     wide = pd.read_parquet(
         config.RAW_CACHE / "phenotype.parquet",
         columns=["participant_id", "session_id"] + list(AGE_COLS.values()),
     )
-
-    def age_rows(pref):
-        d = wide[["participant_id", "session_id", AGE_COLS[pref]]].copy()
-        d.columns = ["participant_id", "session_id", "age_yr"]
-        return d
-
-    ad = pd.concat([age_rows("mh_p"), age_rows("mh_y")], ignore_index=True)
-    ad["age_yr"] = pd.to_numeric(ad["age_yr"].astype("object"), errors="coerce")
-    ad = ad.dropna(subset=["age_yr"]).sort_values("age_yr")
-    ad = ad.drop_duplicates(["participant_id", "session_id"], keep="first")
-    ad["interview_age"] = (ad["age_yr"] * 12).round().astype("Int64")
-    ad["ksads_version"] = ad["session_id"].apply(lambda s: "1.0" if s in V1 else "2.0")
-    sessions = ad[["participant_id", "session_id", "interview_age", "ksads_version"]]
+    sessions = interview_ages(wide)
     sessions.to_csv(CSV / "sessions.csv", index=False)
 
-    age_map = ad.set_index(["participant_id", "session_id"])["interview_age"]
+    age_map = sessions.set_index(["participant_id", "session_id"])["interview_age"]
 
     # ---- category caseness CSVs (+ interview_age) ----
     for name in ("ksads_categories_current", "ksads_categories_evermet"):
