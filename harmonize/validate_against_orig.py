@@ -6,9 +6,16 @@ By default compares config.DERIV against a sibling ``derivatives_orig`` director
 """
 
 import argparse
+import sys
 
 from abcd_ksads import config
-from abcd_ksads.validate import compare_directories, format_report, report_dataframe
+from abcd_ksads.validate import (
+    compare_directories,
+    format_failure_banner,
+    format_report,
+    inconsistent_results,
+    report_dataframe,
+)
 
 
 def main():
@@ -25,6 +32,13 @@ def main():
     out = config.DERIV / "validation_report.csv"
     report_dataframe(results).to_csv(out, index=False)
     print(f"\nWrote {out.as_posix()}")
+
+    # Fail loudly (and non-zero, so `make` stops) if any derivative diverges.
+    failing = inconsistent_results(results)
+    if failing:
+        sys.stdout.flush()  # keep the banner last, after the report
+        print("\n" + format_failure_banner(failing), file=sys.stderr)
+        sys.exit(1)
 
 
 if __name__ == "__main__":

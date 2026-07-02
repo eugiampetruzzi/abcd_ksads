@@ -263,6 +263,32 @@ def report_dataframe(results: list) -> pd.DataFrame:
     return pd.DataFrame(rows, columns=_REPORT_COLS)
 
 
+# Statuses that mean a derivative does not match the reference: value
+# differences, structural (shape/column) differences, or an absent counterpart.
+# ``consistent`` (equal within numeric tolerance) and ``identical`` are passes.
+INCONSISTENT_STATUSES = ("differs", "shape_mismatch", "missing")
+
+
+def inconsistent_results(results: list) -> list:
+    """Return the result rows whose status signals a mismatch with the reference."""
+    return [r for r in results if r.get("status") in INCONSISTENT_STATUSES]
+
+
+def format_failure_banner(failing: list) -> str:
+    """A prominent, hard-to-miss banner listing files that do not match the reference."""
+    bar = "!" * 80
+    lines = [
+        bar,
+        "VALIDATION FAILED",
+        "Workflow results do not match the intended (reference) results.",
+        f"{len(failing)} file(s) inconsistent with derivatives_orig:",
+    ]
+    for r in failing:
+        lines.append(f"    - {r['file']}  ({r['status']})")
+    lines.append(bar)
+    return "\n".join(lines)
+
+
 def format_report(results: list) -> str:
     """Human-readable per-file summary."""
     df = report_dataframe(results)
