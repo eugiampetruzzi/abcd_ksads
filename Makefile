@@ -1,7 +1,29 @@
 -include .env
 export
 
-.PHONY: all merge_covariates clean clean-cache ingest figures tables
+.PHONY: all merge_covariates clean clean-cache ingest figures tables \
+	docker-build docker-run apptainer-build apptainer-run
+
+# --- Containerized runs (Docker / Apptainer) ---------------------------------
+# IMAGE is the local image tag; TARGET is the pipeline target to run inside the
+# container (e.g. `make docker-run TARGET=figures`). The host ${ABCD_70} data
+# directory is bind-mounted to /data, and ABCD_70=/data inside the container.
+IMAGE ?= abcd_ksads:latest
+SIF ?= abcd_ksads.sif
+TARGET ?= all
+
+docker-build:
+	docker build -t ${IMAGE} .
+
+docker-run:
+	docker run --rm --user $$(id -u):$$(id -g) \
+		-v "${ABCD_70}":/data -e ABCD_70=/data ${IMAGE} ${TARGET}
+
+apptainer-build:
+	apptainer build ${SIF} docker-daemon://${IMAGE}
+
+apptainer-run:
+	apptainer run --bind "${ABCD_70}":/data --env ABCD_70=/data ${SIF} ${TARGET}
 
 merge_covariates:
 	uv run python harmonize/merge_covariates.py

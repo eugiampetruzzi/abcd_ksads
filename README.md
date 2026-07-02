@@ -47,6 +47,60 @@ make all
 
 The results will be placed into a folder called `derivatives` within the ABCD data directory.
 
+## Running via Docker / Apptainer
+
+The whole workflow can be run in a container instead of a local `uv` install.
+No data is baked into the image: you bind-mount your ABCD base data directory
+into the container at `/data` and point `ABCD_70` at it. Inputs are read from
+and all outputs (`derivatives/`, `figures/`, `tables/`, …) are written back
+under that mounted directory, exactly as in a local run.
+
+### Docker
+
+Build the image, then run the full pipeline (replace `/path/to/ABCD/basedir`
+with your host data directory):
+
+```bash
+docker build -t abcd_ksads:latest .
+
+docker run --rm --user $(id -u):$(id -g) \
+    -v /path/to/ABCD/basedir:/data -e ABCD_70=/data \
+    abcd_ksads:latest all
+```
+
+`--user $(id -u):$(id -g)` makes the generated files owned by you rather than
+root. Append a different target to run a single stage, e.g. `... abcd_ksads:latest figures`.
+
+If you have set `ABCD_70` in your `.env`, the Makefile provides equivalent
+wrappers:
+
+```bash
+make docker-build
+make docker-run              # runs `all`
+make docker-run TARGET=figures
+```
+
+### Apptainer
+
+Build a `.sif` image from the local Docker image, then run it. Apptainer
+executes as your own user (so outputs are owned correctly) and mounts the image
+read-only:
+
+```bash
+apptainer build abcd_ksads.sif docker-daemon://abcd_ksads:latest
+
+apptainer run --bind /path/to/ABCD/basedir:/data --env ABCD_70=/data \
+    abcd_ksads.sif all
+```
+
+Or via the Makefile wrappers (with `ABCD_70` set in `.env`):
+
+```bash
+make apptainer-build
+make apptainer-run              # runs `all`
+make apptainer-run TARGET=tables
+```
+
 ## Pipeline
 
 ```
