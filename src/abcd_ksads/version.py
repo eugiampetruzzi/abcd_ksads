@@ -16,7 +16,9 @@ def tag_versions(resolved, two_zero_only_vars, v1_waves=V1_WAVES):
 
     version_valid is False only for a 2.0-only diagnosis recorded under a 1.0 wave."""
     out = resolved.copy()
-    out["ksads_version"] = out.session_id.map(lambda s: "1.0" if s in v1_waves else "2.0")
+    # Vectorized: a C-level isin + dict map, not a per-row Python lambda (the
+    # resolved cache is ~18M rows).
+    out["ksads_version"] = out.session_id.isin(v1_waves).map({True: "1.0", False: "2.0"})
     out["two_zero_only"] = out.variable.isin(set(two_zero_only_vars))
     out["version_valid"] = ~(out.two_zero_only & (out.ksads_version == "1.0"))
     return out
