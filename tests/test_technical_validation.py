@@ -34,6 +34,18 @@ def test_caseness_prevalence_over_assessed_denominator():
     assert tv.caseness_prevalence(caseness, ["Depression"]) == 50.0
 
 
+def test_caseness_prevalence_nan_when_none_assessed():
+    # every row not_administered -> empty assessed denominator -> NaN, not a divide error
+    caseness = pd.DataFrame(
+        [
+            ("p1", "Depression", "not_administered"),
+            ("p2", "Depression", "not_administered"),
+        ],
+        columns=["participant_id", "category", "status"],
+    )
+    assert np.isnan(tv.caseness_prevalence(caseness, ["Depression"]))
+
+
 # ---- concordance_kappa ------------------------------------------------------
 
 
