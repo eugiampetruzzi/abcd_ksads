@@ -1,17 +1,17 @@
-import os
 import numpy as np, pandas as pd
 import matplotlib; matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
 from matplotlib import font_manager, gridspec
-DERIV=os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),"harmonize","derivatives")
-OUT=os.path.dirname(os.path.abspath(__file__))
+from abcd_ksads import config
+
+config.FIGURES_OUT.mkdir(parents=True, exist_ok=True)
 for fam in ("Arial","Helvetica"):
     if any(fam in f.name for f in font_manager.fontManager.ttflist): plt.rcParams["font.family"]=fam; break
 plt.rcParams.update({"font.size":10,"axes.linewidth":0.8,"axes.spines.top":False,"axes.spines.right":False})
 BLUE,RED,GREY="#0072B2","#E69F00","#888888"   # Okabe-Ito colorblind-safe
-R=pd.read_csv(os.path.join(DERIV,"inferential_specs.csv")).dropna(subset=["OR"])
-S=pd.read_csv(os.path.join(DERIV,"inferential_summary.csv"))
+R=pd.read_csv(config.DERIV / "inferential_specs.csv").dropna(subset=["OR"])
+S=pd.read_csv(config.DERIV / "inferential_summary.csv")
 
 fig=plt.figure(figsize=(12.5,8.6))
 gs=gridspec.GridSpec(1,2,width_ratios=[1,1.35],wspace=0.32)
@@ -66,5 +66,5 @@ lg2=[Line2D([0],[0],color=RED,lw=2.4,label="Sign flips (crosses OR=1)"),
 axb.legend(handles=lg2,loc="lower right",frameon=False,fontsize=8.5)
 axb.set_title("b",loc="left",fontweight="bold",fontsize=12)
 fig.tight_layout()
-for e in ("png","pdf"): fig.savefig(os.path.join(OUT,f"Figure_inferential.{e}"),dpi=300,bbox_inches="tight")
+for e in ("png","pdf"): fig.savefig(config.FIGURES_OUT / f"Figure_inferential.{e}",dpi=300,bbox_inches="tight")
 print("wrote Figure_inferential.png/pdf")

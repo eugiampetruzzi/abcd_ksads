@@ -1,11 +1,9 @@
-import os
 import numpy as np, pandas as pd
 import matplotlib; matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
 from matplotlib import font_manager, gridspec
-HARM=os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),"harmonize","derivatives")
-OUT=os.path.dirname(os.path.abspath(__file__))
+from abcd_ksads import config
 for fam in ("Arial","Helvetica"):
     if any(fam in f.name for f in font_manager.fontManager.ttflist): plt.rcParams["font.family"]=fam; break
 plt.rcParams.update({"font.size":10,"axes.linewidth":0.8,"axes.spines.top":False,"axes.spines.right":False})
@@ -14,7 +12,8 @@ STATUS_COLOR={"current":BLUE,"ever_met":RED}; STATUS_LAB={"current":"Current epi
 INF_MARK={"parent":"o","youth":"s","either":"^","both":"D"}
 INF_LAB={"parent":"Parent","youth":"Youth","either":"Either","both":"Both"}
 
-g=pd.read_csv(os.path.join(HARM,"multiverse_grid.csv"))
+config.FIGURES_OUT.mkdir(parents=True, exist_ok=True)
+g=pd.read_csv(config.DERIV / "multiverse_grid.csv")
 
 fig=plt.figure(figsize=(12.5,5.0))
 gs=gridspec.GridSpec(1,2,width_ratios=[1,1.3],wspace=0.30)
@@ -64,5 +63,5 @@ axb.legend(handles=hbi,loc="upper right",bbox_to_anchor=(1.0,0.72),frameon=False
            title="Informant",title_fontsize=9,handletextpad=0.2)
 axb.set_title("b",loc="left",fontweight="bold",fontsize=12)
 fig.tight_layout()
-for e in ("png","pdf"): fig.savefig(os.path.join(OUT,f"Figure1_2_combined.{e}"),dpi=300,bbox_inches="tight")
+for e in ("png","pdf"): fig.savefig(config.FIGURES_OUT / f"Figure1_2_combined.{e}",dpi=300,bbox_inches="tight")
 print("wrote Figure1_2_combined.png/pdf")

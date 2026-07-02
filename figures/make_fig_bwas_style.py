@@ -1,12 +1,11 @@
-import os
 import numpy as np, pandas as pd
 import matplotlib; matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
 from matplotlib import font_manager, gridspec
+from abcd_ksads import config
 
-DERIV = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),"harmonize","derivatives")
-OUT = os.path.dirname(os.path.abspath(__file__))
+config.FIGURES_OUT.mkdir(parents=True, exist_ok=True)
 for fam in ("Arial", "Helvetica"):
     if any(fam in f.name for f in font_manager.fontManager.ttflist):
         plt.rcParams["font.family"] = fam; break
@@ -18,7 +17,7 @@ CMAP = {"Sex": "#E69F00", "Income": "#009E73", "Race/ethnicity": "#56B4E9",
         "Culture/environment": "#CC79A7", "Neuroimaging": "#D55E00"}
 ORDER = ["Sex", "Income", "Race/ethnicity", "Culture/environment", "Neuroimaging"]
 
-R = pd.read_csv(os.path.join(DERIV, "inferential_specs.csv")).dropna(subset=["OR"]).copy()
+R = pd.read_csv(config.DERIV / "inferential_specs.csv").dropna(subset=["OR"]).copy()
 R["abslog"] = np.abs(np.log(R.OR))      # association strength, like |r_BWAS|
 
 # per pair (predictor x construct): all spec strengths, summary stats
@@ -64,5 +63,5 @@ axC.legend(handles=handles, loc="upper left", frameon=False, fontsize=8.2,
            handletextpad=0.2, labelspacing=0.3)
 
 for e in ("png", "pdf"):
-    fig.savefig(os.path.join(OUT, f"Figure_bwas_style.{e}"), dpi=300, bbox_inches="tight")
+    fig.savefig(config.FIGURES_OUT / f"Figure_bwas_style.{e}", dpi=300, bbox_inches="tight")
 print("wrote Figure_bwas_style.png/pdf  |  pairs:", len(pairs))

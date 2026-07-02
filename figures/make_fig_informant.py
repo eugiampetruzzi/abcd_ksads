@@ -1,17 +1,17 @@
-import os, sys
 import numpy as np, pandas as pd
 import matplotlib; matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
 from matplotlib import font_manager
-DERIV=os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),"harmonize","derivatives")
-OUT=os.path.dirname(os.path.abspath(__file__))
+from abcd_ksads import config
+
+config.FIGURES_OUT.mkdir(parents=True, exist_ok=True)
 for fam in ("Arial","Helvetica"):
     if any(fam in f.name for f in font_manager.fontManager.ttflist): plt.rcParams["font.family"]=fam; break
 plt.rcParams.update({"font.size":10,"axes.linewidth":0.8,"axes.spines.top":False,"axes.spines.right":False})
 BLUE,RED,GREY="#0072B2","#E69F00","#888888"   # Okabe-Ito colorblind-safe
-PREV=pd.read_csv(os.path.join(DERIV,"informant_prevalence.csv"))
-CONC=pd.read_csv(os.path.join(DERIV,"informant_concordance.csv"))
+PREV=pd.read_csv(config.DERIV / "informant_prevalence.csv")
+CONC=pd.read_csv(config.DERIV / "informant_concordance.csv")
 SES=["ses-00A","ses-02A","ses-04A","ses-06A"]; XV={s:i for i,s in enumerate(SES)}
 XLAB=["0","2","4","6"]
 ORDER=["Depression","Suicidality","Anxiety","Bipolar","Conduct","Eating","DMDD","OCD","PTSD"]
@@ -39,7 +39,7 @@ def fig_trajectories():
         Line2D([0],[0],color=RED,marker="o",mec="white",label="Youth")]
     fig.legend(handles=hl,loc="upper right",frameon=False,fontsize=10,ncol=2,bbox_to_anchor=(0.99,1.01))
     fig.tight_layout()
-    for e in ("png","pdf"): fig.savefig(os.path.join(OUT,f"Figure_informant_trajectories.{e}"),dpi=300,bbox_inches="tight")
+    for e in ("png","pdf"): fig.savefig(config.FIGURES_OUT / f"Figure_informant_trajectories.{e}",dpi=300,bbox_inches="tight")
     print("wrote Figure_informant_trajectories.png/pdf")
 
 # dumbbell - caregiver vs youth prevalence by category (latest co-assessed wave)
@@ -70,7 +70,7 @@ def fig_dumbbell():
         Line2D([0],[0],marker="o",ls="",mfc=RED,mec="white",label="Youth")]
     ax.legend(handles=hl,loc="lower right",frameon=False,fontsize=9,title="Informant",title_fontsize=9)
     fig.tight_layout()
-    for e in ("png","pdf"): fig.savefig(os.path.join(OUT,f"Figure_informant_dumbbell.{e}"),dpi=300,bbox_inches="tight")
+    for e in ("png","pdf"): fig.savefig(config.FIGURES_OUT / f"Figure_informant_dumbbell.{e}",dpi=300,bbox_inches="tight")
     print("wrote Figure_informant_dumbbell.png/pdf")
 
 # diverging concordance (who drives each diagnosis) at ses-06A
@@ -92,7 +92,7 @@ def fig_diverging():
     ax.set_xlabel("Share of positive cases (%)        caregiver only   |   youth only")
     ax.legend(loc="lower right",frameon=False,fontsize=8.5,ncol=1)
     fig.tight_layout()
-    for e in ("png","pdf"): fig.savefig(os.path.join(OUT,f"Figure_informant_diverging.{e}"),dpi=300,bbox_inches="tight")
+    for e in ("png","pdf"): fig.savefig(config.FIGURES_OUT / f"Figure_informant_diverging.{e}",dpi=300,bbox_inches="tight")
     print("wrote Figure_informant_diverging.png/pdf")
 
 if __name__=="__main__":

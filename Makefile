@@ -1,7 +1,7 @@
 -include .env
 export
 
-.PHONY: all merge_covariates clean clean-cache ingest
+.PHONY: all merge_covariates clean clean-cache ingest figures
 
 merge_covariates:
 	uv run python harmonize/merge_covariates.py
@@ -10,8 +10,14 @@ clean-cache:
 	-rm ${ABCD_70}/derivatives/raw_cache/*
 
 clean:
-	-rm ${ABCD_70}/subject_demographics.tsv
 	-rm ${ABCD_70}/derivatives/ksads*
+
+clean-figures:
+	-rm ${ABCD_70}/figures/*
+
+clean-tables:
+	-rm ${ABCD_70}/tables/*
+	
 
 ingest: ${ABCD_70}/derivatives/raw_cache/phenotype.parquet
 
@@ -66,6 +72,25 @@ ${ABCD_70}/derivatives/module_overscreening.csv: ${ABCD_70}/derivatives/ksads_re
 ${ABCD_70}/abcd_ksads_harmonized/csv/sessions.csv: ${ABCD_70}/derivatives/raw_cache/phenotype.parquet ${ABCD_70}/abcd_ksads_harmonized/participants.tsv
 	uv run python harmonize/15_export_analysis_csv.py
 
+${ABCD_70}/figures/Figure1_2_combined.png: ${ABCD_70}/derivatives/multiverse_grid.csv
+	uv run python figures/make_fig12.py
+
+${ABCD_70}/figures/Figure_bwas_style.png: ${ABCD_70}/derivatives/inferential_summary.csv
+	uv run python figures/make_fig_bwas_style.py
+
+${ABCD_70}/figures/Figure_category_calendar.png: ${ABCD_70}/derivatives/ksads_administration_grid.csv
+	uv run python figures/make_fig_catcalendar.py
+
+${ABCD_70}/figures/Figure_inferential.png: ${ABCD_70}/derivatives/inferential_summary.csv
+	uv run python figures/make_fig_inferential.py
+
+${ABCD_70}/figures/Figure_informant_trajectories.png: ${ABCD_70}/derivatives/informant_concordance.csv
+	uv run python figures/make_fig_informant.py
+
+figures: ${ABCD_70}/figures/Figure1_2_combined.png ${ABCD_70}/figures/Figure_bwas_style.png \
+${ABCD_70}/figures/Figure_category_calendar.png ${ABCD_70}/figures/Figure_inferential.png \
+${ABCD_70}/figures/Figure_informant_trajectories.png
+
 all: ingest ${ABCD_70}/derivatives/ksads_resolution_summary.csv ${ABCD_70}/derivatives/ksads_administration_grid.csv \
 ${ABCD_70}/derivatives/ksads_caseness_sensitivity.csv ${ABCD_70}/derivatives/ksads_version_audit.csv \
 ${ABCD_70}/derivatives/multiverse_grid.csv ${ABCD_70}/derivatives/multiverse_summary.csv \
@@ -73,4 +98,5 @@ ${ABCD_70}/derivatives/single_lever.csv ${ABCD_70}/derivatives/inferential_summa
 ${ABCD_70}/derivatives/informant_concordance.csv ${ABCD_70}/derivatives/anxiety_decomposition.csv \
 ${ABCD_70}/derivatives/missingness_error.csv ${ABCD_70}/derivatives/paper_numbers.json \
 ${ABCD_70}/abcd_ksads_harmonized/participants.tsv ${ABCD_70}/derivatives/technical_validation_report.txt \
-${ABCD_70}/derivatives/module_overscreening.csv ${ABCD_70}/abcd_ksads_harmonized/csv/sessions.csv
+${ABCD_70}/derivatives/module_overscreening.csv ${ABCD_70}/abcd_ksads_harmonized/csv/sessions.csv \
+figures

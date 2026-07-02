@@ -1,12 +1,12 @@
-import os
 import pandas as pd
 import matplotlib; matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 from matplotlib.patches import Rectangle
 from matplotlib.lines import Line2D
 from matplotlib import font_manager
-HARM=os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),"harmonize","derivatives")
-OUT=os.path.dirname(os.path.abspath(__file__))
+from abcd_ksads import config
+
+config.FIGURES_OUT.mkdir(parents=True, exist_ok=True)
 for fam in ("Arial","Helvetica"):
     if any(fam in f.name for f in font_manager.fontManager.ttflist): plt.rcParams["font.family"]=fam; break
 plt.rcParams.update({"font.size":9.5})
@@ -30,7 +30,7 @@ CATS=[
  ("PTSD",1,"Post-traumatic stress disorder",["ptsd"],["ptsd"]),
  ("Autism",1,"Autism spectrum disorder",["asd"],[]),
 ]
-cal=pd.read_csv(os.path.join(HARM,"ksads_administration_calendar.csv"))
+cal=pd.read_csv(config.DERIV / "ksads_administration_calendar.csv")
 def color(mods,inf,ses):
     if not mods: return GREY                       # module not part of this informant's interview
     sub=cal[(cal.informant==inf)&(cal.module.isin(mods))&(cal.session_id==ses)]
@@ -74,5 +74,5 @@ ax.legend(handles=leg,loc="lower left",bbox_to_anchor=(0.0,-0.12),frameon=False,
           ncol=3,fontsize=9,handletextpad=0.3,columnspacing=1.4)
 ax.set_xlim(-0.4,x0+8*(cw+gap)+1.4); ax.set_ylim(-0.95,n+0.7); ax.axis("off")
 fig.tight_layout()
-for e in ("png","pdf"): fig.savefig(os.path.join(OUT,f"Figure_category_calendar.{e}"),dpi=300,bbox_inches="tight")
+for e in ("png","pdf"): fig.savefig(config.FIGURES_OUT / f"Figure_category_calendar.{e}",dpi=300,bbox_inches="tight")
 print("wrote Figure_category_calendar.png/pdf")

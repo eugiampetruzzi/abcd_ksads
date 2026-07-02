@@ -88,6 +88,12 @@ class Config(BaseSettings):
 
     @computed_field
     @property
+    def FIGURES_OUT(self) -> Path:
+        """Rendered figure outputs, written alongside the derivatives directory."""
+        return self.DERIV.parent / "figures"
+
+    @computed_field
+    @property
     def TABLES(self) -> Path:
         return self.REPO / "tables"
 
@@ -129,6 +135,7 @@ REPO = config.REPO
 HARMONIZE = config.HARMONIZE
 DERIV = config.DERIV
 FIGURES = config.FIGURES
+FIGURES_OUT = config.FIGURES_OUT
 TABLES = config.TABLES
 CODEBOOKS = config.CODEBOOKS
 DATASET = config.DATASET
