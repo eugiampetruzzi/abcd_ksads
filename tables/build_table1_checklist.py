@@ -1,39 +1,76 @@
 import os
 from docx import Document
-from docx.shared import Pt, Inches, RGBColor
+from docx.shared import Pt, Inches
 from docx.enum.text import WD_ALIGN_PARAGRAPH
 from docx.oxml.ns import qn
 from docx.oxml import OxmlElement
 
-OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "Table1_reporting_checklist.docx")
+OUT = os.path.join(
+    os.path.dirname(os.path.abspath(__file__)), "Table1_reporting_checklist.docx"
+)
 FONT, SIZE = "Arial", 12
 
-HEADER = ["Analytic decision", "What to report", "Recommended default",
-          "Include in sensitivity analysis?"]
-ROWS = [
-    ("Diagnostic status", "Current vs. ever-met (present, past, remission)",
-     "Match to the research question", "Yes"),
-    ("Informant", "Parent, youth, either, or both", "Either", "Yes"),
-    ("Threshold", "Full criteria vs. including subthreshold", "Full criteria", "Optional"),
-    ("Construct membership", "e.g., specific phobia in or out of anxiety",
-     "State explicitly", "Yes, for anxiety"),
-    ("Lifetime reconstruction", "Whether ever-met is computed within a wave or unioned across waves",
-     "Union across waves for lifetime status", "Yes, for longitudinal analyses"),
-    ("Administrative codes", "How 555, 888, and missing values were handled",
-     "Not-administered kept as missing; never recoded to 0", "Fixed (correctness, not preference)"),
-    ("Instrument version", "Which KSADS-COMP versions are included",
-     "Report version; flag the 1.0-to-2.0 transition", "If the analysis spans ses-03A"),
-    ("Administration schedule", "Waves and modules used",
-     "Follow the administration calendar", "Not applicable"),
+HEADER = [
+    "Analytic decision",
+    "What to report",
+    "Recommended default",
+    "Include in sensitivity analysis?",
 ]
-NOTE = ("The four upper rows are the analytic choices that vary across the specification "
-        "curve in Figure 1; investigators should state each and report whether substantive "
-        "results hold across reasonable alternatives. The recommended default is this "
-        "resource's configuration, not an external standard. Administrative-code handling is "
-        "fixed because it has a correct answer rather than a preference: a not-administered "
-        "cell is not a negative. Within-wave episode fields do not carry prior diagnoses "
-        "forward, so lifetime status should be reconstructed by unioning episodes across waves "
-        "(Figure 6).")
+ROWS = [
+    (
+        "Diagnostic status",
+        "Current vs. ever-met (present, past, remission)",
+        "Match to the research question",
+        "Yes",
+    ),
+    ("Informant", "Parent, youth, either, or both", "Either", "Yes"),
+    (
+        "Threshold",
+        "Full criteria vs. including subthreshold",
+        "Full criteria",
+        "Optional",
+    ),
+    (
+        "Construct membership",
+        "e.g., specific phobia in or out of anxiety",
+        "State explicitly",
+        "Yes, for anxiety",
+    ),
+    (
+        "Lifetime reconstruction",
+        "Whether ever-met is computed within a wave or unioned across waves",
+        "Union across waves for lifetime status",
+        "Yes, for longitudinal analyses",
+    ),
+    (
+        "Administrative codes",
+        "How 555, 888, and missing values were handled",
+        "Not-administered kept as missing; never recoded to 0",
+        "Fixed (correctness, not preference)",
+    ),
+    (
+        "Instrument version",
+        "Which KSADS-COMP versions are included",
+        "Report version; flag the 1.0-to-2.0 transition",
+        "If the analysis spans ses-03A",
+    ),
+    (
+        "Administration schedule",
+        "Waves and modules used",
+        "Follow the administration calendar",
+        "Not applicable",
+    ),
+]
+NOTE = (
+    "The four upper rows are the analytic choices that vary across the specification "
+    "curve in Figure 1; investigators should state each and report whether substantive "
+    "results hold across reasonable alternatives. The recommended default is this "
+    "resource's configuration, not an external standard. Administrative-code handling is "
+    "fixed because it has a correct answer rather than a preference: a not-administered "
+    "cell is not a negative. Within-wave episode fields do not carry prior diagnoses "
+    "forward, so lifetime status should be reconstructed by unioning episodes across waves "
+    "(Figure 6)."
+)
 
 
 def style_run(run, *, italic=False, bold=False):
@@ -86,8 +123,11 @@ for st in ("Normal",):
     doc.styles[st].font.size = Pt(SIZE)
 
 para(doc, [("Table 1", dict(bold=True))], space_after=0)
-para(doc, [("Reporting checklist for KSADS-COMP diagnostic definitions", dict(italic=True))],
-     space_after=6)
+para(
+    doc,
+    [("Reporting checklist for KSADS-COMP diagnostic definitions", dict(italic=True))],
+    space_after=6,
+)
 
 n = len(ROWS) + 1
 tbl = doc.add_table(rows=n, cols=4)
