@@ -6,37 +6,13 @@ import json
 import pandas as pd
 
 from abcd_ksads import config
-from abcd_ksads.category_crosswalk import build_crosswalk, build_caseness
+from abcd_ksads.bids import DISORDER_CATS, caseness_wide, count_admin_waves
+from abcd_ksads.category_crosswalk import build_crosswalk
 
 ROOT = config.DATASET
 PHENO = ROOT / "phenotype"
 
 EVEN = ["ses-00A", "ses-02A", "ses-04A", "ses-06A"]
-ALL_SES = [
-    "ses-00A",
-    "ses-01A",
-    "ses-02A",
-    "ses-03A",
-    "ses-04A",
-    "ses-05A",
-    "ses-06A",
-    "ses-07A",
-]
-DISORDER_CATS = [
-    "Depression",
-    "Anxiety",
-    "ADHD",
-    "ODD",
-    "Conduct",
-    "Bipolar",
-    "DMDD",
-    "OCD",
-    "PTSD",
-    "Autism",
-    "Tic",
-    "Eating",
-    "Psychosis",
-]
 
 
 def write_json(path, obj):
@@ -85,67 +61,10 @@ def main():
         compression="gzip",
     )
 
-    # ---- 2. category caseness tables (wide; recommended default = parent) ----
+    # ---- 2. category caseness tables (wide; parent/youth/either informants) ----
     base = ver[ver.session_id.isin(EVEN)].copy()
-    RANK = {"positive": 3, "administered_negative": 2, "not_administered": 1}
-    INV = {3: "positive", 2: "administered_negative", 1: "not_administered"}
-
-    def caseness_informant(status_set, informant):
-        if informant == "either":
-            cp = build_caseness(
-                base,
-                cw,
-                status_set=status_set,
-                include_subthreshold=False,
-                informant="parent",
-            )
-            cy = build_caseness(
-                base,
-                cw,
-                status_set=status_set,
-                include_subthreshold=False,
-                informant="youth",
-            )
-            c = pd.concat([cp, cy])
-            c["rk"] = c.status.map(RANK)
-            c = (
-                c.groupby(["participant_id", "session_id", "category"])["rk"]
-                .max()
-                .reset_index()
-            )
-            c["status"] = c.rk.map(INV)
-            return c[["participant_id", "session_id", "category", "status"]]
-        return build_caseness(
-            base,
-            cw,
-            status_set=status_set,
-            include_subthreshold=False,
-            informant=informant,
-        )
-
-    def caseness_wide(status_set):
-        frames = []
-        for inf in ["parent", "youth", "either"]:
-            c = caseness_informant(status_set, inf)
-            c = c[c.category.isin(DISORDER_CATS)]
-            wide = c.pivot_table(
-                index=["participant_id", "session_id"],
-                columns="category",
-                values="status",
-                aggfunc="first",
-            ).reset_index()
-            for cat in DISORDER_CATS:
-                if cat not in wide:
-                    wide[cat] = "not_administered"
-                wide[cat] = wide[cat].fillna("not_administered")
-            wide.insert(2, "informant", inf)
-            frames.append(
-                wide[["participant_id", "session_id", "informant"] + DISORDER_CATS]
-            )
-        return pd.concat(frames, ignore_index=True)
-
-    cur = caseness_wide("current")
-    eve = caseness_wide("ever_met")
+    cur = caseness_wide(base, cw, "current")
+    eve = caseness_wide(base, cw, "ever_met")
     cur.to_csv(PHENO / "ksads_categories_current.tsv", sep="\t", index=False)
     eve.to_csv(PHENO / "ksads_categories_evermet.tsv", sep="\t", index=False)
 
@@ -155,20 +74,7 @@ def main():
     cw.to_csv(PHENO / "ksads_category_crosswalk.tsv", sep="\t", index=False)
 
     # ---- 4. participants.tsv ----
-    adm = res[res.resolved.isin(["positive", "administered_negative"])]
-    nwav = (
-        adm.groupby(["participant_id", "informant"])["session_id"]
-        .nunique()
-        .unstack(fill_value=0)
-        .reset_index()
-    )
-    for col in ("parent", "youth"):
-        if col not in nwav:
-            nwav[col] = 0
-    parts = nwav.rename(
-        columns={"parent": "n_waves_parent_kSADS", "youth": "n_waves_youth_kSADS"}
-    )
-    parts = parts[["participant_id", "n_waves_parent_kSADS", "n_waves_youth_kSADS"]]
+    parts = count_admin_waves(res)
     parts.to_csv(ROOT / "participants.tsv", sep="\t", index=False)
 
     # ---- 5. JSON data dictionaries ----
