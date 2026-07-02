@@ -40,6 +40,11 @@ From: ghcr.io/astral-sh/uv:python3.13-bookworm-slim
     uv sync --no-dev
     rm -rf /tmp/uv-build-cache
 
+    # Make the whole tree world-readable/traversable. A --fakeroot build under a
+    # root-mapped namespace can otherwise leave /app unreadable to the
+    # unprivileged user who runs the container (read-only rootfs at run time).
+    chmod -R a+rX /app
+
 %environment
     # Run time: never mutate the pre-synced env (Apptainer's rootfs is read-only),
     # and keep uv's cache + matplotlib's config in the writable /tmp mount so the
@@ -55,5 +60,8 @@ From: ghcr.io/astral-sh/uv:python3.13-bookworm-slim
     # `apptainer run <sif>` runs the whole pipeline; append a target to run a
     # single stage, e.g. `apptainer run <sif> figures`.
     cd /app
+    # Drop any make state leaked in from a host `make apptainer-run`, so this
+    # runs as a clean top-level make regardless of how the container is launched.
+    unset MAKEFLAGS MAKELEVEL MFLAGS
     if [ "$#" -eq 0 ]; then set -- all; fi   # default target, mirrors Docker CMD ["all"]
     exec make "$@"
