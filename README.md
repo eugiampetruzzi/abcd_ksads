@@ -50,7 +50,7 @@ make all
 
 The results will be placed into a folder called `derivatives` within the ABCD data directory.
 
-## Running via Docker / Apptainer
+## Running via Apptainer or Docker
 
 The whole workflow can be run in a container instead of a local `uv` install.
 No data is baked into the image: you bind-mount your ABCD base data directory
@@ -58,10 +58,43 @@ into the container at `/data` and point `ABCD_70` at it. Inputs are read from
 and all outputs (`derivatives/`, `figures/`, `tables/`, …) are written back
 under that mounted directory, exactly as in a local run.
 
+Because the ABCD data are access-controlled, nearly everyone runs this pipeline on
+a shared HPC system — so **Apptainer is the recommended route** (it builds and runs
+entirely as your own user, needing neither Docker nor root, and most clusters
+provide it). Docker is an alternative for local machines where you have it.
+
+### Apptainer (recommended)
+
+Apptainer builds and runs entirely as your own user (no Docker, no root; outputs
+are owned correctly and the image is mounted read-only). With `ABCD_70` set in your
+`.env`, build the image once and run the pipeline through the Makefile wrappers:
+
+```bash
+make apptainer-build                 # native --fakeroot build from apptainer.def
+make apptainer-run                   # runs the full pipeline (`all`)
+make apptainer-run TARGET=figures    # or a single stage
+```
+
+The wrappers expand to plain Apptainer commands, which you can also run directly
+(substitute your host data path if `ABCD_70` isn't in `.env`):
+
+```bash
+apptainer build --fakeroot abcd_ksads.sif apptainer.def
+
+apptainer run --bind /path/to/ABCD/basedir:/data --env ABCD_70=/data \
+    abcd_ksads.sif all
+```
+
+Note for HPC clusters: many sites bind-mount paths such as `/software` into every
+container via `apptainer.conf`. The minimal base image lacks those paths and the
+build can't auto-create them, which otherwise fails the build. `apptainer.def`
+pre-creates `/software` in a `%setup` step to avoid this; if your cluster binds a
+different path, add it there the same way.
+
 ### Docker
 
-Build the image, then run the full pipeline (replace `/path/to/ABCD/basedir`
-with your host data directory):
+For local runs on a machine with Docker, build the image and run the full pipeline
+(replace `/path/to/ABCD/basedir` with your host data directory):
 
 ```bash
 docker build -t abcd_ksads:latest .
@@ -83,37 +116,9 @@ make docker-run              # runs `all`
 make docker-run TARGET=figures
 ```
 
-### Apptainer
-
-You can build the `.sif` image **directly from the definition file, with no
-Docker involved**, using `--fakeroot` (works as an unprivileged user on most HPC
-systems). Then run it — Apptainer executes as your own user (so outputs are owned
-correctly) and mounts the image read-only:
-
-```bash
-apptainer build --fakeroot abcd_ksads.sif apptainer.def
-
-apptainer run --bind /path/to/ABCD/basedir:/data --env ABCD_70=/data \
-    abcd_ksads.sif all
-```
-
-Note for HPC clusters: many sites bind-mount paths such as `/software` into every
-container via `apptainer.conf`. The minimal base image lacks those paths and the
-build can't auto-create them, which otherwise fails the build. `apptainer.def`
-pre-creates `/software` in a `%setup` step to avoid this; if your cluster binds a
-different path, add it there the same way.
-
-Or via the Makefile wrappers (with `ABCD_70` set in `.env`):
-
-```bash
-make apptainer-build            # native --fakeroot build from apptainer.def
-make apptainer-run              # runs `all`
-make apptainer-run TARGET=tables
-```
-
-`apptainer.def` mirrors the `Dockerfile`, so the two images are equivalent.
-If you would rather reuse a Docker image you already built, you can convert it
-instead of building natively:
+`apptainer.def` mirrors the `Dockerfile`, so the two images are equivalent. If you
+already built a Docker image, you can convert it to a `.sif` instead of building
+natively:
 
 ```bash
 apptainer build abcd_ksads.sif docker-daemon://abcd_ksads:latest
