@@ -1,0 +1,77 @@
+bucket,construct,construct_label,predictor,n_specs,OR_min,OR_max,pct_sig,sign_flip,any_sig,all_sig,eta2_status,eta2_informant
+Culture/environment,ADHD,ADHD,Family conflict (per SD),4,1.2137261825134196,1.2565407522252963,100.0,False,True,True,1.0,0.0
+Culture/environment,ADHD,ADHD,Screen time (per SD),4,1.2766790303096258,1.3093692534210082,100.0,False,True,True,1.0,0.0
+Culture/environment,anxiety,Anxiety,Family conflict (per SD),8,1.0345923617478283,1.6410308377768283,87.5,False,True,False,0.02048245271771588,0.9712709726316507
+Culture/environment,anxiety,Anxiety,Screen time (per SD),8,1.1265331113801091,1.4287396859719121,100.0,False,True,True,0.20070804360239905,0.7450755871131628
+Culture/environment,any-disorder,Any disorder,Family conflict (per SD),8,1.1370541049289917,1.6866148702097015,100.0,False,True,True,0.017420826875054668,0.9766597023424858
+Culture/environment,any-disorder,Any disorder,Screen time (per SD),8,1.178270860476036,1.5470452444963974,100.0,False,True,True,0.08723640210559777,0.9035280404305533
+Culture/environment,depression,Depression,Family conflict (per SD),7,1.2114199923260058,2.562970543268796,85.71428571428571,False,True,False,0.04088970519639468,0.9548476473535792
+Culture/environment,depression,Depression,Screen time (per SD),7,1.2401040347784775,1.7940484519416156,85.71428571428571,False,True,False,0.00016246886599192585,0.8212410884983052
+Culture/environment,eating,Eating disorders,Family conflict (per SD),4,1.454508696956509,1.4896745907760962,100.0,False,True,True,1.0,0.0
+Culture/environment,eating,Eating disorders,Screen time (per SD),4,1.508900813120534,1.5238907234563082,100.0,False,True,True,1.0,1.261364035243229e-28
+Culture/environment,suicidality,Suicidality,Family conflict (per SD),8,1.2990290307999197,1.7963652314797085,100.0,False,True,True,0.33762115978550145,0.6480684097803651
+Culture/environment,suicidality,Suicidality,Screen time (per SD),8,1.1330458272205894,1.341717880728488,100.0,False,True,True,0.18385466389212615,0.729158271771714
+Income,ADHD,ADHD,Income (per SD),4,0.8598876392269191,0.9156101749982264,100.0,False,True,True,1.0,0.0
+Income,anxiety,Anxiety,Income (per SD),8,0.8063521560870057,0.9980470583843677,50.0,False,True,False,0.873721797268675,0.06435435773529379
+Income,any-disorder,Any disorder,Income (per SD),8,0.7025051212728457,0.9007781251290604,100.0,False,True,True,0.522750193493441,0.33511884942928294
+Income,depression,Depression,Income (per SD),7,0.5713306347941751,0.7633389674515014,85.71428571428571,False,True,False,0.3857510638569767,0.7753115556168578
+Income,eating,Eating disorders,Income (per SD),4,0.6701663549062312,0.6807801274412361,100.0,False,True,True,1.0,0.0
+Income,suicidality,Suicidality,Income (per SD),8,0.7591136619095719,0.9786005676871891,75.0,False,True,False,0.608066232822176,0.2853740530705275
+Neuroimaging,ADHD,ADHD,DMN within-network FC (per SD),4,0.9155180804298977,0.9233655985932373,50.0,False,True,False,1.0,0.0
+Neuroimaging,ADHD,ADHD,DMN-FPN FC (per SD),4,0.9886369958296216,1.0002488074236096,0.0,True,False,False,1.0,0.0
+Neuroimaging,ADHD,ADHD,DMN-salience FC (per SD),4,1.0059586288610598,1.0228360040885112,0.0,False,False,False,1.0,0.0
+Neuroimaging,ADHD,ADHD,FPN within-network FC (per SD),4,0.9133832466558278,0.9144224763299329,100.0,False,True,True,1.0,0.0
+Neuroimaging,ADHD,ADHD,Salience within-network FC (per SD),4,0.9547363633691823,0.9562322882953964,0.0,False,False,False,1.0,0.0
+Neuroimaging,ADHD,ADHD,Salience-FPN FC (per SD),4,0.9027113778095469,0.925099109906982,100.0,False,True,True,1.0,1.283627976641951e-30
+Neuroimaging,anxiety,Anxiety,DMN within-network FC (per SD),4,0.9381282427038327,0.968333267403215,0.0,False,False,False,0.9988001289087011,0.00039699503056446624
+Neuroimaging,anxiety,Anxiety,DMN-FPN FC (per SD),4,0.9902880377103664,1.0188988942562534,0.0,True,False,False,0.9780440106864224,0.018554418700285298
+Neuroimaging,anxiety,Anxiety,DMN-salience FC (per SD),4,1.0046865471088873,1.0323528579994912,0.0,False,False,False,0.8089426597155891,0.07479866791615404
+Neuroimaging,anxiety,Anxiety,FPN within-network FC (per SD),4,0.936332091069354,0.9718072238316517,0.0,False,False,False,0.9992708692578938,0.0003787484076558027
+Neuroimaging,anxiety,Anxiety,Salience within-network FC (per SD),4,0.9541860151928556,0.9942144475391679,25.0,False,True,False,0.9183802329896847,0.0730815957389168
+Neuroimaging,anxiety,Anxiety,Salience-FPN FC (per SD),4,0.9424029637032996,0.9591731691595573,25.0,False,True,False,0.9615982717062161,0.035755760616111174
+Neuroimaging,any-disorder,Any disorder,DMN within-network FC (per SD),8,0.8628650894111954,0.9624384728531634,50.0,False,True,False,0.5698163308346431,0.20734724266159082
+Neuroimaging,any-disorder,Any disorder,DMN-FPN FC (per SD),8,0.8439238056548013,0.9998055839547434,25.0,False,True,False,0.025860768342009694,0.8330644987299762
+Neuroimaging,any-disorder,Any disorder,DMN-salience FC (per SD),8,0.9874000729819978,1.0420036852783991,0.0,True,False,False,0.5464108804520591,0.07950827086423808
+Neuroimaging,any-disorder,Any disorder,FPN within-network FC (per SD),8,0.7945719065123631,0.9479673401034169,87.5,False,True,False,0.09599124348131348,0.7178512509507481
+Neuroimaging,any-disorder,Any disorder,Salience within-network FC (per SD),8,0.9773397433485171,1.0905099151440256,0.0,True,False,False,0.08286458839879175,0.9057646435711141
+Neuroimaging,any-disorder,Any disorder,Salience-FPN FC (per SD),8,0.9454923962170085,1.048641418993728,25.0,True,True,False,0.2334755772824746,0.7543033286927325
+Neuroimaging,depression,Depression,DMN within-network FC (per SD),2,0.8967671742388408,0.9332080955846126,50.0,False,True,False,0.0,1.0
+Neuroimaging,depression,Depression,DMN-FPN FC (per SD),2,1.0738651306452471,1.132467731720395,0.0,False,False,False,0.0,1.0
+Neuroimaging,depression,Depression,DMN-salience FC (per SD),2,0.8677330710272623,0.9090597632369373,100.0,False,True,True,0.0,1.0
+Neuroimaging,depression,Depression,FPN within-network FC (per SD),3,0.8907925912528585,1.0913712788533243,0.0,True,False,False,0.0,0.9999999999999998
+Neuroimaging,depression,Depression,Salience within-network FC (per SD),2,0.9986735136491861,0.9998508833242742,0.0,False,False,False,0.0,1.0
+Neuroimaging,depression,Depression,Salience-FPN FC (per SD),2,1.0043451103162637,1.0926141599559531,0.0,False,False,False,0.0,1.0
+Neuroimaging,suicidality,Suicidality,DMN within-network FC (per SD),7,0.8851389494186639,1.0091542774595725,0.0,True,False,False,0.2768294435045622,0.5946950027883336
+Neuroimaging,suicidality,Suicidality,DMN-FPN FC (per SD),7,0.9649921738881829,1.082678835096463,0.0,True,False,False,0.13745438279809488,0.6346256517908829
+Neuroimaging,suicidality,Suicidality,DMN-salience FC (per SD),7,0.9266176526918413,1.1508177654036171,14.285714285714285,True,True,False,0.5107774707690701,0.7091287205126491
+Neuroimaging,suicidality,Suicidality,FPN within-network FC (per SD),7,0.933830622122349,1.0243589020569002,0.0,True,False,False,0.020400570806683678,0.8255344783279808
+Neuroimaging,suicidality,Suicidality,Salience within-network FC (per SD),7,0.9943575292810235,1.1229964576745537,0.0,True,False,False,0.004830351226168506,0.8184289881240068
+Neuroimaging,suicidality,Suicidality,Salience-FPN FC (per SD),7,0.9355484635756457,1.0235818239653467,14.285714285714285,True,True,False,0.024676147663824765,0.8726966158467452
+Race/ethnicity,ADHD,ADHD,Race: Asian vs White,2,0.31783269355285465,0.31783269355285465,100.0,False,True,True,,
+Race/ethnicity,ADHD,ADHD,Race: Black/AA vs White,4,1.0005001561770066,1.0435763967518448,0.0,False,False,False,1.0,0.0
+Race/ethnicity,ADHD,ADHD,Race: Hispanic vs White,4,0.8071856627477648,0.9480232857943933,0.0,False,False,False,1.0,0.0
+Race/ethnicity,ADHD,ADHD,Race: Other/Multiracial vs White,4,1.0467514616574587,1.1776298510576797,0.0,False,False,False,1.0,0.0
+Race/ethnicity,anxiety,Anxiety,Race: Asian vs White,4,0.6400292091635342,0.8480576757492357,50.0,False,True,False,0.9821152617706805,0.00026200045144991545
+Race/ethnicity,anxiety,Anxiety,Race: Black/AA vs White,7,0.901469887035551,1.4699652042552853,28.57142857142857,True,True,False,0.7558584279155224,0.27432879950754174
+Race/ethnicity,anxiety,Anxiety,Race: Hispanic vs White,7,0.9566199622428792,1.6862438168906562,28.57142857142857,True,True,False,0.3854097949384511,0.6065411112705469
+Race/ethnicity,anxiety,Anxiety,Race: Other/Multiracial vs White,6,1.0364927279804876,2.0095254501221835,50.0,False,True,False,0.011210413674948317,0.8502895158773944
+Race/ethnicity,any-disorder,Any disorder,Race: Asian vs White,5,0.5017817758496096,0.886727136319303,80.0,False,True,False,0.1668809832035709,0.9999300804995083
+Race/ethnicity,any-disorder,Any disorder,Race: Black/AA vs White,8,0.932389166770892,1.8646421869181076,75.0,True,True,False,0.0811999376267054,0.6963271784117032
+Race/ethnicity,any-disorder,Any disorder,Race: Hispanic vs White,8,0.8707623999601014,1.351151617856996,37.5,True,True,False,0.24532760144879032,0.6161957736238431
+Race/ethnicity,any-disorder,Any disorder,Race: Other/Multiracial vs White,8,1.0302640748122633,1.550339226938634,62.5,False,True,False,0.09138267263347333,0.7224348636184275
+Race/ethnicity,depression,Depression,Race: Black/AA vs White,5,1.3730293517210348,2.4669942006549603,60.0,False,True,False,0.02668712545413771,0.6312708415126229
+Race/ethnicity,depression,Depression,Race: Hispanic vs White,5,1.1042592868468566,1.7819909465654356,60.0,False,True,False,0.9512992223595332,0.29344560623106486
+Race/ethnicity,depression,Depression,Race: Other/Multiracial vs White,3,1.1178020556928137,1.6325082623634921,66.66666666666666,False,True,False,0.0,1.0
+Race/ethnicity,eating,Eating disorders,Race: Black/AA vs White,4,1.9804504310033948,2.0638668098764903,100.0,False,True,True,1.0,0.0
+Race/ethnicity,eating,Eating disorders,Race: Hispanic vs White,4,2.2131331195723387,2.433199953005291,100.0,False,True,True,1.0,5.4863285642553326e-30
+Race/ethnicity,eating,Eating disorders,Race: Other/Multiracial vs White,4,2.027122159296098,2.30288241929395,100.0,False,True,True,1.0,0.0
+Race/ethnicity,suicidality,Suicidality,Race: Asian vs White,5,0.9601415918254321,1.3701487968938812,0.0,True,False,False,0.9178019404528314,0.04695806575831302
+Race/ethnicity,suicidality,Suicidality,Race: Black/AA vs White,7,0.6569689182735766,1.1496162820957163,14.285714285714285,True,True,False,0.27631873034424215,0.6419375339167098
+Race/ethnicity,suicidality,Suicidality,Race: Hispanic vs White,7,0.9748239677234153,1.1712940209663099,0.0,True,False,False,0.5631179472339852,0.5642797443652453
+Race/ethnicity,suicidality,Suicidality,Race: Other/Multiracial vs White,7,1.0749832909857684,1.5345430404936644,57.14285714285714,False,True,False,0.0034585838131764497,0.7276125785620416
+Sex,ADHD,ADHD,Female (vs male),4,0.4194913186692789,0.48390232300258545,100.0,False,True,True,1.0,0.0
+Sex,anxiety,Anxiety,Female (vs male),8,0.9417048969810765,1.1989906853869072,0.0,True,False,False,0.06711173120299732,0.7539360512595606
+Sex,any-disorder,Any disorder,Female (vs male),8,0.6260318577210348,0.8901020858588126,87.5,False,True,False,0.22279106277143879,0.6115846041551591
+Sex,depression,Depression,Female (vs male),7,0.47171768504564104,0.8512916186432152,0.0,False,False,False,0.011069015688397969,0.794872434140912
+Sex,eating,Eating disorders,Female (vs male),4,0.8716985274200606,0.9232927215520972,0.0,False,False,False,1.0,0.0
+Sex,suicidality,Suicidality,Female (vs male),8,0.6172035146258439,0.7889793135301038,87.5,False,True,False,0.05480534948734601,0.13886127068497298

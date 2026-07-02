@@ -1,0 +1,5 @@
+construct,default_prevalence_pct,cdc_us_current,cdc_note
+Anxiety,10.15,11%,"current diagnosed anxiety, NSCH 2022-23"
+Depression,0.2,3.2%,"current diagnosed depression, NSCH 2016 (apples-to-apples current)"
+Behavior (ODD/Conduct),7.52,8%,"current diagnosed behavior disorders, NSCH 2022-23"
+Any disorder (ever-met),47.19,21%,"ever diagnosed any mental/emotional/behavioral condition, NSCH 2021"

@@ -1,0 +1,2 @@
+variable,n_positive,n_administered,n_all_personwaves,prevalence_correct_pct,prevalence_error_pct,fold_deflation,fabricated_personwaves
+mh_p_ksads__dep__mdd__pres_dx,240,40128,77588,0.598,0.309,1.93,37441

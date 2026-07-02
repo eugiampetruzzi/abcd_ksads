@@ -1,0 +1,7 @@
+lever,prevalence_pct,delta_pts
+"base (current, parent, full, phobia-in)",25.152,0.0
+current -> ever-met,47.194,22.042
+parent -> youth-only,5.138,-20.014
+anxiety: drop phobia,20.325,-4.827
+parent -> either,28.141,2.989
++ subthreshold dx,25.878,0.726
