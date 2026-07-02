@@ -1,7 +1,7 @@
 -include .env
 export
 
-.PHONY: all merge_covariates clean clean-cache ingest figures tables \
+.PHONY: all merge_covariates clean clean-cache ingest figures tables validate \
 	docker-build docker-run apptainer-build apptainer-run
 
 # --- Containerized runs (Docker / Apptainer) ---------------------------------
@@ -121,7 +121,7 @@ ${ABCD_70}/tables/Table2_categories_subdiagnoses.docx: tables/build_table_catego
 
 tables: ${ABCD_70}/tables/Table1_reporting_checklist.docx ${ABCD_70}/tables/Table2_categories_subdiagnoses.docx
 
-all: ingest ${ABCD_70}/derivatives/ksads_resolution_summary.csv ${ABCD_70}/derivatives/ksads_administration_grid.csv \
+PIPELINE := ingest ${ABCD_70}/derivatives/ksads_resolution_summary.csv ${ABCD_70}/derivatives/ksads_administration_grid.csv \
 ${ABCD_70}/derivatives/ksads_caseness_sensitivity.csv ${ABCD_70}/derivatives/ksads_version_audit.csv \
 ${ABCD_70}/derivatives/multiverse_grid.csv ${ABCD_70}/derivatives/multiverse_summary.csv \
 ${ABCD_70}/derivatives/single_lever.csv ${ABCD_70}/derivatives/inferential_summary.csv \
@@ -130,3 +130,9 @@ ${ABCD_70}/derivatives/missingness_error.csv ${ABCD_70}/derivatives/paper_number
 ${ABCD_70}/abcd_ksads_harmonized/participants.tsv ${ABCD_70}/derivatives/technical_validation_report.txt \
 ${ABCD_70}/derivatives/module_overscreening.csv ${ABCD_70}/abcd_ksads_harmonized/csv/sessions.csv \
 figures tables
+
+# validate depends on the whole pipeline, so it runs last even under `make -j`.
+validate: $(PIPELINE)
+	uv run python harmonize/validate_against_orig.py
+
+all: $(PIPELINE) validate
