@@ -20,8 +20,8 @@ dependencies = [
     "statsmodels>=0.14.6",
 ]
 
-[project.scripts]
-abcd-ksads = "abcd_ksads:main"
+# project.scripts]
+# abcd-ksads = "abcd_ksads:main"
 
 [build-system]
 requires = ["uv_build>=0.9.18,<0.10.0"]
