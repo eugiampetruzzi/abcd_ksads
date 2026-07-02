@@ -110,6 +110,12 @@ class Config(BaseSettings):
 
     @computed_field
     @property
+    def BENCHMARK(self) -> Path:
+        """In-repo reference derivatives that the pipeline output is validated against."""
+        return self.REPO / "benchmark_data"
+
+    @computed_field
+    @property
     def DATASET(self) -> Path:
         return self.ABCD_70 / "abcd_ksads_harmonized"
 
@@ -145,6 +151,7 @@ FIGURES_OUT = config.FIGURES_OUT
 TABLES = config.TABLES
 TABLES_OUT = config.TABLES_OUT
 CODEBOOKS = config.CODEBOOKS
+BENCHMARK = config.BENCHMARK
 DATASET = config.DATASET
 RAW_CACHE = config.RAW_CACHE
 KSADS_VARIABLE_MAP = config.KSADS_VARIABLE_MAP

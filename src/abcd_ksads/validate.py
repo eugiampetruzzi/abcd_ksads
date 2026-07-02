@@ -281,7 +281,7 @@ def format_failure_banner(failing: list) -> str:
         bar,
         "VALIDATION FAILED",
         "Workflow results do not match the intended (reference) results.",
-        f"{len(failing)} file(s) inconsistent with derivatives_orig:",
+        f"{len(failing)} file(s) inconsistent with the benchmark data:",
     ]
     for r in failing:
         lines.append(f"    - {r['file']}  ({r['status']})")
