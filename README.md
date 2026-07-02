@@ -1,5 +1,8 @@
 # abcd_ksads
 
+[![Tests](https://github.com/poldrack/abcd_ksads/actions/workflows/tests.yml/badge.svg)](https://github.com/poldrack/abcd_ksads/actions/workflows/tests.yml)
+[![Coverage](https://raw.githubusercontent.com/poldrack/abcd_ksads/badges/coverage.svg)](https://github.com/poldrack/abcd_ksads/actions/workflows/tests.yml)
+
 Harmonization and analysis code for the ABCD Study KSADS-COMP diagnostic data
 (release 7.0). The pipeline resolves administrative-missingness codes, reconstructs
 the administration calendar, crosswalks the 230 diagnosis variables to DSM
