@@ -1,0 +1,13 @@
+disorder,module,present_core_pct,n_positive,n_administered,approx_childhood_pct
+Specific phobia,phobia,8.83,1033,11705,~5
+OCD,ocd,7.66,897,11705,1-2
+ADHD,adhd,7.37,863,11705,~7-9
+ODD,odd,5.6,655,11705,~3-5
+Bipolar,bpd,3.54,414,11705,<1
+Conduct,cond,3.2,374,11705,~1-2
+Psychotic disorders,psych,1.67,195,11705,<0.5
+GAD,gad,1.09,128,11705,~1
+Social anxiety,socanx,0.94,110,11705,~1-2
+Depression (MDD/PDD),dep,0.2,23,11705,<1 (current)
+Panic,panic,0.04,5,11705,<1
+PTSD,ptsd,0.0,0,11705,~1

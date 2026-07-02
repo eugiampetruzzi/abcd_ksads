@@ -1,0 +1,547 @@
+construct,construct_label,informant,status,threshold,bucket,predictor,OR,p,sig,logor
+suicidality,Suicidality,parent,current,full,Sex,Female (vs male),0.7041303901366878,0.002549897687698293,True,-0.3507917267116128
+suicidality,Suicidality,parent,current,full,Income,Income (per SD),0.7591136619095719,5.319942746423902e-07,True,-0.2756037606117223
+suicidality,Suicidality,parent,current,full,Culture/environment,Screen time (per SD),1.2302783846538357,2.687378617385918e-05,True,0.20724047276264312
+suicidality,Suicidality,parent,current,full,Culture/environment,Family conflict (per SD),1.4900808183243828,1.1150131709032823e-13,True,0.39883035897256874
+suicidality,Suicidality,parent,current,full,Neuroimaging,DMN within-network FC (per SD),1.0091542774595725,0.8974294172636266,False,0.009112631030697819
+suicidality,Suicidality,parent,current,full,Neuroimaging,Salience within-network FC (per SD),1.1229964576745537,0.08813179321022684,False,0.116000521409883
+suicidality,Suicidality,parent,current,full,Neuroimaging,FPN within-network FC (per SD),1.0243589020569002,0.7070668696207145,False,0.02406695549988398
+suicidality,Suicidality,parent,current,full,Neuroimaging,DMN-salience FC (per SD),1.0303607021872863,0.6805084868744798,False,0.02990893723546886
+suicidality,Suicidality,parent,current,full,Neuroimaging,DMN-FPN FC (per SD),1.0713208217175219,0.2920515613740431,False,0.0688923000328327
+suicidality,Suicidality,parent,current,full,Neuroimaging,Salience-FPN FC (per SD),1.0235818239653467,0.7487063966881712,False,0.023308068175682244
+suicidality,Suicidality,parent,current,full,Race/ethnicity,Race: Black/AA vs White,0.9386978887841634,0.7227085428163145,False,-0.06326158872645071
+suicidality,Suicidality,parent,current,full,Race/ethnicity,Race: Hispanic vs White,1.0518710704219867,0.7973287599341876,False,0.050570550171747795
+suicidality,Suicidality,parent,current,full,Race/ethnicity,Race: Asian vs White,,,False,
+suicidality,Suicidality,parent,current,full,Race/ethnicity,Race: Other/Multiracial vs White,1.5345430404936644,0.014295049089885329,True,0.4282326432301882
+suicidality,Suicidality,parent,ever_met,full,Sex,Female (vs male),0.6768224542362384,9.996183604017472e-10,True,-0.3903462941774701
+suicidality,Suicidality,parent,ever_met,full,Income,Income (per SD),0.9338135827683163,0.043349111217332925,True,-0.06847845085788143
+suicidality,Suicidality,parent,ever_met,full,Culture/environment,Screen time (per SD),1.1330458272205894,5.334676120426857e-05,True,0.12490942890713323
+suicidality,Suicidality,parent,ever_met,full,Culture/environment,Family conflict (per SD),1.2990290307999197,1.0870534087140075e-18,True,0.26161708601450256
+suicidality,Suicidality,parent,ever_met,full,Neuroimaging,DMN within-network FC (per SD),0.9971661825510738,0.9420015162383376,False,-0.0028378403114292243
+suicidality,Suicidality,parent,ever_met,full,Neuroimaging,Salience within-network FC (per SD),1.0679780207890466,0.06917988478435905,False,0.06576716054069949
+suicidality,Suicidality,parent,ever_met,full,Neuroimaging,FPN within-network FC (per SD),0.9923230627946521,0.9363497709579258,False,-0.0077065565758520135
+suicidality,Suicidality,parent,ever_met,full,Neuroimaging,DMN-salience FC (per SD),1.0633213800720567,0.09716900171791404,False,0.06139738675391405
+suicidality,Suicidality,parent,ever_met,full,Neuroimaging,DMN-FPN FC (per SD),1.0314417096504345,0.39902803822857835,False,0.030957541656528212
+suicidality,Suicidality,parent,ever_met,full,Neuroimaging,Salience-FPN FC (per SD),0.9847711364357388,0.6738578323657485,False,-0.015346013603415934
+suicidality,Suicidality,parent,ever_met,full,Race/ethnicity,Race: Black/AA vs White,0.6569689182735766,0.0001768105932059378,True,-0.42011857018042226
+suicidality,Suicidality,parent,ever_met,full,Race/ethnicity,Race: Hispanic vs White,1.0395554488974585,0.7073295909464044,False,0.03879316878599941
+suicidality,Suicidality,parent,ever_met,full,Race/ethnicity,Race: Asian vs White,1.0554349054859833,0.8139109263177995,False,0.053952914671614866
+suicidality,Suicidality,parent,ever_met,full,Race/ethnicity,Race: Other/Multiracial vs White,1.2782908072982444,0.015398548865987844,True,0.24552387881672383
+suicidality,Suicidality,youth,current,full,Sex,Female (vs male),0.6287643617229965,9.006112456856426e-07,True,-0.46399871612250077
+suicidality,Suicidality,youth,current,full,Income,Income (per SD),0.8509803025921636,0.0006306845639158756,True,-0.16136629686681211
+suicidality,Suicidality,youth,current,full,Culture/environment,Screen time (per SD),1.341717880728488,7.449428926705552e-14,True,0.2939507934454297
+suicidality,Suicidality,youth,current,full,Culture/environment,Family conflict (per SD),1.696795843983179,1.8277354292728559e-40,True,0.5287416749390624
+suicidality,Suicidality,youth,current,full,Neuroimaging,DMN within-network FC (per SD),0.8851389494186639,0.20798496880054695,False,-0.12201064130536093
+suicidality,Suicidality,youth,current,full,Neuroimaging,Salience within-network FC (per SD),0.9943575292810235,0.9165009823552281,False,-0.005658449592114261
+suicidality,Suicidality,youth,current,full,Neuroimaging,FPN within-network FC (per SD),0.933830622122349,0.19518567019160127,False,-0.06846020396268737
+suicidality,Suicidality,youth,current,full,Neuroimaging,DMN-salience FC (per SD),0.9266176526918413,0.15583149824284542,False,-0.07621425514302489
+suicidality,Suicidality,youth,current,full,Neuroimaging,DMN-FPN FC (per SD),0.9649921738881829,0.493276912710338,False,-0.03563528763646923
+suicidality,Suicidality,youth,current,full,Neuroimaging,Salience-FPN FC (per SD),0.9411959061462222,0.27976863348451164,False,-0.06060397174928789
+suicidality,Suicidality,youth,current,full,Race/ethnicity,Race: Black/AA vs White,1.1496162820957163,0.32417968051126556,False,0.13942821895283602
+suicidality,Suicidality,youth,current,full,Race/ethnicity,Race: Hispanic vs White,1.1712940209663099,0.26283918429386743,False,0.15810913846725075
+suicidality,Suicidality,youth,current,full,Race/ethnicity,Race: Asian vs White,1.3701487968938812,0.31575785900279396,False,0.31491934481374606
+suicidality,Suicidality,youth,current,full,Race/ethnicity,Race: Other/Multiracial vs White,1.0749832909857684,0.6461338630175304,False,0.0723051181897756
+suicidality,Suicidality,youth,ever_met,full,Sex,Female (vs male),0.688715081101511,1.827996208568663e-10,True,-0.3729276187454223
+suicidality,Suicidality,youth,ever_met,full,Income,Income (per SD),0.9229979793771986,0.008902017982388953,True,-0.08012823367214854
+suicidality,Suicidality,youth,ever_met,full,Culture/environment,Screen time (per SD),1.307571050618402,6.58171660277459e-26,True,0.26817125629766564
+suicidality,Suicidality,youth,ever_met,full,Culture/environment,Family conflict (per SD),1.5750310370229614,2.7944364635820817e-66,True,0.45427497812975953
+suicidality,Suicidality,youth,ever_met,full,Neuroimaging,DMN within-network FC (per SD),0.9727455832736186,0.4594273456445742,False,-0.02763270758152797
+suicidality,Suicidality,youth,ever_met,full,Neuroimaging,Salience within-network FC (per SD),1.0202518231307711,0.5409774323764572,False,0.020049482247313618
+suicidality,Suicidality,youth,ever_met,full,Neuroimaging,FPN within-network FC (per SD),0.9635167146173033,0.26993992047429993,False,-0.03716544346572955
+suicidality,Suicidality,youth,ever_met,full,Neuroimaging,DMN-salience FC (per SD),1.0328998769357909,0.3401713631477148,False,0.03237026088608393
+suicidality,Suicidality,youth,ever_met,full,Neuroimaging,DMN-FPN FC (per SD),1.03344752420324,0.3164175116585297,False,0.03290032401096771
+suicidality,Suicidality,youth,ever_met,full,Neuroimaging,Salience-FPN FC (per SD),0.9355484635756457,0.04475762749421878,True,-0.06662232961180747
+suicidality,Suicidality,youth,ever_met,full,Race/ethnicity,Race: Black/AA vs White,1.117401629838633,0.21408575547693687,False,0.1110060166409463
+suicidality,Suicidality,youth,ever_met,full,Race/ethnicity,Race: Hispanic vs White,1.044274814039711,0.6330889993543907,False,0.043322686659828705
+suicidality,Suicidality,youth,ever_met,full,Race/ethnicity,Race: Asian vs White,0.9601415918254321,0.853816854426887,False,-0.040674513911229664
+suicidality,Suicidality,youth,ever_met,full,Race/ethnicity,Race: Other/Multiracial vs White,1.176585101536603,0.09637338618728408,False,0.16261626106701652
+suicidality,Suicidality,either,current,full,Sex,Female (vs male),0.6387307168437195,6.4453677470822335e-09,True,-0.4482723268142893
+suicidality,Suicidality,either,current,full,Income,Income (per SD),0.8019728106860438,7.054548362534351e-09,True,-0.22068057357803053
+suicidality,Suicidality,either,current,full,Culture/environment,Screen time (per SD),1.3126666019684168,1.5614890144541264e-16,True,0.272060642261177
+suicidality,Suicidality,either,current,full,Culture/environment,Family conflict (per SD),1.6274807422472772,3.599202126216321e-47,True,0.4870332623100131
+suicidality,Suicidality,either,current,full,Neuroimaging,DMN within-network FC (per SD),0.9434458867146962,0.24559274936428144,False,-0.05821626959182964
+suicidality,Suicidality,either,current,full,Neuroimaging,Salience within-network FC (per SD),1.044976964462897,0.3207256645814396,False,0.04399484159763602
+suicidality,Suicidality,either,current,full,Neuroimaging,FPN within-network FC (per SD),0.9669690015858626,0.436110753269379,False,-0.03358884031373908
+suicidality,Suicidality,either,current,full,Neuroimaging,DMN-salience FC (per SD),0.9694092991720489,0.4943951467566766,False,-0.031068362907928658
+suicidality,Suicidality,either,current,full,Neuroimaging,DMN-FPN FC (per SD),1.0142946977922456,0.7442773275701631,False,0.014193491931003912
+suicidality,Suicidality,either,current,full,Neuroimaging,Salience-FPN FC (per SD),0.9574174836586751,0.3526553792082433,False,-0.04351574058750822
+suicidality,Suicidality,either,current,full,Race/ethnicity,Race: Black/AA vs White,1.0804414998331062,0.5099930301707241,False,0.0773697537435155
+suicidality,Suicidality,either,current,full,Race/ethnicity,Race: Hispanic vs White,1.160292100926207,0.2127739955787913,False,0.14867178456245062
+suicidality,Suicidality,either,current,full,Race/ethnicity,Race: Asian vs White,1.2627269174978855,0.3809368140412823,False,0.2332736026486731
+suicidality,Suicidality,either,current,full,Race/ethnicity,Race: Other/Multiracial vs White,1.2562103985621265,0.06397588999268049,False,0.22809956879573617
+suicidality,Suicidality,either,ever_met,full,Sex,Female (vs male),0.6763986081033497,1.4542313591305803e-15,True,-0.39097271976090875
+suicidality,Suicidality,either,ever_met,full,Income,Income (per SD),0.9133057887919799,0.0004736088211342362,True,-0.09068452697985654
+suicidality,Suicidality,either,ever_met,full,Culture/environment,Screen time (per SD),1.2415780004816495,3.882847872941114e-21,True,0.21638315160560098
+suicidality,Suicidality,either,ever_met,full,Culture/environment,Family conflict (per SD),1.4570439118352798,5.4012405606914336e-61,True,0.37640966528690034
+suicidality,Suicidality,either,ever_met,full,Neuroimaging,DMN within-network FC (per SD),0.9793239287330026,0.49294716640422553,False,-0.02089281402617997
+suicidality,Suicidality,either,ever_met,full,Neuroimaging,Salience within-network FC (per SD),1.0413832645929568,0.14069756933624786,False,0.04054989151282788
+suicidality,Suicidality,either,ever_met,full,Neuroimaging,FPN within-network FC (per SD),0.9686770469024288,0.253656528872114,False,-0.031824007573550625
+suicidality,Suicidality,either,ever_met,full,Neuroimaging,DMN-salience FC (per SD),1.0291676952837285,0.5740270404744288,False,0.028750412751457472
+suicidality,Suicidality,either,ever_met,full,Neuroimaging,DMN-FPN FC (per SD),1.0249978739078283,0.37199332432483945,False,0.024690538351955157
+suicidality,Suicidality,either,ever_met,full,Neuroimaging,Salience-FPN FC (per SD),0.9484009547743265,0.05761569709046471,False,-0.05297791807025619
+suicidality,Suicidality,either,ever_met,full,Race/ethnicity,Race: Black/AA vs White,0.8979468708000513,0.1705787802503146,False,-0.10764437634995587
+suicidality,Suicidality,either,ever_met,full,Race/ethnicity,Race: Hispanic vs White,1.0568199014757673,0.4665440727374599,False,0.05526430587660218
+suicidality,Suicidality,either,ever_met,full,Race/ethnicity,Race: Asian vs White,0.9868724662721206,0.9416063857427197,False,-0.013214461400863353
+suicidality,Suicidality,either,ever_met,full,Race/ethnicity,Race: Other/Multiracial vs White,1.2096772721353268,0.018763908800960964,True,0.19035360678974833
+suicidality,Suicidality,both,current,full,Sex,Female (vs male),0.7889793135301038,0.3801874493334787,False,-0.23701517707300052
+suicidality,Suicidality,both,current,full,Income,Income (per SD),0.9045246333993352,0.4089100909634047,False,-0.10034574024528924
+suicidality,Suicidality,both,current,full,Culture/environment,Screen time (per SD),1.2846669989223938,0.018546638380850345,True,0.2504995399558897
+suicidality,Suicidality,both,current,full,Culture/environment,Family conflict (per SD),1.7963652314797085,7.074359885492929e-06,True,0.5857653074904303
+suicidality,Suicidality,both,current,full,Neuroimaging,DMN within-network FC (per SD),,,False,
+suicidality,Suicidality,both,current,full,Neuroimaging,Salience within-network FC (per SD),,,False,
+suicidality,Suicidality,both,current,full,Neuroimaging,FPN within-network FC (per SD),,,False,
+suicidality,Suicidality,both,current,full,Neuroimaging,DMN-salience FC (per SD),,,False,
+suicidality,Suicidality,both,current,full,Neuroimaging,DMN-FPN FC (per SD),,,False,
+suicidality,Suicidality,both,current,full,Neuroimaging,Salience-FPN FC (per SD),,,False,
+suicidality,Suicidality,both,current,full,Race/ethnicity,Race: Black/AA vs White,,,False,
+suicidality,Suicidality,both,current,full,Race/ethnicity,Race: Hispanic vs White,,,False,
+suicidality,Suicidality,both,current,full,Race/ethnicity,Race: Asian vs White,,,False,
+suicidality,Suicidality,both,current,full,Race/ethnicity,Race: Other/Multiracial vs White,,,False,
+suicidality,Suicidality,both,ever_met,full,Sex,Female (vs male),0.6172035146258439,8.765771529827495e-06,True,-0.4825564640410299
+suicidality,Suicidality,both,ever_met,full,Income,Income (per SD),0.9786005676871891,0.6982895809145069,False,-0.021631720025924
+suicidality,Suicidality,both,ever_met,full,Culture/environment,Screen time (per SD),1.277409103299203,6.905817586799616e-08,True,0.24483388854801819
+suicidality,Suicidality,both,ever_met,full,Culture/environment,Family conflict (per SD),1.6054591472358788,1.6924944148183077e-23,True,0.4734097887150493
+suicidality,Suicidality,both,ever_met,full,Neuroimaging,DMN within-network FC (per SD),1.0056721121993246,0.9347364724611427,False,0.00565608634267047
+suicidality,Suicidality,both,ever_met,full,Neuroimaging,Salience within-network FC (per SD),1.0613018190825332,0.3634386234527027,False,0.05949628579767614
+suicidality,Suicidality,both,ever_met,full,Neuroimaging,FPN within-network FC (per SD),1.005706033510798,0.9257528482941382,False,0.005689815765005944
+suicidality,Suicidality,both,ever_met,full,Neuroimaging,DMN-salience FC (per SD),1.1508177654036171,0.02353488407848154,True,0.14047279001407087
+suicidality,Suicidality,both,ever_met,full,Neuroimaging,DMN-FPN FC (per SD),1.082678835096463,0.19366181268870386,False,0.07943837288139666
+suicidality,Suicidality,both,ever_met,full,Neuroimaging,Salience-FPN FC (per SD),0.9889791872954569,0.8548655155508312,False,-0.011081991771497204
+suicidality,Suicidality,both,ever_met,full,Race/ethnicity,Race: Black/AA vs White,0.8665398451790571,0.40245341634192955,False,-0.1432471868340194
+suicidality,Suicidality,both,ever_met,full,Race/ethnicity,Race: Hispanic vs White,0.9748239677234153,0.8892177890835198,False,-0.025498370209369618
+suicidality,Suicidality,both,ever_met,full,Race/ethnicity,Race: Asian vs White,,,False,
+suicidality,Suicidality,both,ever_met,full,Race/ethnicity,Race: Other/Multiracial vs White,1.3806677260411855,0.04865477790926314,True,0.32256724159701067
+eating,Eating disorders,parent,current,full,Sex,Female (vs male),0.9232927215520972,0.7220284220344735,False,-0.07980895331477682
+eating,Eating disorders,parent,current,full,Income,Income (per SD),0.6701663549062312,8.961586527866458e-05,True,-0.400229306511388
+eating,Eating disorders,parent,current,full,Culture/environment,Screen time (per SD),1.508900813120534,1.0825071919818424e-07,True,0.411381447420307
+eating,Eating disorders,parent,current,full,Culture/environment,Family conflict (per SD),1.454508696956509,9.15050881968644e-06,True,0.37466817827969756
+eating,Eating disorders,parent,current,full,Neuroimaging,DMN within-network FC (per SD),,,False,
+eating,Eating disorders,parent,current,full,Neuroimaging,Salience within-network FC (per SD),,,False,
+eating,Eating disorders,parent,current,full,Neuroimaging,FPN within-network FC (per SD),,,False,
+eating,Eating disorders,parent,current,full,Neuroimaging,DMN-salience FC (per SD),,,False,
+eating,Eating disorders,parent,current,full,Neuroimaging,DMN-FPN FC (per SD),,,False,
+eating,Eating disorders,parent,current,full,Neuroimaging,Salience-FPN FC (per SD),,,False,
+eating,Eating disorders,parent,current,full,Race/ethnicity,Race: Black/AA vs White,1.9804504310033948,0.023190587349355713,True,0.6833243092401802
+eating,Eating disorders,parent,current,full,Race/ethnicity,Race: Hispanic vs White,2.433199953005291,0.0025772321229044436,True,0.8892072441504606
+eating,Eating disorders,parent,current,full,Race/ethnicity,Race: Asian vs White,,,False,
+eating,Eating disorders,parent,current,full,Race/ethnicity,Race: Other/Multiracial vs White,2.30288241929395,0.01612282892760984,True,0.8341615640831335
+eating,Eating disorders,parent,ever_met,full,Sex,Female (vs male),0.8716985274200606,0.5089156599819185,False,-0.13731164028568416
+eating,Eating disorders,parent,ever_met,full,Income,Income (per SD),0.6807801274412361,2.4847784981586698e-05,True,-0.3845158921589446
+eating,Eating disorders,parent,ever_met,full,Culture/environment,Screen time (per SD),1.5238907234563082,2.4319685351089562e-09,True,0.4212667509247897
+eating,Eating disorders,parent,ever_met,full,Culture/environment,Family conflict (per SD),1.4896745907760962,8.376831504909965e-07,True,0.39855770065332374
+eating,Eating disorders,parent,ever_met,full,Neuroimaging,DMN within-network FC (per SD),,,False,
+eating,Eating disorders,parent,ever_met,full,Neuroimaging,Salience within-network FC (per SD),,,False,
+eating,Eating disorders,parent,ever_met,full,Neuroimaging,FPN within-network FC (per SD),,,False,
+eating,Eating disorders,parent,ever_met,full,Neuroimaging,DMN-salience FC (per SD),,,False,
+eating,Eating disorders,parent,ever_met,full,Neuroimaging,DMN-FPN FC (per SD),,,False,
+eating,Eating disorders,parent,ever_met,full,Neuroimaging,Salience-FPN FC (per SD),,,False,
+eating,Eating disorders,parent,ever_met,full,Race/ethnicity,Race: Black/AA vs White,2.0638668098764903,0.011431771115107346,True,0.7245813154385603
+eating,Eating disorders,parent,ever_met,full,Race/ethnicity,Race: Hispanic vs White,2.2131331195723387,0.006334176313011565,True,0.7944092127041131
+eating,Eating disorders,parent,ever_met,full,Race/ethnicity,Race: Asian vs White,,,False,
+eating,Eating disorders,parent,ever_met,full,Race/ethnicity,Race: Other/Multiracial vs White,2.027122159296098,0.03290218844656171,True,0.7066171317102262
+eating,Eating disorders,either,current,full,Sex,Female (vs male),0.9232927215520972,0.7220284220344735,False,-0.07980895331477682
+eating,Eating disorders,either,current,full,Income,Income (per SD),0.6701663549062312,8.961586527866458e-05,True,-0.400229306511388
+eating,Eating disorders,either,current,full,Culture/environment,Screen time (per SD),1.508900813120534,1.0825071919818424e-07,True,0.411381447420307
+eating,Eating disorders,either,current,full,Culture/environment,Family conflict (per SD),1.454508696956509,9.15050881968644e-06,True,0.37466817827969756
+eating,Eating disorders,either,current,full,Neuroimaging,DMN within-network FC (per SD),,,False,
+eating,Eating disorders,either,current,full,Neuroimaging,Salience within-network FC (per SD),,,False,
+eating,Eating disorders,either,current,full,Neuroimaging,FPN within-network FC (per SD),,,False,
+eating,Eating disorders,either,current,full,Neuroimaging,DMN-salience FC (per SD),,,False,
+eating,Eating disorders,either,current,full,Neuroimaging,DMN-FPN FC (per SD),,,False,
+eating,Eating disorders,either,current,full,Neuroimaging,Salience-FPN FC (per SD),,,False,
+eating,Eating disorders,either,current,full,Race/ethnicity,Race: Black/AA vs White,1.9804504310033948,0.023190587349355713,True,0.6833243092401802
+eating,Eating disorders,either,current,full,Race/ethnicity,Race: Hispanic vs White,2.433199953005291,0.0025772321229044436,True,0.8892072441504606
+eating,Eating disorders,either,current,full,Race/ethnicity,Race: Asian vs White,,,False,
+eating,Eating disorders,either,current,full,Race/ethnicity,Race: Other/Multiracial vs White,2.30288241929395,0.01612282892760984,True,0.8341615640831335
+eating,Eating disorders,either,ever_met,full,Sex,Female (vs male),0.8716985274200606,0.5089156599819185,False,-0.13731164028568416
+eating,Eating disorders,either,ever_met,full,Income,Income (per SD),0.6807801274412361,2.4847784981586698e-05,True,-0.3845158921589446
+eating,Eating disorders,either,ever_met,full,Culture/environment,Screen time (per SD),1.5238907234563082,2.4319685351089562e-09,True,0.4212667509247897
+eating,Eating disorders,either,ever_met,full,Culture/environment,Family conflict (per SD),1.4896745907760962,8.376831504909965e-07,True,0.39855770065332374
+eating,Eating disorders,either,ever_met,full,Neuroimaging,DMN within-network FC (per SD),,,False,
+eating,Eating disorders,either,ever_met,full,Neuroimaging,Salience within-network FC (per SD),,,False,
+eating,Eating disorders,either,ever_met,full,Neuroimaging,FPN within-network FC (per SD),,,False,
+eating,Eating disorders,either,ever_met,full,Neuroimaging,DMN-salience FC (per SD),,,False,
+eating,Eating disorders,either,ever_met,full,Neuroimaging,DMN-FPN FC (per SD),,,False,
+eating,Eating disorders,either,ever_met,full,Neuroimaging,Salience-FPN FC (per SD),,,False,
+eating,Eating disorders,either,ever_met,full,Race/ethnicity,Race: Black/AA vs White,2.0638668098764903,0.011431771115107346,True,0.7245813154385603
+eating,Eating disorders,either,ever_met,full,Race/ethnicity,Race: Hispanic vs White,2.2131331195723387,0.006334176313011565,True,0.7944092127041131
+eating,Eating disorders,either,ever_met,full,Race/ethnicity,Race: Asian vs White,,,False,
+eating,Eating disorders,either,ever_met,full,Race/ethnicity,Race: Other/Multiracial vs White,2.027122159296098,0.03290218844656171,True,0.7066171317102262
+depression,Depression,parent,current,full,Sex,Female (vs male),0.7115710321718153,0.4508467303585888,False,-0.34028003204067087
+depression,Depression,parent,current,full,Income,Income (per SD),0.5713306347941751,0.004571073085456315,True,-0.5597871917344082
+depression,Depression,parent,current,full,Culture/environment,Screen time (per SD),1.2401040347784775,0.19424679361909236,False,0.21519527511252123
+depression,Depression,parent,current,full,Culture/environment,Family conflict (per SD),1.2114199923260058,0.17892447477163764,False,0.1917932189170592
+depression,Depression,parent,current,full,Neuroimaging,DMN within-network FC (per SD),,,False,
+depression,Depression,parent,current,full,Neuroimaging,Salience within-network FC (per SD),,,False,
+depression,Depression,parent,current,full,Neuroimaging,FPN within-network FC (per SD),,,False,
+depression,Depression,parent,current,full,Neuroimaging,DMN-salience FC (per SD),,,False,
+depression,Depression,parent,current,full,Neuroimaging,DMN-FPN FC (per SD),,,False,
+depression,Depression,parent,current,full,Neuroimaging,Salience-FPN FC (per SD),,,False,
+depression,Depression,parent,current,full,Race/ethnicity,Race: Black/AA vs White,,,False,
+depression,Depression,parent,current,full,Race/ethnicity,Race: Hispanic vs White,,,False,
+depression,Depression,parent,current,full,Race/ethnicity,Race: Asian vs White,,,False,
+depression,Depression,parent,current,full,Race/ethnicity,Race: Other/Multiracial vs White,,,False,
+depression,Depression,parent,ever_met,full,Sex,Female (vs male),0.8352436055591964,0.1168845630997686,False,-0.18003185349538275
+depression,Depression,parent,ever_met,full,Income,Income (per SD),0.6419456987911379,5.6145013124997375e-15,True,-0.4432515601915927
+depression,Depression,parent,ever_met,full,Culture/environment,Screen time (per SD),1.3449910273008734,9.576850554553237e-10,True,0.2963873418797832
+depression,Depression,parent,ever_met,full,Culture/environment,Family conflict (per SD),1.322784039208444,8.770402414471788e-08,True,0.27973863613831623
+depression,Depression,parent,ever_met,full,Neuroimaging,DMN within-network FC (per SD),0.9332080955846126,0.3782029537940187,False,-0.06912706379253694
+depression,Depression,parent,ever_met,full,Neuroimaging,Salience within-network FC (per SD),0.9986735136491861,0.9848046355640684,False,-0.0013273669126216265
+depression,Depression,parent,ever_met,full,Neuroimaging,FPN within-network FC (per SD),1.0913712788533243,0.1732682345220351,False,0.08743495954808377
+depression,Depression,parent,ever_met,full,Neuroimaging,DMN-salience FC (per SD),0.8677330710272623,0.04017453754703734,True,-0.14187113347432254
+depression,Depression,parent,ever_met,full,Neuroimaging,DMN-FPN FC (per SD),1.132467731720395,0.051110820746192304,False,0.1243990850069963
+depression,Depression,parent,ever_met,full,Neuroimaging,Salience-FPN FC (per SD),1.0926141599559531,0.1451976309349057,False,0.08857313676732417
+depression,Depression,parent,ever_met,full,Race/ethnicity,Race: Black/AA vs White,1.3730293517210348,0.08002326206106156,False,0.3170195043585227
+depression,Depression,parent,ever_met,full,Race/ethnicity,Race: Hispanic vs White,1.7819909465654356,0.0005022689983060081,True,0.577731248544935
+depression,Depression,parent,ever_met,full,Race/ethnicity,Race: Asian vs White,,,False,
+depression,Depression,parent,ever_met,full,Race/ethnicity,Race: Other/Multiracial vs White,1.6325082623634921,0.012051445899396945,True,0.4901176433277652
+depression,Depression,youth,current,full,Sex,Female (vs male),0.7029505356239077,0.15820172832491863,False,-0.3524687514906418
+depression,Depression,youth,current,full,Income,Income (per SD),0.679061370107103,0.0006725284333938003,True,-0.38704377243395544
+depression,Depression,youth,current,full,Culture/environment,Screen time (per SD),1.7227120362701027,1.9151818105981315e-15,True,0.5438998143094823
+depression,Depression,youth,current,full,Culture/environment,Family conflict (per SD),1.8355071357839663,3.812461306667029e-12,True,0.6073208115984978
+depression,Depression,youth,current,full,Neuroimaging,DMN within-network FC (per SD),,,False,
+depression,Depression,youth,current,full,Neuroimaging,Salience within-network FC (per SD),,,False,
+depression,Depression,youth,current,full,Neuroimaging,FPN within-network FC (per SD),,,False,
+depression,Depression,youth,current,full,Neuroimaging,DMN-salience FC (per SD),,,False,
+depression,Depression,youth,current,full,Neuroimaging,DMN-FPN FC (per SD),,,False,
+depression,Depression,youth,current,full,Neuroimaging,Salience-FPN FC (per SD),,,False,
+depression,Depression,youth,current,full,Race/ethnicity,Race: Black/AA vs White,1.7304755079142453,0.09819487649911036,False,0.5483962308086177
+depression,Depression,youth,current,full,Race/ethnicity,Race: Hispanic vs White,1.1076852814497438,0.8027516654185464,False,0.10227250596465244
+depression,Depression,youth,current,full,Race/ethnicity,Race: Asian vs White,,,False,
+depression,Depression,youth,current,full,Race/ethnicity,Race: Other/Multiracial vs White,,,False,
+depression,Depression,youth,ever_met,full,Sex,Female (vs male),0.8418975869565366,0.133617535620778,False,-0.17209690283037232
+depression,Depression,youth,ever_met,full,Income,Income (per SD),0.7496417260040298,4.939867244825554e-08,True,-0.28815988524742936
+depression,Depression,youth,ever_met,full,Culture/environment,Screen time (per SD),1.4971417936468028,4.495260430322315e-24,True,0.4035578194869125
+depression,Depression,youth,ever_met,full,Culture/environment,Family conflict (per SD),1.6623558678101042,1.1166125237377487e-26,True,0.5082357937354794
+depression,Depression,youth,ever_met,full,Neuroimaging,DMN within-network FC (per SD),,,False,
+depression,Depression,youth,ever_met,full,Neuroimaging,Salience within-network FC (per SD),,,False,
+depression,Depression,youth,ever_met,full,Neuroimaging,FPN within-network FC (per SD),0.8907925912528585,,False,-0.1156436605925828
+depression,Depression,youth,ever_met,full,Neuroimaging,DMN-salience FC (per SD),,,False,
+depression,Depression,youth,ever_met,full,Neuroimaging,DMN-FPN FC (per SD),,,False,
+depression,Depression,youth,ever_met,full,Neuroimaging,Salience-FPN FC (per SD),,,False,
+depression,Depression,youth,ever_met,full,Race/ethnicity,Race: Black/AA vs White,2.4669942006549603,5.328937619049546e-09,True,0.9030004867763011
+depression,Depression,youth,ever_met,full,Race/ethnicity,Race: Hispanic vs White,1.5502071740319854,0.011895350081844846,True,0.43838858266516134
+depression,Depression,youth,ever_met,full,Race/ethnicity,Race: Asian vs White,,,False,
+depression,Depression,youth,ever_met,full,Race/ethnicity,Race: Other/Multiracial vs White,1.1178020556928137,0.603633220923551,False,0.11136430690420629
+depression,Depression,either,current,full,Sex,Female (vs male),0.6854501371350299,0.08754957320809775,False,-0.37767952203455385
+depression,Depression,either,current,full,Income,Income (per SD),0.6493701922453738,1.3420416467988444e-05,True,-0.4317523208205393
+depression,Depression,either,current,full,Culture/environment,Screen time (per SD),1.5865069590898084,4.007066715446982e-12,True,0.4615347184732252
+depression,Depression,either,current,full,Culture/environment,Family conflict (per SD),1.656739038582101,5.267731823640336e-11,True,0.50485123574708
+depression,Depression,either,current,full,Neuroimaging,DMN within-network FC (per SD),,,False,
+depression,Depression,either,current,full,Neuroimaging,Salience within-network FC (per SD),,,False,
+depression,Depression,either,current,full,Neuroimaging,FPN within-network FC (per SD),,,False,
+depression,Depression,either,current,full,Neuroimaging,DMN-salience FC (per SD),,,False,
+depression,Depression,either,current,full,Neuroimaging,DMN-FPN FC (per SD),,,False,
+depression,Depression,either,current,full,Neuroimaging,Salience-FPN FC (per SD),,,False,
+depression,Depression,either,current,full,Race/ethnicity,Race: Black/AA vs White,1.8188352697578112,0.03472823153112421,True,0.5981963345542936
+depression,Depression,either,current,full,Race/ethnicity,Race: Hispanic vs White,1.1042592868468566,0.7785087093215434,False,0.09917478155363864
+depression,Depression,either,current,full,Race/ethnicity,Race: Asian vs White,,,False,
+depression,Depression,either,current,full,Race/ethnicity,Race: Other/Multiracial vs White,,,False,
+depression,Depression,either,ever_met,full,Sex,Female (vs male),0.8512916186432152,0.0533749042867896,False,-0.1610005315027257
+depression,Depression,either,ever_met,full,Income,Income (per SD),0.6845524088000137,4.5687800553260105e-21,True,-0.378990072100567
+depression,Depression,either,ever_met,full,Culture/environment,Screen time (per SD),1.427174138218943,2.7434775425642564e-26,True,0.3556963620368702
+depression,Depression,either,ever_met,full,Culture/environment,Family conflict (per SD),1.46454556956906,3.097836500371257e-25,True,0.381545002929284
+depression,Depression,either,ever_met,full,Neuroimaging,DMN within-network FC (per SD),0.8967671742388408,0.04218847570403716,True,-0.10895901110681183
+depression,Depression,either,ever_met,full,Neuroimaging,Salience within-network FC (per SD),0.9998508833242742,0.9976287799759856,False,-0.00014912779472266873
+depression,Depression,either,ever_met,full,Neuroimaging,FPN within-network FC (per SD),0.9917247179877413,0.8635843796735527,False,-0.008309712236563465
+depression,Depression,either,ever_met,full,Neuroimaging,DMN-salience FC (per SD),0.9090597632369373,0.047343298917898236,True,-0.09534444083059612
+depression,Depression,either,ever_met,full,Neuroimaging,DMN-FPN FC (per SD),1.0738651306452471,0.12631023373218045,False,0.07126441152085841
+depression,Depression,either,ever_met,full,Neuroimaging,Salience-FPN FC (per SD),1.0043451103162637,0.9268736102396098,False,0.004335697580832599
+depression,Depression,either,ever_met,full,Race/ethnicity,Race: Black/AA vs White,1.9953169437790483,1.1358045470948075e-08,True,0.6908029067856534
+depression,Depression,either,ever_met,full,Race/ethnicity,Race: Hispanic vs White,1.7341039185752116,8.521514567706563e-06,True,0.5504908065367914
+depression,Depression,either,ever_met,full,Race/ethnicity,Race: Asian vs White,,,False,
+depression,Depression,either,ever_met,full,Race/ethnicity,Race: Other/Multiracial vs White,1.391010048374788,0.027146721686154004,True,0.33003013676480997
+depression,Depression,both,ever_met,full,Sex,Female (vs male),0.47171768504564104,0.09796158287598725,False,-0.7513745972479436
+depression,Depression,both,ever_met,full,Income,Income (per SD),0.7633389674515014,0.25760815555296235,False,-0.27005309018836887
+depression,Depression,both,ever_met,full,Culture/environment,Screen time (per SD),1.7940484519416156,1.6563805809446567e-09,True,0.5844747710431473
+depression,Depression,both,ever_met,full,Culture/environment,Family conflict (per SD),2.562970543268796,4.4702960801621506e-08,True,0.9411669542486999
+depression,Depression,both,ever_met,full,Neuroimaging,DMN within-network FC (per SD),,,False,
+depression,Depression,both,ever_met,full,Neuroimaging,Salience within-network FC (per SD),,,False,
+depression,Depression,both,ever_met,full,Neuroimaging,FPN within-network FC (per SD),,,False,
+depression,Depression,both,ever_met,full,Neuroimaging,DMN-salience FC (per SD),,,False,
+depression,Depression,both,ever_met,full,Neuroimaging,DMN-FPN FC (per SD),,,False,
+depression,Depression,both,ever_met,full,Neuroimaging,Salience-FPN FC (per SD),,,False,
+depression,Depression,both,ever_met,full,Race/ethnicity,Race: Black/AA vs White,,,False,
+depression,Depression,both,ever_met,full,Race/ethnicity,Race: Hispanic vs White,,,False,
+depression,Depression,both,ever_met,full,Race/ethnicity,Race: Asian vs White,,,False,
+depression,Depression,both,ever_met,full,Race/ethnicity,Race: Other/Multiracial vs White,,,False,
+anxiety,Anxiety,parent,current,full,Sex,Female (vs male),1.0390748351904668,0.537765781524971,False,0.03833073569317328
+anxiety,Anxiety,parent,current,full,Income,Income (per SD),0.8063521560870057,5.1585370897692224e-11,True,-0.2152347136743906
+anxiety,Anxiety,parent,current,full,Culture/environment,Screen time (per SD),1.2474493422963124,5.985641861541934e-16,True,0.22110094044132933
+anxiety,Anxiety,parent,current,full,Culture/environment,Family conflict (per SD),1.128681278695254,3.673775680524455e-05,True,0.1210499412336217
+anxiety,Anxiety,parent,current,full,Neuroimaging,DMN within-network FC (per SD),0.9395252776796044,0.1059694151016485,False,-0.0623805550306323
+anxiety,Anxiety,parent,current,full,Neuroimaging,Salience within-network FC (per SD),0.9822251916991993,0.617996003762733,False,-0.01793467746807053
+anxiety,Anxiety,parent,current,full,Neuroimaging,FPN within-network FC (per SD),0.936357476121678,0.06698940064593674,False,-0.06575795648360037
+anxiety,Anxiety,parent,current,full,Neuroimaging,DMN-salience FC (per SD),1.018553550233216,0.6075484762859277,False,0.01838353285114002
+anxiety,Anxiety,parent,current,full,Neuroimaging,DMN-FPN FC (per SD),1.0188988942562534,0.5905599119408877,False,0.018722528764667866
+anxiety,Anxiety,parent,current,full,Neuroimaging,Salience-FPN FC (per SD),0.9557004408442332,0.22278283902676332,False,-0.0453107614312215
+anxiety,Anxiety,parent,current,full,Race/ethnicity,Race: Black/AA vs White,1.4699652042552853,3.92083622698827e-05,True,0.3852387299358566
+anxiety,Anxiety,parent,current,full,Race/ethnicity,Race: Hispanic vs White,1.2443205297073046,0.02646132975379112,True,0.21858962166463097
+anxiety,Anxiety,parent,current,full,Race/ethnicity,Race: Asian vs White,0.8480576757492357,0.5314654056161323,False,-0.16480663164784054
+anxiety,Anxiety,parent,current,full,Race/ethnicity,Race: Other/Multiracial vs White,1.305589044763755,0.013185786879426583,True,0.2666543142333675
+anxiety,Anxiety,parent,ever_met,full,Sex,Female (vs male),1.0213085015719114,0.6027952829356573,False,0.02108464983233526
+anxiety,Anxiety,parent,ever_met,full,Income,Income (per SD),0.9187816572475273,0.00018030030378049042,True,-0.08470677218065799
+anxiety,Anxiety,parent,ever_met,full,Culture/environment,Screen time (per SD),1.1265331113801091,6.120066903808433e-09,True,0.11914487360520411
+anxiety,Anxiety,parent,ever_met,full,Culture/environment,Family conflict (per SD),1.0345923617478283,0.09092638858452132,False,0.03400749575297677
+anxiety,Anxiety,parent,ever_met,full,Neuroimaging,DMN within-network FC (per SD),0.9680821839309256,0.18574973723116128,False,-0.032438294554336736
+anxiety,Anxiety,parent,ever_met,full,Neuroimaging,Salience within-network FC (per SD),0.9541860151928556,0.04070336589790922,True,-0.04689664206196906
+anxiety,Anxiety,parent,ever_met,full,Neuroimaging,FPN within-network FC (per SD),0.9718072238316517,0.21422728805013513,False,-0.02859782358287728
+anxiety,Anxiety,parent,ever_met,full,Neuroimaging,DMN-salience FC (per SD),1.0061722796010784,0.7825601688295631,False,0.006153309104129526
+anxiety,Anxiety,parent,ever_met,full,Neuroimaging,DMN-FPN FC (per SD),0.9922425122604566,0.7314526540402618,False,-0.007787733570205078
+anxiety,Anxiety,parent,ever_met,full,Neuroimaging,Salience-FPN FC (per SD),0.9424029637032996,0.31699120354641797,False,-0.059322321243304416
+anxiety,Anxiety,parent,ever_met,full,Race/ethnicity,Race: Black/AA vs White,0.9143313354081269,0.17039817346241382,False,-0.0895622618319172
+anxiety,Anxiety,parent,ever_met,full,Race/ethnicity,Race: Hispanic vs White,0.9566199622428792,0.48118275380623965,False,-0.044349080043491335
+anxiety,Anxiety,parent,ever_met,full,Race/ethnicity,Race: Asian vs White,0.6400292091635342,0.006689785384477089,True,-0.44624146435183926
+anxiety,Anxiety,parent,ever_met,full,Race/ethnicity,Race: Other/Multiracial vs White,1.0364927279804876,0.6216205981621901,False,0.03584263693130215
+anxiety,Anxiety,youth,current,full,Sex,Female (vs male),0.9417048969810765,0.7984434433493612,False,-0.06006332632982976
+anxiety,Anxiety,youth,current,full,Income,Income (per SD),0.8388155798059834,0.15465050849312387,False,-0.17576440620461517
+anxiety,Anxiety,youth,current,full,Culture/environment,Screen time (per SD),1.4287396859719121,6.427310252299598e-06,True,0.35679271718353
+anxiety,Anxiety,youth,current,full,Culture/environment,Family conflict (per SD),1.5631890149988266,6.416116097663327e-06,True,0.4467279750291481
+anxiety,Anxiety,youth,current,full,Neuroimaging,DMN within-network FC (per SD),,,False,
+anxiety,Anxiety,youth,current,full,Neuroimaging,Salience within-network FC (per SD),,,False,
+anxiety,Anxiety,youth,current,full,Neuroimaging,FPN within-network FC (per SD),,,False,
+anxiety,Anxiety,youth,current,full,Neuroimaging,DMN-salience FC (per SD),,,False,
+anxiety,Anxiety,youth,current,full,Neuroimaging,DMN-FPN FC (per SD),,,False,
+anxiety,Anxiety,youth,current,full,Neuroimaging,Salience-FPN FC (per SD),,,False,
+anxiety,Anxiety,youth,current,full,Race/ethnicity,Race: Black/AA vs White,1.3245770601013964,0.39186838928524903,False,0.28109320855957204
+anxiety,Anxiety,youth,current,full,Race/ethnicity,Race: Hispanic vs White,1.6862438168906562,0.13374281662879162,False,0.5225034617521755
+anxiety,Anxiety,youth,current,full,Race/ethnicity,Race: Asian vs White,,,False,
+anxiety,Anxiety,youth,current,full,Race/ethnicity,Race: Other/Multiracial vs White,,,False,
+anxiety,Anxiety,youth,ever_met,full,Sex,Female (vs male),1.0745462368173218,0.6554404924944165,False,0.0718984671819003
+anxiety,Anxiety,youth,ever_met,full,Income,Income (per SD),0.9304303767684429,0.43109812798100844,False,-0.07210802916142503
+anxiety,Anxiety,youth,ever_met,full,Culture/environment,Screen time (per SD),1.3458537443338394,1.02662495933048e-06,True,0.29702856583414905
+anxiety,Anxiety,youth,ever_met,full,Culture/environment,Family conflict (per SD),1.528767304505169,2.967118893024119e-10,True,0.4244617273371398
+anxiety,Anxiety,youth,ever_met,full,Neuroimaging,DMN within-network FC (per SD),,,False,
+anxiety,Anxiety,youth,ever_met,full,Neuroimaging,Salience within-network FC (per SD),,,False,
+anxiety,Anxiety,youth,ever_met,full,Neuroimaging,FPN within-network FC (per SD),,,False,
+anxiety,Anxiety,youth,ever_met,full,Neuroimaging,DMN-salience FC (per SD),,,False,
+anxiety,Anxiety,youth,ever_met,full,Neuroimaging,DMN-FPN FC (per SD),,,False,
+anxiety,Anxiety,youth,ever_met,full,Neuroimaging,Salience-FPN FC (per SD),,,False,
+anxiety,Anxiety,youth,ever_met,full,Race/ethnicity,Race: Black/AA vs White,1.2287751319106262,0.4031193850840855,False,0.20601784550354463
+anxiety,Anxiety,youth,ever_met,full,Race/ethnicity,Race: Hispanic vs White,1.3517462917341785,0.2320944139604444,False,0.30139730596878206
+anxiety,Anxiety,youth,ever_met,full,Race/ethnicity,Race: Asian vs White,,,False,
+anxiety,Anxiety,youth,ever_met,full,Race/ethnicity,Race: Other/Multiracial vs White,2.0095254501221835,0.0034797138999576598,True,0.697898599729723
+anxiety,Anxiety,either,current,full,Sex,Female (vs male),1.0272912477964713,0.6599986629925603,False,0.026925481585830354
+anxiety,Anxiety,either,current,full,Income,Income (per SD),0.8079180750435128,3.448951921076521e-11,True,-0.2132946178744659
+anxiety,Anxiety,either,current,full,Culture/environment,Screen time (per SD),1.266479553910406,1.2609494127010213e-18,True,0.23624104655542041
+anxiety,Anxiety,either,current,full,Culture/environment,Family conflict (per SD),1.1448138550170344,2.5899503043596463e-06,True,0.1352420517524123
+anxiety,Anxiety,either,current,full,Neuroimaging,DMN within-network FC (per SD),0.9381282427038327,0.09188750602680353,False,-0.0638686200206829
+anxiety,Anxiety,either,current,full,Neuroimaging,Salience within-network FC (per SD),0.9942144475391679,0.8735655370166813,False,-0.0058023536034051484
+anxiety,Anxiety,either,current,full,Neuroimaging,FPN within-network FC (per SD),0.936332091069354,0.060967179110475424,False,-0.06578506727950618
+anxiety,Anxiety,either,current,full,Neuroimaging,DMN-salience FC (per SD),1.0323528579994912,0.3670607428255308,False,0.031840525285362034
+anxiety,Anxiety,either,current,full,Neuroimaging,DMN-FPN FC (per SD),1.0138937652663877,0.6868560287908292,False,0.013798131698576929
+anxiety,Anxiety,either,current,full,Neuroimaging,Salience-FPN FC (per SD),0.9591731691595573,0.25439650021320936,False,-0.0416836477622721
+anxiety,Anxiety,either,current,full,Race/ethnicity,Race: Black/AA vs White,1.448315248494937,5.530191275141484e-05,True,0.3704009833164677
+anxiety,Anxiety,either,current,full,Race/ethnicity,Race: Hispanic vs White,1.244280120218128,0.023848735836006926,True,0.2185571459926654
+anxiety,Anxiety,either,current,full,Race/ethnicity,Race: Asian vs White,0.8170081387741389,0.4413126652306848,False,-0.20210622239190057
+anxiety,Anxiety,either,current,full,Race/ethnicity,Race: Other/Multiracial vs White,1.3096608342193394,0.010362279271862156,True,0.2697681985152522
+anxiety,Anxiety,either,ever_met,full,Sex,Female (vs male),1.0154060955835642,0.7037885757728102,False,0.015288626648419039
+anxiety,Anxiety,either,ever_met,full,Income,Income (per SD),0.9178886418116021,0.00013449022892196756,True,-0.08567920093583906
+anxiety,Anxiety,either,ever_met,full,Culture/environment,Screen time (per SD),1.1408940061579407,1.0206386076341131e-10,True,0.13181217099777973
+anxiety,Anxiety,either,ever_met,full,Culture/environment,Family conflict (per SD),1.043200651316033,0.034296323840863605,True,0.04229353653441335
+anxiety,Anxiety,either,ever_met,full,Neuroimaging,DMN within-network FC (per SD),0.968333267403215,0.1860808508682965,False,-0.032178966450418164
+anxiety,Anxiety,either,ever_met,full,Neuroimaging,Salience within-network FC (per SD),0.9598815583824669,0.07167573845705016,False,-0.04094537881671468
+anxiety,Anxiety,either,ever_met,full,Neuroimaging,FPN within-network FC (per SD),0.970454242948671,0.1889599854628362,False,-0.029991025399386053
+anxiety,Anxiety,either,ever_met,full,Neuroimaging,DMN-salience FC (per SD),1.0046865471088873,0.8330535579186267,False,0.004675599438176575
+anxiety,Anxiety,either,ever_met,full,Neuroimaging,DMN-FPN FC (per SD),0.9902880377103664,0.6643096114817271,False,-0.009759430988236733
+anxiety,Anxiety,either,ever_met,full,Neuroimaging,Salience-FPN FC (per SD),0.9443611919781228,0.01164269441044183,True,-0.05724656739558199
+anxiety,Anxiety,either,ever_met,full,Race/ethnicity,Race: Black/AA vs White,0.9281741424683866,0.2497993268970118,False,-0.07453591027868797
+anxiety,Anxiety,either,ever_met,full,Race/ethnicity,Race: Hispanic vs White,0.9626761762539973,0.5429685151341592,False,-0.03803818930612971
+anxiety,Anxiety,either,ever_met,full,Race/ethnicity,Race: Asian vs White,0.6589884407449331,0.009786271801120237,True,-0.4170492852329625
+anxiety,Anxiety,either,ever_met,full,Race/ethnicity,Race: Other/Multiracial vs White,1.0669262841848912,0.3686830466411861,False,0.06478188294601946
+anxiety,Anxiety,both,current,full,Sex,Female (vs male),1.147667881913113,0.738530010550897,False,0.13773195457221798
+anxiety,Anxiety,both,current,full,Income,Income (per SD),0.8137101821667382,0.36038221570750695,False,-0.2061510179416468
+anxiety,Anxiety,both,current,full,Culture/environment,Screen time (per SD),1.3506462940600716,0.024174189895794368,True,0.30058321423345036
+anxiety,Anxiety,both,current,full,Culture/environment,Family conflict (per SD),1.6410308377768283,0.0032418209826671975,True,0.495324603995266
+anxiety,Anxiety,both,current,full,Neuroimaging,DMN within-network FC (per SD),,,False,
+anxiety,Anxiety,both,current,full,Neuroimaging,Salience within-network FC (per SD),,,False,
+anxiety,Anxiety,both,current,full,Neuroimaging,FPN within-network FC (per SD),,,False,
+anxiety,Anxiety,both,current,full,Neuroimaging,DMN-salience FC (per SD),,,False,
+anxiety,Anxiety,both,current,full,Neuroimaging,DMN-FPN FC (per SD),,,False,
+anxiety,Anxiety,both,current,full,Neuroimaging,Salience-FPN FC (per SD),,,False,
+anxiety,Anxiety,both,current,full,Race/ethnicity,Race: Black/AA vs White,,,False,
+anxiety,Anxiety,both,current,full,Race/ethnicity,Race: Hispanic vs White,,,False,
+anxiety,Anxiety,both,current,full,Race/ethnicity,Race: Asian vs White,,,False,
+anxiety,Anxiety,both,current,full,Race/ethnicity,Race: Other/Multiracial vs White,,,False,
+anxiety,Anxiety,both,ever_met,full,Sex,Female (vs male),1.1989906853869072,0.4168146798049621,False,0.18148010736374753
+anxiety,Anxiety,both,ever_met,full,Income,Income (per SD),0.9980470583843677,0.9885212069499345,False,-0.001954851092579022
+anxiety,Anxiety,both,ever_met,full,Culture/environment,Screen time (per SD),1.3305559325693397,0.001559410011910127,True,0.28559684931137136
+anxiety,Anxiety,both,ever_met,full,Culture/environment,Family conflict (per SD),1.6114265309605458,2.475336857976793e-08,True,0.4771198307659096
+anxiety,Anxiety,both,ever_met,full,Neuroimaging,DMN within-network FC (per SD),,,False,
+anxiety,Anxiety,both,ever_met,full,Neuroimaging,Salience within-network FC (per SD),,,False,
+anxiety,Anxiety,both,ever_met,full,Neuroimaging,FPN within-network FC (per SD),,,False,
+anxiety,Anxiety,both,ever_met,full,Neuroimaging,DMN-salience FC (per SD),,,False,
+anxiety,Anxiety,both,ever_met,full,Neuroimaging,DMN-FPN FC (per SD),,,False,
+anxiety,Anxiety,both,ever_met,full,Neuroimaging,Salience-FPN FC (per SD),,,False,
+anxiety,Anxiety,both,ever_met,full,Race/ethnicity,Race: Black/AA vs White,0.901469887035551,0.767525898047553,False,-0.10372864007408908
+anxiety,Anxiety,both,ever_met,full,Race/ethnicity,Race: Hispanic vs White,1.1545868158622752,0.7056332645605352,False,0.14374254478708412
+anxiety,Anxiety,both,ever_met,full,Race/ethnicity,Race: Asian vs White,,,False,
+anxiety,Anxiety,both,ever_met,full,Race/ethnicity,Race: Other/Multiracial vs White,1.6180744310363109,0.1555716512313651,False,0.4812368194548288
+any-disorder,Any disorder,parent,current,full,Sex,Female (vs male),0.7378399320174223,6.728628994032742e-12,True,-0.30402837219196743
+any-disorder,Any disorder,parent,current,full,Income,Income (per SD),0.78497319968495,5.16469518048312e-24,True,-0.24210570231125578
+any-disorder,Any disorder,parent,current,full,Culture/environment,Screen time (per SD),1.2566624496335776,9.911394665424835e-27,True,0.22845935705693068
+any-disorder,Any disorder,parent,current,full,Culture/environment,Family conflict (per SD),1.2073844726389868,4.222855130808429e-19,True,0.18845642713432473
+any-disorder,Any disorder,parent,current,full,Neuroimaging,DMN within-network FC (per SD),0.915682435720744,0.0014772939783385505,True,-0.08808566031183884
+any-disorder,Any disorder,parent,current,full,Neuroimaging,Salience within-network FC (per SD),1.0061223970512791,0.8131636708132581,False,0.006103731325697583
+any-disorder,Any disorder,parent,current,full,Neuroimaging,FPN within-network FC (per SD),0.9318150438648131,0.004961418813564308,True,-0.07062093477933641
+any-disorder,Any disorder,parent,current,full,Neuroimaging,DMN-salience FC (per SD),1.0215303681638004,0.5666840885401143,False,0.021301863824146554
+any-disorder,Any disorder,parent,current,full,Neuroimaging,DMN-FPN FC (per SD),0.9998055839547434,0.9937152673199168,False,-0.0001944349465057772
+any-disorder,Any disorder,parent,current,full,Neuroimaging,Salience-FPN FC (per SD),0.9693890380884456,0.21944467970553894,False,-0.031089263569142014
+any-disorder,Any disorder,parent,current,full,Race/ethnicity,Race: Black/AA vs White,1.3143979672072883,6.20314469637489e-05,True,0.2733787411841017
+any-disorder,Any disorder,parent,current,full,Race/ethnicity,Race: Hispanic vs White,1.0851739213214715,0.23964197474486926,False,0.08174027029518964
+any-disorder,Any disorder,parent,current,full,Race/ethnicity,Race: Asian vs White,0.5017817758496096,0.0006028782352445278,True,-0.6895899632668872
+any-disorder,Any disorder,parent,current,full,Race/ethnicity,Race: Other/Multiracial vs White,1.239878212234084,0.005214454541959532,True,0.21501315885318928
+any-disorder,Any disorder,parent,ever_met,full,Sex,Female (vs male),0.7726613957054925,2.7046782856170514e-11,True,-0.25791436555273206
+any-disorder,Any disorder,parent,ever_met,full,Income,Income (per SD),0.9007781251290604,2.3393433210763267e-06,True,-0.10449630571809952
+any-disorder,Any disorder,parent,ever_met,full,Culture/environment,Screen time (per SD),1.178270860476036,5.94588309761166e-16,True,0.16404799129136124
+any-disorder,Any disorder,parent,ever_met,full,Culture/environment,Family conflict (per SD),1.1370541049289917,2.5308063537382965e-11,True,0.12844079932576258
+any-disorder,Any disorder,parent,ever_met,full,Neuroimaging,DMN within-network FC (per SD),0.9624384728531634,0.09780577262493734,False,-0.03828513917184508
+any-disorder,Any disorder,parent,ever_met,full,Neuroimaging,Salience within-network FC (per SD),0.9773397433485171,0.28743971764858456,False,-0.022920945986648063
+any-disorder,Any disorder,parent,ever_met,full,Neuroimaging,FPN within-network FC (per SD),0.9479673401034169,0.014016429420975134,True,-0.05343522868828096
+any-disorder,Any disorder,parent,ever_met,full,Neuroimaging,DMN-salience FC (per SD),1.0186854338792146,0.37994362544558835,False,0.0185130057772046
+any-disorder,Any disorder,parent,ever_met,full,Neuroimaging,DMN-FPN FC (per SD),0.9728465505725071,0.19753129104874656,False,-0.027528916764097418
+any-disorder,Any disorder,parent,ever_met,full,Neuroimaging,Salience-FPN FC (per SD),0.9454923962170085,0.0093477171331369,True,-0.056049432992103694
+any-disorder,Any disorder,parent,ever_met,full,Race/ethnicity,Race: Black/AA vs White,0.932389166770892,0.25909690545580033,False,-0.07000499053786899
+any-disorder,Any disorder,parent,ever_met,full,Race/ethnicity,Race: Hispanic vs White,0.8707623999601014,0.020791736694429443,True,-0.13838612928605679
+any-disorder,Any disorder,parent,ever_met,full,Race/ethnicity,Race: Asian vs White,0.5045815517283397,8.563211575718534e-06,True,-0.6840258036330962
+any-disorder,Any disorder,parent,ever_met,full,Race/ethnicity,Race: Other/Multiracial vs White,1.0302640748122633,0.6666918776302124,False,0.029815152693836357
+any-disorder,Any disorder,youth,current,full,Sex,Female (vs male),0.8379658520792456,0.037693915712021624,True,-0.17677792863910582
+any-disorder,Any disorder,youth,current,full,Income,Income (per SD),0.7868327551844754,6.299864104183501e-08,True,-0.2397395624434906
+any-disorder,Any disorder,youth,current,full,Culture/environment,Screen time (per SD),1.465421984713377,3.6410204391207354e-29,True,0.38214324516522596
+any-disorder,Any disorder,youth,current,full,Culture/environment,Family conflict (per SD),1.6025745036733434,6.955704225707236e-39,True,0.4716114008838138
+any-disorder,Any disorder,youth,current,full,Neuroimaging,DMN within-network FC (per SD),0.9020757039286382,0.05153278889087583,False,-0.10305683347390399
+any-disorder,Any disorder,youth,current,full,Neuroimaging,Salience within-network FC (per SD),1.0701827626362386,0.1754372565389014,False,0.06782944009018846
+any-disorder,Any disorder,youth,current,full,Neuroimaging,FPN within-network FC (per SD),0.9139957662184958,0.0666741848048949,False,-0.08992933968478137
+any-disorder,Any disorder,youth,current,full,Neuroimaging,DMN-salience FC (per SD),1.0420036852783991,0.403150210912709,False,0.041145480060428764
+any-disorder,Any disorder,youth,current,full,Neuroimaging,DMN-FPN FC (per SD),0.8998351724444459,0.03276182564155441,True,-0.10554367415871396
+any-disorder,Any disorder,youth,current,full,Neuroimaging,Salience-FPN FC (per SD),1.0472275724615168,0.36423765361818894,False,0.046146264966623995
+any-disorder,Any disorder,youth,current,full,Race/ethnicity,Race: Black/AA vs White,1.6120840193788897,8.430203246240433e-05,True,0.477527763928959
+any-disorder,Any disorder,youth,current,full,Race/ethnicity,Race: Hispanic vs White,1.298306207638717,0.04112564849857256,True,0.26106049773189216
+any-disorder,Any disorder,youth,current,full,Race/ethnicity,Race: Asian vs White,,,False,
+any-disorder,Any disorder,youth,current,full,Race/ethnicity,Race: Other/Multiracial vs White,1.2576810689723437,0.10933522313521399,False,0.22926960385650702
+any-disorder,Any disorder,youth,ever_met,full,Sex,Female (vs male),0.8901020858588126,0.10422036688837051,False,-0.11641911962171302
+any-disorder,Any disorder,youth,ever_met,full,Income,Income (per SD),0.7964519983451791,6.887920233211325e-10,True,-0.22758841717918565
+any-disorder,Any disorder,youth,ever_met,full,Culture/environment,Screen time (per SD),1.4312410937338362,1.966495001930115e-33,True,0.3585419655823345
+any-disorder,Any disorder,youth,ever_met,full,Culture/environment,Family conflict (per SD),1.5887396415318753,2.2854584464227596e-49,True,0.4629410236147492
+any-disorder,Any disorder,youth,ever_met,full,Neuroimaging,DMN within-network FC (per SD),0.9136334564621829,0.04483114617351325,True,-0.0903258202800387
+any-disorder,Any disorder,youth,ever_met,full,Neuroimaging,Salience within-network FC (per SD),1.053608587611224,0.213124299833924,False,0.05222102214570657
+any-disorder,Any disorder,youth,ever_met,full,Neuroimaging,FPN within-network FC (per SD),0.9101780217021465,0.035906276456772905,True,-0.09411507035983406
+any-disorder,Any disorder,youth,ever_met,full,Neuroimaging,DMN-salience FC (per SD),0.9874000729819978,0.7594055514159805,False,-0.012679979244071788
+any-disorder,Any disorder,youth,ever_met,full,Neuroimaging,DMN-FPN FC (per SD),0.9417695326056398,0.14610854931258482,False,-0.059994691870478144
+any-disorder,Any disorder,youth,ever_met,full,Neuroimaging,Salience-FPN FC (per SD),1.0018605298598529,0.9651917159972185,False,0.0018588012179676114
+any-disorder,Any disorder,youth,ever_met,full,Race/ethnicity,Race: Black/AA vs White,1.8646421869181076,7.296888679442914e-10,True,0.623069177808522
+any-disorder,Any disorder,youth,ever_met,full,Race/ethnicity,Race: Hispanic vs White,1.351151617856996,0.00478881686264756,True,0.3009572790741905
+any-disorder,Any disorder,youth,ever_met,full,Race/ethnicity,Race: Asian vs White,0.886727136319303,0.702537105572552,False,-0.12021796934358149
+any-disorder,Any disorder,youth,ever_met,full,Race/ethnicity,Race: Other/Multiracial vs White,1.4021078908608113,0.004672266445279771,True,0.3379767406164323
+any-disorder,Any disorder,either,current,full,Sex,Female (vs male),0.7532257251897867,2.1655333340050606e-11,True,-0.2833903282553255
+any-disorder,Any disorder,either,current,full,Income,Income (per SD),0.780711922425786,1.3463067964362317e-26,True,-0.2475490545163881
+any-disorder,Any disorder,either,current,full,Culture/environment,Screen time (per SD),1.314473805501087,3.779838636873538e-39,True,0.2734364376412717
+any-disorder,Any disorder,either,current,full,Culture/environment,Family conflict (per SD),1.2739835866570877,1.0163207515552807e-32,True,0.24214867375229313
+any-disorder,Any disorder,either,current,full,Neuroimaging,DMN within-network FC (per SD),0.9123122192106216,0.000510559426325281,True,-0.09177300186901692
+any-disorder,Any disorder,either,current,full,Neuroimaging,Salience within-network FC (per SD),1.013627055286365,0.5804438625446626,False,0.01353504194003297
+any-disorder,Any disorder,either,current,full,Neuroimaging,FPN within-network FC (per SD),0.9359833831623711,0.006090362441029079,True,-0.06615755569378678
+any-disorder,Any disorder,either,current,full,Neuroimaging,DMN-salience FC (per SD),1.0261090876727836,0.27550642029519734,False,0.025774064364480077
+any-disorder,Any disorder,either,current,full,Neuroimaging,DMN-FPN FC (per SD),0.9892319863539705,0.6468858824469532,False,-0.010826408279444257
+any-disorder,Any disorder,either,current,full,Neuroimaging,Salience-FPN FC (per SD),0.9780930625889175,0.362930251960497,False,-0.02215045745297872
+any-disorder,Any disorder,either,current,full,Race/ethnicity,Race: Black/AA vs White,1.3935271902542856,4.0779644259142005e-07,True,0.3318380799520784
+any-disorder,Any disorder,either,current,full,Race/ethnicity,Race: Hispanic vs White,1.1113546457698191,0.10954073284855594,False,0.10557967283397514
+any-disorder,Any disorder,either,current,full,Race/ethnicity,Race: Asian vs White,0.5377592906246208,0.0009097994663321631,True,-0.6203442341362682
+any-disorder,Any disorder,either,current,full,Race/ethnicity,Race: Other/Multiracial vs White,1.232121092723188,0.004971759233281048,True,0.20873714982926914
+any-disorder,Any disorder,either,ever_met,full,Sex,Female (vs male),0.7771184246075499,4.617352957645423e-11,True,-0.252162527605784
+any-disorder,Any disorder,either,ever_met,full,Income,Income (per SD),0.876231441494077,1.7063424495622253e-09,True,-0.13212502032230206
+any-disorder,Any disorder,either,ever_met,full,Culture/environment,Screen time (per SD),1.238737655742814,4.684036474024302e-25,True,0.2140928415208359
+any-disorder,Any disorder,either,ever_met,full,Culture/environment,Family conflict (per SD),1.190314135935734,1.788354767013594e-19,True,0.17421725206483488
+any-disorder,Any disorder,either,ever_met,full,Neuroimaging,DMN within-network FC (per SD),0.9484434299154542,0.02165739393147356,True,-0.05293313301410969
+any-disorder,Any disorder,either,ever_met,full,Neuroimaging,Salience within-network FC (per SD),0.9792835510456486,0.3264396783717727,False,-0.020934045041354352
+any-disorder,Any disorder,either,ever_met,full,Neuroimaging,FPN within-network FC (per SD),0.9432029829092113,0.01087482736078589,True,-0.058473767222404036
+any-disorder,Any disorder,either,ever_met,full,Neuroimaging,DMN-salience FC (per SD),1.0130403007520912,0.5369207138843165,False,0.012956008040937862
+any-disorder,Any disorder,either,ever_met,full,Neuroimaging,DMN-FPN FC (per SD),0.9721523649674109,0.18221647113357287,False,-0.02824273272463686
+any-disorder,Any disorder,either,ever_met,full,Neuroimaging,Salience-FPN FC (per SD),0.9471757755002802,0.011486486308936722,True,-0.05427059003133804
+any-disorder,Any disorder,either,ever_met,full,Race/ethnicity,Race: Black/AA vs White,1.0425321578374087,0.4941579599487994,False,0.0416525210615005
+any-disorder,Any disorder,either,ever_met,full,Race/ethnicity,Race: Hispanic vs White,0.9312745155851737,0.22485800062736772,False,-0.07120118417428742
+any-disorder,Any disorder,either,ever_met,full,Race/ethnicity,Race: Asian vs White,0.5370989918341251,2.8008587647200998e-05,True,-0.6215728591268043
+any-disorder,Any disorder,either,ever_met,full,Race/ethnicity,Race: Other/Multiracial vs White,1.0586240230067305,0.4101872904163558,False,0.056969973370292894
+any-disorder,Any disorder,both,current,full,Sex,Female (vs male),0.6260318577210348,0.0008335566707177431,True,-0.4683540182487673
+any-disorder,Any disorder,both,current,full,Income,Income (per SD),0.7025051212728457,4.119577113526318e-08,True,-0.35310258773270087
+any-disorder,Any disorder,both,current,full,Culture/environment,Screen time (per SD),1.5470452444963974,2.0403746877922925e-20,True,0.43634681776726153
+any-disorder,Any disorder,both,current,full,Culture/environment,Family conflict (per SD),1.6866148702097015,3.140870351259181e-20,True,0.5227234847978853
+any-disorder,Any disorder,both,current,full,Neuroimaging,DMN within-network FC (per SD),0.8628650894111954,0.10805146699368916,False,-0.1474969275684864
+any-disorder,Any disorder,both,current,full,Neuroimaging,Salience within-network FC (per SD),1.0905099151440256,0.3761448336131499,False,0.0866453989098449
+any-disorder,Any disorder,both,current,full,Neuroimaging,FPN within-network FC (per SD),0.7945719065123631,0.006377132149701114,True,-0.2299517917358927
+any-disorder,Any disorder,both,current,full,Neuroimaging,DMN-salience FC (per SD),1.0207471405828068,0.7883573329501566,False,0.020534849923207425
+any-disorder,Any disorder,both,current,full,Neuroimaging,DMN-FPN FC (per SD),0.8439238056548013,0.034360187453086624,True,-0.1696930661216412
+any-disorder,Any disorder,both,current,full,Neuroimaging,Salience-FPN FC (per SD),1.048641418993728,0.5387027409773057,False,0.04749543970267954
+any-disorder,Any disorder,both,current,full,Race/ethnicity,Race: Black/AA vs White,1.5200670751434089,0.022282043640425287,True,0.41875446226837815
+any-disorder,Any disorder,both,current,full,Race/ethnicity,Race: Hispanic vs White,1.3400698402484084,0.15437868154078366,False,0.2927217321930059
+any-disorder,Any disorder,both,current,full,Race/ethnicity,Race: Asian vs White,,,False,
+any-disorder,Any disorder,both,current,full,Race/ethnicity,Race: Other/Multiracial vs White,1.550339226938634,0.0377782189066199,True,0.4384737630750963
+any-disorder,Any disorder,both,ever_met,full,Sex,Female (vs male),0.7838014616050929,0.008600609035150747,True,-0.2435995284504282
+any-disorder,Any disorder,both,ever_met,full,Income,Income (per SD),0.8139179940605108,1.1348604195146138e-05,True,-0.2058956624520613
+any-disorder,Any disorder,both,ever_met,full,Culture/environment,Screen time (per SD),1.4480809876075378,1.5059064989147624e-23,True,0.3702392230676522
+any-disorder,Any disorder,both,ever_met,full,Culture/environment,Family conflict (per SD),1.6400748124090163,6.603894811088432e-37,True,0.49474185811823956
+any-disorder,Any disorder,both,ever_met,full,Neuroimaging,DMN within-network FC (per SD),0.9528334166146046,0.3977663435436565,False,-0.04831518954240654
+any-disorder,Any disorder,both,ever_met,full,Neuroimaging,Salience within-network FC (per SD),1.0750969644208388,0.19439298434510566,False,0.07241085697314471
+any-disorder,Any disorder,both,ever_met,full,Neuroimaging,FPN within-network FC (per SD),0.8893708650537687,0.0338559200144073,True,-0.11724095942076773
+any-disorder,Any disorder,both,ever_met,full,Neuroimaging,DMN-salience FC (per SD),0.99753689669032,0.9625889539006902,False,-0.0024661417389727153
+any-disorder,Any disorder,both,ever_met,full,Neuroimaging,DMN-FPN FC (per SD),0.9044604579813086,0.05791211349629695,False,-0.1004166920937697
+any-disorder,Any disorder,both,ever_met,full,Neuroimaging,Salience-FPN FC (per SD),1.0028823505513138,0.9682909279874876,False,0.0028782045438840134
+any-disorder,Any disorder,both,ever_met,full,Race/ethnicity,Race: Black/AA vs White,1.519029265361573,0.0013527459955327622,True,0.4180714896305287
+any-disorder,Any disorder,both,ever_met,full,Race/ethnicity,Race: Hispanic vs White,1.0332908568042594,0.8235143280959013,False,0.03274871565964432
+any-disorder,Any disorder,both,ever_met,full,Race/ethnicity,Race: Asian vs White,,,False,
+any-disorder,Any disorder,both,ever_met,full,Race/ethnicity,Race: Other/Multiracial vs White,1.4153343144249977,0.01527745441895978,True,0.34736576780041883
+ADHD,ADHD,parent,current,full,Sex,Female (vs male),0.4194913186692789,8.079365503080829e-29,True,-0.8687124477603353
+ADHD,ADHD,parent,current,full,Income,Income (per SD),0.9156101749982264,0.022935807532591654,True,-0.08816457803599957
+ADHD,ADHD,parent,current,full,Culture/environment,Screen time (per SD),1.2766790303096258,1.1868952888095202e-14,True,0.24426219879318606
+ADHD,ADHD,parent,current,full,Culture/environment,Family conflict (per SD),1.2137261825134196,1.1783970019801543e-08,True,0.19369511737291814
+ADHD,ADHD,parent,current,full,Neuroimaging,DMN within-network FC (per SD),0.9233655985932373,0.10398682194468191,False,-0.07973002475459551
+ADHD,ADHD,parent,current,full,Neuroimaging,Salience within-network FC (per SD),0.9547363633691823,0.2950689082685819,False,-0.04632003591207485
+ADHD,ADHD,parent,current,full,Neuroimaging,FPN within-network FC (per SD),0.9144224763299329,0.04594937255004967,True,-0.08946258639031712
+ADHD,ADHD,parent,current,full,Neuroimaging,DMN-salience FC (per SD),1.0228360040885112,0.5846644535026937,False,0.022579165309774413
+ADHD,ADHD,parent,current,full,Neuroimaging,DMN-FPN FC (per SD),0.9886369958296216,0.8008406809703534,False,-0.01142805636398006
+ADHD,ADHD,parent,current,full,Neuroimaging,Salience-FPN FC (per SD),0.9027113778095469,0.015571209397603846,True,-0.10235240255944641
+ADHD,ADHD,parent,current,full,Race/ethnicity,Race: Black/AA vs White,1.0005001561770066,0.9964992182953557,False,0.0005000311405959913
+ADHD,ADHD,parent,current,full,Race/ethnicity,Race: Hispanic vs White,0.8071856627477648,0.0766246643563702,False,-0.2142015718103837
+ADHD,ADHD,parent,current,full,Race/ethnicity,Race: Asian vs White,,,False,
+ADHD,ADHD,parent,current,full,Race/ethnicity,Race: Other/Multiracial vs White,1.0467514616574587,0.7082960380799639,False,0.04569152229298208
+ADHD,ADHD,parent,ever_met,full,Sex,Female (vs male),0.48390232300258545,1.631116259944261e-38,True,-0.725872204610412
+ADHD,ADHD,parent,ever_met,full,Income,Income (per SD),0.8598876392269191,1.6723871304538368e-07,True,-0.15095355033202967
+ADHD,ADHD,parent,ever_met,full,Culture/environment,Screen time (per SD),1.3093692534210082,1.9918150085024828e-27,True,0.2695455353233233
+ADHD,ADHD,parent,ever_met,full,Culture/environment,Family conflict (per SD),1.2565407522252963,9.539751711883857e-20,True,0.22836251060353885
+ADHD,ADHD,parent,ever_met,full,Neuroimaging,DMN within-network FC (per SD),0.9155180804298977,0.009720858263194415,True,-0.0882651658218451
+ADHD,ADHD,parent,ever_met,full,Neuroimaging,Salience within-network FC (per SD),0.9562322882953964,0.1840067706092836,False,-0.04475441605695653
+ADHD,ADHD,parent,ever_met,full,Neuroimaging,FPN within-network FC (per SD),0.9133832466558278,0.004638965261784532,True,-0.09059972013819795
+ADHD,ADHD,parent,ever_met,full,Neuroimaging,DMN-salience FC (per SD),1.0059586288610598,0.8484453020539956,False,0.005940946439331756
+ADHD,ADHD,parent,ever_met,full,Neuroimaging,DMN-FPN FC (per SD),1.0002488074236096,0.9937055141101707,False,0.0002487764761757267
+ADHD,ADHD,parent,ever_met,full,Neuroimaging,Salience-FPN FC (per SD),0.925099109906982,0.010350783826692076,True,-0.07785440136403206
+ADHD,ADHD,parent,ever_met,full,Race/ethnicity,Race: Black/AA vs White,1.0435763967518448,0.610668656300045,False,0.04265365688384926
+ADHD,ADHD,parent,ever_met,full,Race/ethnicity,Race: Hispanic vs White,0.9480232857943933,0.5353422555827845,False,-0.05337621395452806
+ADHD,ADHD,parent,ever_met,full,Race/ethnicity,Race: Asian vs White,0.31783269355285465,8.300747105771429e-05,True,-1.1462301555550984
+ADHD,ADHD,parent,ever_met,full,Race/ethnicity,Race: Other/Multiracial vs White,1.1776298510576797,0.07235746053720837,False,0.16350381773511902
+ADHD,ADHD,either,current,full,Sex,Female (vs male),0.4194913186692789,8.079365503080829e-29,True,-0.8687124477603353
+ADHD,ADHD,either,current,full,Income,Income (per SD),0.9156101749982264,0.022935807532591654,True,-0.08816457803599957
+ADHD,ADHD,either,current,full,Culture/environment,Screen time (per SD),1.2766790303096258,1.1868952888095202e-14,True,0.24426219879318606
+ADHD,ADHD,either,current,full,Culture/environment,Family conflict (per SD),1.2137261825134196,1.1783970019801543e-08,True,0.19369511737291814
+ADHD,ADHD,either,current,full,Neuroimaging,DMN within-network FC (per SD),0.9233655985932373,0.10398682194468191,False,-0.07973002475459551
+ADHD,ADHD,either,current,full,Neuroimaging,Salience within-network FC (per SD),0.9547363633691823,0.2950689082685819,False,-0.04632003591207485
+ADHD,ADHD,either,current,full,Neuroimaging,FPN within-network FC (per SD),0.9144224763299329,0.04594937255004967,True,-0.08946258639031712
+ADHD,ADHD,either,current,full,Neuroimaging,DMN-salience FC (per SD),1.0228360040885112,0.5846644535026937,False,0.022579165309774413
+ADHD,ADHD,either,current,full,Neuroimaging,DMN-FPN FC (per SD),0.9886369958296216,0.8008406809703534,False,-0.01142805636398006
+ADHD,ADHD,either,current,full,Neuroimaging,Salience-FPN FC (per SD),0.9027113778095469,0.015571209397603846,True,-0.10235240255944641
+ADHD,ADHD,either,current,full,Race/ethnicity,Race: Black/AA vs White,1.0005001561770066,0.9964992182953557,False,0.0005000311405959913
+ADHD,ADHD,either,current,full,Race/ethnicity,Race: Hispanic vs White,0.8071856627477648,0.0766246643563702,False,-0.2142015718103837
+ADHD,ADHD,either,current,full,Race/ethnicity,Race: Asian vs White,,,False,
+ADHD,ADHD,either,current,full,Race/ethnicity,Race: Other/Multiracial vs White,1.0467514616574587,0.7082960380799639,False,0.04569152229298208
+ADHD,ADHD,either,ever_met,full,Sex,Female (vs male),0.48390232300258545,1.631116259944261e-38,True,-0.725872204610412
+ADHD,ADHD,either,ever_met,full,Income,Income (per SD),0.8598876392269191,1.6723871304538368e-07,True,-0.15095355033202967
+ADHD,ADHD,either,ever_met,full,Culture/environment,Screen time (per SD),1.3093692534210082,1.9918150085024828e-27,True,0.2695455353233233
+ADHD,ADHD,either,ever_met,full,Culture/environment,Family conflict (per SD),1.2565407522252963,9.539751711883857e-20,True,0.22836251060353885
+ADHD,ADHD,either,ever_met,full,Neuroimaging,DMN within-network FC (per SD),0.9155180804298977,0.009720858263194415,True,-0.0882651658218451
+ADHD,ADHD,either,ever_met,full,Neuroimaging,Salience within-network FC (per SD),0.9562322882953964,0.1840067706092836,False,-0.04475441605695653
+ADHD,ADHD,either,ever_met,full,Neuroimaging,FPN within-network FC (per SD),0.9133832466558278,0.004638965261784532,True,-0.09059972013819795
+ADHD,ADHD,either,ever_met,full,Neuroimaging,DMN-salience FC (per SD),1.0059586288610598,0.8484453020539956,False,0.005940946439331756
+ADHD,ADHD,either,ever_met,full,Neuroimaging,DMN-FPN FC (per SD),1.0002488074236096,0.9937055141101707,False,0.0002487764761757267
+ADHD,ADHD,either,ever_met,full,Neuroimaging,Salience-FPN FC (per SD),0.925099109906982,0.010350783826692076,True,-0.07785440136403206
+ADHD,ADHD,either,ever_met,full,Race/ethnicity,Race: Black/AA vs White,1.0435763967518448,0.610668656300045,False,0.04265365688384926
+ADHD,ADHD,either,ever_met,full,Race/ethnicity,Race: Hispanic vs White,0.9480232857943933,0.5353422555827845,False,-0.05337621395452806
+ADHD,ADHD,either,ever_met,full,Race/ethnicity,Race: Asian vs White,0.31783269355285465,8.300747105771429e-05,True,-1.1462301555550984
+ADHD,ADHD,either,ever_met,full,Race/ethnicity,Race: Other/Multiracial vs White,1.1776298510576797,0.07235746053720837,False,0.16350381773511902

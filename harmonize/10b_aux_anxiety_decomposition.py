@@ -1,0 +1,97 @@
+#!/usr/bin/env python3
+"""Decompose the anxiety construct into sub-disorders and the effect of specific phobia."""
+
+import matplotlib
+
+matplotlib.use("Agg")
+import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
+
+from abcd_ksads import config
+from abcd_ksads.anxiety import SUBS, decompose_anxiety
+
+plt.rcParams.update(
+    {
+        "font.family": "Arial",
+        "font.size": 10,
+        "axes.spines.top": False,
+        "axes.spines.right": False,
+    }
+)
+
+
+def main():
+    r = pd.read_parquet(config.DERIV / "ksads_resolved_long.parquet")
+    for c in ["session_id", "module", "informant", "status_layer", "resolved"]:
+        r[c] = r[c].astype(str)
+    base = r[
+        (r.session_id == "ses-00A")
+        & (r.informant == "parent")
+        & (r.status_layer == "present")
+    ]
+
+    dec, cum, any_with, any_without_phobia, assessed_all_n = decompose_anxiety(base)
+    dec_out = pd.concat(
+        [
+            dec,
+            pd.DataFrame(
+                [
+                    {
+                        "sub": "ANY (without phobia)",
+                        "n_pos": np.nan,
+                        "n_assessed": assessed_all_n,
+                        "prevalence_pct": round(any_without_phobia, 2),
+                    },
+                    {
+                        "sub": "ANY (with phobia)",
+                        "n_pos": np.nan,
+                        "n_assessed": assessed_all_n,
+                        "prevalence_pct": round(any_with, 2),
+                    },
+                ]
+            ),
+        ],
+        ignore_index=True,
+    )
+    dec_out.to_csv(config.DERIV / "anxiety_decomposition.csv", index=False)
+
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(9, 3.6))
+    labs = [l for _, l in SUBS]
+    ax1.barh(labs[::-1], dec.prevalence_pct[::-1], color="#2166AC")
+    ax1.set_xlabel("Baseline present-diagnosis prevalence (%)")
+    for i, v in enumerate(dec.prevalence_pct[::-1]):
+        ax1.text(v + 0.1, i, f"{v:.1f}", va="center", fontsize=8)
+
+    ax2.plot(range(1, len(cum) + 1), cum, "-o", color="#B2182B")
+    ax2.set_xticks(range(1, len(cum) + 1))
+    ax2.set_xticklabels([l for _, l in SUBS], rotation=40, ha="right", fontsize=8)
+    ax2.set_ylabel('"Any anxiety" prevalence (%)')
+    ax2.set_xlabel("sub-disorders included (cumulative)")
+    ax2.axhline(any_without_phobia, ls="--", lw=0.8, color="#999999")
+    ax2.text(
+        1,
+        any_without_phobia + 0.3,
+        f"without phobia = {any_without_phobia:.1f}%",
+        fontsize=8,
+        color="#555555",
+    )
+    fig.tight_layout()
+    fig.savefig(
+        config.DERIV / "fig_anxiety_decomposition.png",
+        dpi=300,
+        bbox_inches="tight",
+    )
+
+    print(dec.to_string(index=False))
+    print(f"\n'Any anxiety' with all sub-disorders:  {any_with:.2f}%")
+    print(f"'Any anxiety' excluding specific phobia: {any_without_phobia:.2f}%")
+    print(
+        f"-> including specific phobia changes the anxiety construct "
+        f"{any_with / any_without_phobia:.1f}x."
+    )
+    print(f"\nWrote {config.DERIV.as_posix()}/fig_anxiety_decomposition.png")
+
+
+if __name__ == "__main__":
+    main()

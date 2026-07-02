@@ -1,0 +1,17 @@
+category,n_resolved_positive,n_raw_value1,match
+ADHD,9117,9117,True
+Anxiety,22948,22948,True
+Autism,5613,5613,True
+Bipolar,4110,4110,True
+Conduct,3343,3343,True
+DMDD,108,108,True
+Depression,7669,7669,True
+Eating,5629,5629,True
+Homicidality,302,302,True
+OCD,4269,4269,True
+ODD,6267,6267,True
+PTSD,3276,3276,True
+Psychosis,2164,2164,True
+Sleep,11917,11917,True
+Suicidality,30812,30812,True
+Tic,1114,1114,True

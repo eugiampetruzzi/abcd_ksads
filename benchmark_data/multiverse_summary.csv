@@ -1,0 +1,10 @@
+construct,n_specs,prev_min,prev_max,fold_range,pp_span,prev_median,prev_iqr_low,prev_iqr_high,unstable_fold
+depression,16,0.008,10.76,1345.0,10.75,0.768,0.286,3.333,True
+anxiety,32,0.093,38.198,410.7,38.1,2.819,0.755,11.751,True
+suicidality,16,0.499,18.871,37.8,18.37,5.522,3.115,10.477,False
+any-disorder,16,1.905,56.849,29.8,54.94,19.952,5.622,33.685,False
+ODD,8,5.596,14.191,2.5,8.6,9.894,5.596,14.191,False
+ADHD,8,7.373,14.959,2.0,7.59,11.166,7.373,14.959,False
+externalizing,8,12.012,22.725,1.9,10.71,17.368,12.012,22.725,False
+eating,8,0.692,1.102,1.6,0.41,0.808,0.775,0.885,False
+conduct,8,3.195,3.204,1.0,0.01,3.2,3.195,3.204,False

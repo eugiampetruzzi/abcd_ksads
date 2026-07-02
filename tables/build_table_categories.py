@@ -1,17 +1,22 @@
-import os
 from docx import Document
 from docx.shared import Pt, Inches
 from docx.enum.text import WD_ALIGN_PARAGRAPH
 from docx.oxml.ns import qn
 from docx.oxml import OxmlElement
 
-OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "Table2_categories_subdiagnoses.docx")
+from abcd_ksads import config
+
+config.TABLES_OUT.mkdir(parents=True, exist_ok=True)
+OUT = config.TABLES_OUT / "Table2_categories_subdiagnoses.docx"
 FONT, SIZE = "Arial", 12
 
 HEADER = ["DSM category", "Diagnoses (n)", "Constituent diagnoses"]
 ROWS = [
-    ("Anxiety", "Generalized anxiety disorder; separation anxiety disorder; social anxiety disorder; "
-     "panic disorder; agoraphobia; specific phobia"),
+    (
+        "Anxiety",
+        "Generalized anxiety disorder; separation anxiety disorder; social anxiety disorder; "
+        "panic disorder; agoraphobia; specific phobia",
+    ),
     ("Eating", "Anorexia nervosa; bulimia nervosa; binge-eating disorder"),
     ("Psychosis", "Schizophrenia; schizoaffective disorder; schizophreniform disorder"),
     ("Tic", "Tourette's disorder; persistent tic disorder; provisional tic disorder"),
@@ -25,12 +30,14 @@ ROWS = [
     ("PTSD", "Post-traumatic stress disorder"),
     ("Autism", "Autism spectrum disorder"),
 ]
-NOTE = ("Category caseness tables aggregate the constituent diagnoses listed here; the sub-disorder "
-        "caseness tables report them separately, so construct-membership choices (e.g., whether specific "
-        "phobia is counted within anxiety) can be made directly. Other specified and unspecified "
-        "(subthreshold) variants of each diagnosis are retained in the resolved layer and excluded from "
-        "caseness by default. Sleep, suicidality, and homicidality are recorded in the resolved layer but "
-        "are not summarized as caseness.")
+NOTE = (
+    "Category caseness tables aggregate the constituent diagnoses listed here; the sub-disorder "
+    "caseness tables report them separately, so construct-membership choices (e.g., whether specific "
+    "phobia is counted within anxiety) can be made directly. Other specified and unspecified "
+    "(subthreshold) variants of each diagnosis are retained in the resolved layer and excluded from "
+    "caseness by default. Sleep, suicidality, and homicidality are recorded in the resolved layer but "
+    "are not summarized as caseness."
+)
 
 
 def style_run(run, *, italic=False, bold=False):
@@ -55,11 +62,15 @@ def set_border(cell, edge, sz=8):
     tcPr = cell._tc.get_or_add_tcPr()
     borders = tcPr.find(qn("w:tcBorders"))
     if borders is None:
-        borders = OxmlElement("w:tcBorders"); tcPr.append(borders)
+        borders = OxmlElement("w:tcBorders")
+        tcPr.append(borders)
     el = borders.find(qn(f"w:{edge}"))
     if el is None:
-        el = OxmlElement(f"w:{edge}"); borders.append(el)
-    el.set(qn("w:val"), "single"); el.set(qn("w:sz"), str(sz)); el.set(qn("w:color"), "000000")
+        el = OxmlElement(f"w:{edge}")
+        borders.append(el)
+    el.set(qn("w:val"), "single")
+    el.set(qn("w:sz"), str(sz))
+    el.set(qn("w:color"), "000000")
 
 
 def fill_cell(cell, text, *, center=False):
@@ -78,7 +89,11 @@ doc.styles["Normal"].font.name = FONT
 doc.styles["Normal"].font.size = Pt(SIZE)
 
 para(doc, [("Table 2", dict(bold=True))])
-para(doc, [("DSM categories and their constituent KSADS-COMP diagnoses", dict(italic=True))], space_after=6)
+para(
+    doc,
+    [("DSM categories and their constituent KSADS-COMP diagnoses", dict(italic=True))],
+    space_after=6,
+)
 
 tbl = doc.add_table(rows=len(ROWS) + 1, cols=3)
 tbl.autofit = False
@@ -94,7 +109,8 @@ for i, (cat, dis) in enumerate(ROWS, start=1):
     fill_cell(tbl.rows[i].cells[1], str(n), center=True)
     fill_cell(tbl.rows[i].cells[2], dis)
 for c in tbl.rows[0].cells:
-    set_border(c, "top"); set_border(c, "bottom")
+    set_border(c, "top")
+    set_border(c, "bottom")
 for c in tbl.rows[-1].cells:
     set_border(c, "bottom")
 

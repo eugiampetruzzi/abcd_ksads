@@ -1,0 +1,9 @@
+variable,session_id,administered_negative,no_record,not_administered,positive,administered_pre_switch
+mh_p_ksads__asd__oth_dx,ses-00A,8466,14,0,3239,11705
+mh_p_ksads__asd__oth_dx,ses-02A,8506,4,0,2233,10739
+mh_p_ksads__psych__schiz__oth__past_dx,ses-00A,11646,14,0,59,11705
+mh_p_ksads__psych__schiz__oth__past_dx,ses-01A,10995,9,0,79,11074
+mh_p_ksads__psych__schiz__oth__past_dx,ses-02A,10678,4,0,61,10739
+mh_p_ksads__psych__schiz__oth__pres_dx,ses-00A,11672,14,0,33,11705
+mh_p_ksads__psych__schiz__oth__pres_dx,ses-01A,11017,9,0,57,11074
+mh_p_ksads__psych__schiz__oth__pres_dx,ses-02A,10705,4,0,34,10739

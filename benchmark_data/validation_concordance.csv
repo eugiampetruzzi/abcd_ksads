@@ -1,0 +1,3 @@
+category,n_both_assessed,parent_pos_pct,youth_pos_pct,cohen_kappa,both_positive
+Depression,11668,0.2,0.56,0.02,1
+Anxiety,11668,10.18,0.62,0.025,23

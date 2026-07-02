@@ -1,0 +1,67 @@
+Bootstrap: docker
+From: ghcr.io/astral-sh/uv:python3.13-bookworm-slim
+
+# Native Apptainer build of the abcd_ksads pipeline -- mirrors the Dockerfile so
+# users can build without Docker:
+#     apptainer build --fakeroot abcd_ksads.sif apptainer.def
+# No data is baked in: bind-mount the ABCD base directory to /data at run time
+# and set ABCD_70=/data (see README, "Running via Docker / Apptainer").
+
+%setup
+    # Some HPC sites bind-mount paths (e.g. /software) into every container via
+    # apptainer.conf. The minimal base image lacks these paths and the build
+    # namespace can't auto-create them, which fails the build before %post runs.
+    # Pre-create the destination(s) in the image so the site binds have a target.
+    # Add any other site-bound paths your cluster reports here the same way.
+    mkdir -p "${APPTAINER_ROOTFS}/software"
+
+%files
+    pyproject.toml /app/pyproject.toml
+    uv.lock /app/uv.lock
+    README.md /app/README.md
+    src /app/src
+    codebooks /app/codebooks
+    harmonize /app/harmonize
+    figures /app/figures
+    tables /app/tables
+    Makefile /app/Makefile
+
+%post
+    # `make` drives the pipeline; the slim base image does not ship it.
+    apt-get update
+    apt-get install --yes --no-install-recommends make
+    rm -rf /var/lib/apt/lists/*
+
+    cd /app
+    # Build-time uv: copy into the venv, no Python download, frozen lockfile.
+    # The cache lives under /tmp (removed below and shadowed at run time anyway).
+    export UV_LINK_MODE=copy UV_PYTHON_DOWNLOADS=0 UV_FROZEN=1
+    export UV_CACHE_DIR=/tmp/uv-build-cache
+    uv sync --no-dev
+    rm -rf /tmp/uv-build-cache
+
+    # Make the whole tree world-readable/traversable. A --fakeroot build under a
+    # root-mapped namespace can otherwise leave /app unreadable to the
+    # unprivileged user who runs the container (read-only rootfs at run time).
+    chmod -R a+rX /app
+
+%environment
+    # Run time: never mutate the pre-synced env (Apptainer's rootfs is read-only),
+    # and keep uv's cache + matplotlib's config in the writable /tmp mount so the
+    # container works as the invoking (non-root) user.
+    export UV_LINK_MODE=copy
+    export UV_PYTHON_DOWNLOADS=0
+    export UV_FROZEN=1
+    export UV_NO_SYNC=1
+    export UV_CACHE_DIR=/tmp/uv-cache
+    export MPLCONFIGDIR=/tmp/matplotlib
+
+%runscript
+    # `apptainer run <sif>` runs the whole pipeline; append a target to run a
+    # single stage, e.g. `apptainer run <sif> figures`.
+    cd /app
+    # Drop any make state leaked in from a host `make apptainer-run`, so this
+    # runs as a clean top-level make regardless of how the container is launched.
+    unset MAKEFLAGS MAKELEVEL MFLAGS
+    if [ "$#" -eq 0 ]; then set -- all; fi   # default target, mirrors Docker CMD ["all"]
+    exec make "$@"

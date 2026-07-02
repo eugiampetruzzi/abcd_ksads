@@ -1,0 +1,9 @@
+sub,n_pos,n_assessed,prevalence_pct
+GAD,139.0,11705,1.19
+Separation,100.0,11705,0.85
+Social,110.0,11705,0.94
+Panic,18.0,11705,0.15
+Agoraphobia,14.0,11705,0.12
+Specific phobia,1033.0,11705,8.83
+ANY (without phobia),,11705,2.83
+ANY (with phobia),,11705,10.55
