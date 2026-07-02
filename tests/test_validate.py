@@ -179,6 +179,44 @@ def test_compare_directories_flags_missing_and_present(tmp_path):
     assert results["b.csv"]["status"] == "missing"
 
 
+# ---- failure detection / loud reporting -------------------------------------
+
+
+def test_inconsistent_results_selects_failing_statuses():
+    results = [
+        {"file": "a.csv", "status": "identical"},
+        {"file": "b.csv", "status": "consistent"},
+        {"file": "c.csv", "status": "differs"},
+        {"file": "d.csv", "status": "shape_mismatch"},
+        {"file": "e.csv", "status": "missing"},
+    ]
+    failing = validate.inconsistent_results(results)
+    assert [r["file"] for r in failing] == ["c.csv", "d.csv", "e.csv"]
+
+
+def test_inconsistent_results_empty_when_all_pass():
+    results = [
+        {"file": "a.csv", "status": "identical"},
+        {"file": "b.csv", "status": "consistent"},
+    ]
+    assert validate.inconsistent_results(results) == []
+
+
+def test_format_failure_banner_names_files_and_statuses():
+    failing = [
+        {"file": "c.csv", "status": "differs"},
+        {"file": "d.csv", "status": "shape_mismatch"},
+    ]
+    banner = validate.format_failure_banner(failing)
+    # states, prominently, that results do not match the intended reference
+    assert "VALIDATION FAILED" in banner
+    assert "do not match" in banner.lower()
+    # names every failing file with its status
+    for r in failing:
+        assert r["file"] in banner
+        assert r["status"] in banner
+
+
 def test_report_dataframe_has_expected_columns(tmp_path):
     orig = tmp_path / "orig"
     new = tmp_path / "new"
