@@ -289,6 +289,18 @@ def format_failure_banner(failing: list) -> str:
     return "\n".join(lines)
 
 
+def format_success_banner(results: list) -> str:
+    """A prominent banner confirming every file matched the benchmark reference."""
+    bar = "=" * 80
+    return "\n".join(
+        [
+            bar,
+            f"SUCCESS: All results match benchmarks ({len(results)} files).",
+            bar,
+        ]
+    )
+
+
 def format_report(results: list) -> str:
     """Human-readable per-file summary."""
     df = report_dataframe(results)

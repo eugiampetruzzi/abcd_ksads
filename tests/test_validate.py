@@ -217,6 +217,16 @@ def test_format_failure_banner_names_files_and_statuses():
         assert r["status"] in banner
 
 
+def test_format_success_banner_states_success_and_count():
+    results = [
+        {"file": "a.csv", "status": "identical"},
+        {"file": "b.csv", "status": "consistent"},
+    ]
+    banner = validate.format_success_banner(results)
+    assert "SUCCESS: All results match benchmarks" in banner
+    assert "2" in banner   # file count
+
+
 def test_report_dataframe_has_expected_columns(tmp_path):
     orig = tmp_path / "orig"
     new = tmp_path / "new"

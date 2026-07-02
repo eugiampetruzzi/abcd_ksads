@@ -13,6 +13,7 @@ from abcd_ksads.validate import (
     compare_directories,
     format_failure_banner,
     format_report,
+    format_success_banner,
     inconsistent_results,
     report_dataframe,
 )
@@ -33,12 +34,14 @@ def main():
     report_dataframe(results).to_csv(out, index=False)
     print(f"\nWrote {out.as_posix()}")
 
-    # Fail loudly (and non-zero, so `make` stops) if any derivative diverges.
+    # Fail loudly (and non-zero, so `make` stops) if any derivative diverges;
+    # otherwise state success just as explicitly.
     failing = inconsistent_results(results)
     if failing:
         sys.stdout.flush()  # keep the banner last, after the report
         print("\n" + format_failure_banner(failing), file=sys.stderr)
         sys.exit(1)
+    print("\n" + format_success_banner(results))
 
 
 if __name__ == "__main__":
