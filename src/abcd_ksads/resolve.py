@@ -32,7 +32,8 @@ _IDS = ["participant_id", "session_id"]
 
 def load_diagnosis_metadata(map_path: Path) -> dict:
     """Return ``{variable: row}`` for the diagnosis-layer rows of the variable map."""
-    rows = [r for r in csv.DictReader(open(map_path)) if r["layer"] == "diagnosis"]
+    with open(map_path, newline="") as f:
+        rows = [r for r in csv.DictReader(f) if r["layer"] == "diagnosis"]
     return {r["variable"]: r for r in rows}
 
 
