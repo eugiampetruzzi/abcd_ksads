@@ -40,7 +40,8 @@ def caseness_prevalence(caseness, cats):
     )
     pos = (piv == "positive").any(axis=1)
     adm = (piv.notna() & (piv != "not_administered")).any(axis=1)
-    return 100 * pos.sum() / adm.sum()
+    den = int(adm.sum())
+    return (100 * pos.sum() / den) if den else np.nan
 
 
 def concordance_kappa(cp, cy, cat, min_n=50):
