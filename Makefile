@@ -2,7 +2,11 @@
 export
 
 .PHONY: all merge_covariates clean clean-cache ingest figures tables validate \
-	docker-build docker-run apptainer-build apptainer-run
+	coverage docker-build docker-run apptainer-build apptainer-run
+
+# Run the test suite with a line-coverage report for the abcd_ksads package.
+coverage:
+	uv run pytest --cov=abcd_ksads --cov-report=term-missing
 
 # --- Containerized runs (Docker / Apptainer) ---------------------------------
 # IMAGE is the local image tag; TARGET is the pipeline target to run inside the
