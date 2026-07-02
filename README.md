@@ -63,6 +63,12 @@ a shared HPC system — so **Apptainer is the recommended route** (it builds and
 entirely as your own user, needing neither Docker nor root, and most clusters
 provide it). Docker is an alternative for local machines where you have it.
 
+**Memory:** the pipeline is memory-intensive — the dataset-build step loads the
+~18M-row resolved table into memory — so give it at least **16 GB of RAM**. With
+less, that step is killed by the out-of-memory killer and `make` reports exit code
+137. On HPC, request the memory in your job, e.g. `srun --mem=16G …` (or the
+equivalent `salloc`/`sbatch --mem`), then run the container inside that allocation.
+
 ### Apptainer (recommended)
 
 Apptainer builds and runs entirely as your own user (no Docker, no root; outputs
