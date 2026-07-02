@@ -25,8 +25,10 @@ docker-run:
 		-v "${ABCD_70}":/data -e ABCD_70=/data ${IMAGE} ${TARGET}
 
 # Native build straight from the definition file (no Docker needed).
+# --no-mount bind-paths skips site-configured binds (e.g. /software on HPC),
+# which the minimal base image lacks and cannot auto-create during the build.
 apptainer-build:
-	apptainer build --fakeroot ${SIF} ${DEF}
+	apptainer build --fakeroot --no-mount bind-paths ${SIF} ${DEF}
 
 apptainer-run:
 	apptainer run --bind "${ABCD_70}":/data --env ABCD_70=/data ${SIF} ${TARGET}
