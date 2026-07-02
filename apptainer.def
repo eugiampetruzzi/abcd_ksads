@@ -7,6 +7,14 @@ From: ghcr.io/astral-sh/uv:python3.13-bookworm-slim
 # No data is baked in: bind-mount the ABCD base directory to /data at run time
 # and set ABCD_70=/data (see README, "Running via Docker / Apptainer").
 
+%setup
+    # Some HPC sites bind-mount paths (e.g. /software) into every container via
+    # apptainer.conf. The minimal base image lacks these paths and the build
+    # namespace can't auto-create them, which fails the build before %post runs.
+    # Pre-create the destination(s) in the image so the site binds have a target.
+    # Add any other site-bound paths your cluster reports here the same way.
+    mkdir -p "${APPTAINER_ROOTFS}/software"
+
 %files
     pyproject.toml /app/pyproject.toml
     uv.lock /app/uv.lock

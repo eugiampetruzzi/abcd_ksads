@@ -91,16 +91,17 @@ systems). Then run it — Apptainer executes as your own user (so outputs are ow
 correctly) and mounts the image read-only:
 
 ```bash
-apptainer build --fakeroot --no-mount bind-paths abcd_ksads.sif apptainer.def
+apptainer build --fakeroot abcd_ksads.sif apptainer.def
 
 apptainer run --bind /path/to/ABCD/basedir:/data --env ABCD_70=/data \
     abcd_ksads.sif all
 ```
 
-`--no-mount bind-paths` skips any site-configured bind mounts (e.g. `/software`
-on many HPC clusters) during the build; the minimal base image doesn't contain
-those paths and can't auto-create them, which otherwise fails the build before
-`%post` runs. It's harmless on systems without such binds.
+Note for HPC clusters: many sites bind-mount paths such as `/software` into every
+container via `apptainer.conf`. The minimal base image lacks those paths and the
+build can't auto-create them, which otherwise fails the build. `apptainer.def`
+pre-creates `/software` in a `%setup` step to avoid this; if your cluster binds a
+different path, add it there the same way.
 
 Or via the Makefile wrappers (with `ABCD_70` set in `.env`):
 
