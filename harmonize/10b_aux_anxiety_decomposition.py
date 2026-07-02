@@ -9,6 +9,7 @@ import numpy as np
 import pandas as pd
 
 from abcd_ksads import config
+from abcd_ksads.anxiety import SUBS, decompose_anxiety
 
 plt.rcParams.update(
     {
@@ -18,15 +19,6 @@ plt.rcParams.update(
         "axes.spines.right": False,
     }
 )
-
-SUBS = [
-    ("gad", "GAD"),
-    ("sepanx", "Separation"),
-    ("socanx", "Social"),
-    ("panic", "Panic"),
-    ("agor", "Agoraphobia"),
-    ("phobia", "Specific phobia"),
-]
 
 
 def main():
@@ -39,41 +31,7 @@ def main():
         & (r.status_layer == "present")
     ]
 
-    # per sub-disorder: positive at any present-dx variable in that module
-    def module_pos(mod):
-        m = base[base.module == mod]
-        pos = set(m[m.resolved == "positive"].participant_id)
-        assessed = set(
-            m[m.resolved.isin(["positive", "administered_negative"])].participant_id
-        )
-        return pos, assessed
-
-    rows, pos_sets, assessed_all = [], {}, set()
-    for mod, lab in SUBS:
-        pos, assessed = module_pos(mod)
-        pos_sets[mod] = pos
-        assessed_all |= assessed
-        rows.append(
-            {
-                "sub": lab,
-                "n_pos": len(pos),
-                "n_assessed": len(assessed),
-                "prevalence_pct": round(100 * len(pos) / len(assessed), 2),
-            }
-        )
-    dec = pd.DataFrame(rows)
-
-    # cumulative "any anxiety" as sub-disorders are added in order
-    cum, ids = [], set()
-    for mod, lab in SUBS:
-        ids |= pos_sets[mod]
-        cum.append(100 * len(ids) / len(assessed_all))
-    any_with = cum[-1]
-    any_without_phobia = (
-        100
-        * len(set().union(*[pos_sets[m] for m, _ in SUBS if m != "phobia"]))
-        / len(assessed_all)
-    )
+    dec, cum, any_with, any_without_phobia, assessed_all_n = decompose_anxiety(base)
     dec_out = pd.concat(
         [
             dec,
@@ -82,13 +40,13 @@ def main():
                     {
                         "sub": "ANY (without phobia)",
                         "n_pos": np.nan,
-                        "n_assessed": len(assessed_all),
+                        "n_assessed": assessed_all_n,
                         "prevalence_pct": round(any_without_phobia, 2),
                     },
                     {
                         "sub": "ANY (with phobia)",
                         "n_pos": np.nan,
-                        "n_assessed": len(assessed_all),
+                        "n_assessed": assessed_all_n,
                         "prevalence_pct": round(any_with, 2),
                     },
                 ]
