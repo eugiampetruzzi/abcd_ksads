@@ -159,7 +159,3 @@ tables/    build_table1_checklist, build_table_categories
 Scripts 01 through 11 write intermediates to `harmonize/derivatives/` (git-ignored).
 The figure scripts read those intermediates; `11_paper_numbers.py` collates every
 in-text statistic into `paper_numbers.json`.
-
-## Software
-
-Python 3.12 with pandas, numpy, pyarrow, statsmodels, matplotlib, and openpyxl.
