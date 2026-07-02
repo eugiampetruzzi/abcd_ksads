@@ -13,7 +13,7 @@ import pandas as pd
 import statsmodels.api as sm
 
 from abcd_ksads.multiverse import construct_status
-from abcd_ksads.predictors import RACE_LVES, RACE_REF
+from abcd_ksads.predictors import RACE_LEVELS, RACE_REF
 
 CONSTRUCTS = [
     ("suicidality", "Suicidality"),
@@ -153,16 +153,16 @@ def fit_spec(df):
 
     # --- Race bucket: ONE full-sample model, White reference ---
     d = df[["y", "Race", "sex_f", "age_z"] + NUIS].dropna()
-    d = d[d.Race.isin([RACE_REF] + RACE_LVES)]
+    d = d[d.Race.isin([RACE_REF] + RACE_LEVELS)]
     if enough(d.y):
         dummies = (
             pd.get_dummies(d.Race)
-            .reindex(columns=RACE_LVES, fill_value=0)
+            .reindex(columns=RACE_LEVELS, fill_value=0)
             .astype(float)
         )
         dd = pd.concat([d[["y", "sex_f", "age_z"] + NUIS], dummies], axis=1)
-        fit = fit_adj(dd, RACE_LVES)
-        for lvl in RACE_LVES:
+        fit = fit_adj(dd, RACE_LEVELS)
+        for lvl in RACE_LEVELS:
             # blank out separation: <10 positives in that race group
             if ((d.Race == lvl) & (d.y == 1)).sum() < 10:
                 fit[lvl] = (np.nan, np.nan)

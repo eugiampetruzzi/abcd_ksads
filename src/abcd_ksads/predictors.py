@@ -45,7 +45,7 @@ SCREEN_HOURS = {0: 0.0, 1: 0.25, 2: 0.5, 3: 1.0, 4: 2.0, 5: 3.0, 6: 4.0}
 INCOME_MISSING = [777, 999]  # "Decline to answer" / "Don't know"
 
 RACE_REF = "White"
-RACE_LVES = ["Black/AA", "Hispanic", "Asian", "Other/Multiracial"]
+RACE_LEVELS = ["Black/AA", "Hispanic", "Asian", "Other/Multiracial"]
 
 
 def _num(series: pd.Series) -> pd.Series:

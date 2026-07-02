@@ -139,7 +139,7 @@ def test_fit_adj_sex_focal_does_not_duplicate_column():
 def _full_frame(n=600, seed=1, race=None, y=None):
     rng = np.random.default_rng(seed)
     if race is None:
-        race = rng.choice([inf.RACE_REF] + inf.RACE_LVES, n)
+        race = rng.choice([inf.RACE_REF] + inf.RACE_LEVELS, n)
     df = pd.DataFrame({
         "y": (rng.binomial(1, 0.35, n).astype(float) if y is None else np.asarray(y, float)),
         "sex_f": rng.integers(0, 2, n).astype(float),
@@ -163,7 +163,7 @@ def test_fit_spec_covers_all_predictor_buckets():
     expected = {"Female (vs male)", "Income (per SD)",
                 "Screen time (per SD)", "Family conflict (per SD)"}
     expected |= {lab for _, lab in inf.NEURAL}
-    expected |= {f"Race: {lvl} vs {inf.RACE_REF}" for lvl in inf.RACE_LVES}
+    expected |= {f"Race: {lvl} vs {inf.RACE_REF}" for lvl in inf.RACE_LEVELS}
     assert expected <= set(out)
     assert all(isinstance(v, tuple) and len(v) == 2 for v in out.values())
 
