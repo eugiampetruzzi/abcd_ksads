@@ -16,9 +16,9 @@ All inputs are access-controlled and are not included in this repository. An app
 ABCD Data Use Certification is required (https://nbdc-datahub.org/data-access-process).
 The pipeline expects a number of tabular files, which are listed in the [Manifest](codebooks/phenotype_manifest.txt), which can be downloaded from the NBDC.  
 
-**TODO**: Add download instructions
-
 You should first create a base data directory for the project (preferably separate from the code repository).  The tabular files should be located within `rawdata/phenotype/` under that main directory.
+
+A full list of the required tabbular files is in [the included Manifest file](codebooks/phenotype_manifest.txt). Each of these files should be downloaded from the NBDC into the `rawdata/phenotype/` directory.  The scripts below will first check to make sure that all required files are present.
 
 ## Setup
 
