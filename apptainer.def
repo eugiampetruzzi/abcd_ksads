@@ -25,6 +25,7 @@ From: ghcr.io/astral-sh/uv:python3.13-bookworm-slim
     figures /app/figures
     tables /app/tables
     Makefile /app/Makefile
+    benchmark_data /app/benchmark_data
 
 %post
     # `make` drives the pipeline; the slim base image does not ship it.
