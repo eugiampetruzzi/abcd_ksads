@@ -175,18 +175,13 @@ def fig_diverging():
     d["b_share"] = 100 * d.both_pos / d.union_pos
     fig, ax = plt.subplots(figsize=(8.6, 4.6))
     y = range(len(d))
-    ax.barh(y, -d.p_share, color=BLUE, label="Caregiver only")
-    ax.barh(y, d.y_share, color=RED, label="Youth only")
-    ax.barh(y, d.b_share, left=-d.b_share / 2, color="#999999", label="Both agree")
-    ax.axvline(0, color="#333", lw=1.0)
+    # stacked to 100%: caregiver only | both agree | youth only
+    ax.barh(y, d.p_share, color=BLUE, label="Caregiver only")
+    ax.barh(y, d.b_share, left=d.p_share, color="#999999", label="Both agree")
+    ax.barh(y, d.y_share, left=d.p_share + d.b_share, color=RED, label="Youth only")
     ax.set_yticks(list(y))
     ax.set_yticklabels(d.category)
-    # diverging layout draws caregiver bars at negative x; label both sides as positive shares
-    M = np.ceil(max(d.p_share.max(), d.y_share.max()) / 5) * 5
-    ax.set_xlim(-M, M)
-    xt = np.arange(-75, 76, 25)
-    ax.set_xticks(xt)
-    ax.set_xticklabels([f"{abs(int(t))}" for t in xt])
+    ax.set_xlim(0, 100)
     ax.set_xlabel("Share of positive cases (%)")
     ax.legend(loc="center left", bbox_to_anchor=(1.0, 0.5), frameon=False, fontsize=8.5)
     fig.tight_layout()

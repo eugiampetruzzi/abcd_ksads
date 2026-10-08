@@ -26,9 +26,9 @@ BLUE, RED, GREEN, GREY = (
     "#888888",
 )  # Okabe-Ito colorblind-safe
 STATUS_COLOR = {"current": BLUE, "ever_met": RED}
-STATUS_LAB = {"current": "Current episode", "ever_met": "Ever-met (lifetime)"}
+STATUS_LAB = {"current": "Current", "ever_met": "Lifetime"}
 INF_MARK = {"parent": "o", "youth": "s", "either": "^", "both": "D"}
-INF_LAB = {"parent": "Parent", "youth": "Youth", "either": "Either", "both": "Both"}
+INF_LAB = {"parent": "Caregiver", "youth": "Youth", "either": "Either", "both": "Both"}
 
 config.FIGURES_OUT.mkdir(parents=True, exist_ok=True)
 g = pd.read_csv(config.DERIV / "multiverse_grid.csv")
@@ -61,7 +61,7 @@ for i, row in a.iterrows():
         zorder=3,
     )
 axa.set_xticks([])
-axa.set_xlabel("Any-disorder operationalizations, ordered by prevalence")
+axa.set_xlabel("Any-disorder specifications (full criteria), ordered by prevalence")
 axa.set_ylabel("Baseline prevalence (%)")
 axa.set_xlim(-0.7, len(a) - 0.3)
 axa.set_ylim(0, a.prevalence_pct.max() * 1.10)
