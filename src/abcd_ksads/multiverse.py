@@ -69,7 +69,8 @@ def _agg(cobj, cats):
     return rk.map(INV)
 
 
-def construct_status(cache, construct, status_set, informant, subthr, phobia):
+def construct_status(cache, construct, status_set, informant, subthr, phobia,
+                     require_both_assessed=True):
     prim = cache[(status_set, subthr, phobia)]
     cats = CATS_FOR[construct]
     ps = _agg(prim["parent"], cats)
@@ -79,11 +80,21 @@ def construct_status(cache, construct, status_set, informant, subthr, phobia):
     if informant == "youth":
         return ys
     df = pd.concat([ps.map(RANK).rename("p"), ys.map(RANK).rename("y")], axis=1)
+    if require_both_assessed:
+        # either/both: keep only participants assessed by BOTH informants
+        df = df.where((df.p >= 2) & (df.y >= 2), 1).fillna(1)
     if informant == "either":
-        return df.max(axis=1).map(INV)
+        return df.max(axis=1).astype(int).map(INV)
     # both: positive only if both informants positive; administered if either; else none
     both = np.where((df.p == 3) & (df.y == 3), 3, np.where(df.max(axis=1) >= 2, 2, 1))
     return pd.Series(both, index=df.index).map(INV)
+
+
+def shared_module_crosswalk(cw, cal, session=BASE_SES):
+    """Crosswalk restricted to modules administered to both informants at session."""
+    adm = cal[(cal.session_id == session) & (cal.status == "administered")]
+    shared = set(adm[adm.informant == "parent"].module) & set(adm[adm.informant == "youth"].module)
+    return cw[cw.module.isin(shared)].copy()
 
 
 def prevalence(stat):
@@ -94,9 +105,9 @@ def prevalence(stat):
     return (100 * n_num / n_den if n_den else np.nan), n_num, n_den
 
 
-def informant_validity(cw, cal):
+def informant_validity(cw, cal, session=BASE_SES):
     """parent/youth module availability per construct at baseline."""
-    adm = cal[(cal.session_id == BASE_SES) & (cal.status == "administered")]
+    adm = cal[(cal.session_id == session) & (cal.status == "administered")]
     adm_p = set(adm[adm.informant == "parent"].module)
     adm_y = set(adm[adm.informant == "youth"].module)
     valid = {}

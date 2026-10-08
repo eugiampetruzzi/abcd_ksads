@@ -49,4 +49,5 @@ def concordance(parent: pd.Series, youth: pd.Series):
         "youth_only": youth_only,
         "union_pos": both + parent_only + youth_only,
         "kappa": cohen_kappa_score(pb, yb),
+        "pos_agree": 2 * both / (2 * both + parent_only + youth_only) if both + parent_only + youth_only else np.nan,
     }

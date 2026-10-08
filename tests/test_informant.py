@@ -75,3 +75,9 @@ def test_concordance_no_overlap_returns_none():
     ps = pd.Series({"a": "positive", "b": "administered_negative"})
     ys = pd.Series({"c": "positive", "d": "positive"})
     assert informant.concordance(ps, ys) is None
+
+
+def test_concordance_positive_agreement():
+    p = pd.Series({"A": "positive", "B": "positive", "C": "administered_negative"})
+    y = pd.Series({"A": "positive", "B": "administered_negative", "C": "positive"})
+    assert informant.concordance(p, y)["pos_agree"] == 0.5
