@@ -32,7 +32,7 @@ CMAP = {
 ORDER = ["Sex", "Income", "Race/ethnicity", "Culture/environment", "Neuroimaging"]
 
 R = pd.read_csv(config.DERIV / "inferential_specs.csv").dropna(subset=["OR"]).copy()
-R["abslog"] = np.abs(np.log(R.OR))  # association strength, like |r_BWAS|
+R["abslog"] = np.log(R.OR)  # signed log odds ratio, so direction is visible
 
 # per pair (predictor x construct): all spec strengths, summary stats
 grp = R.groupby(["bucket", "predictor", "construct"])
@@ -64,10 +64,12 @@ for _, row in R.iterrows():
         zorder=2,
     )
 axC.set_xlim(-1, len(cord))
-axC.set_ylim(0, R.abslog.max() * 1.05)
+lim = R.abslog.abs().max() * 1.05
+axC.set_ylim(-lim, lim)
+axC.axhline(0, color="#888888", lw=0.6, zorder=1)
 axC.set_xticks([])
 axC.set_xlabel("Correlate × disorder pairs")
-axC.set_ylabel("Association strength  |ln(OR)|")
+axC.set_ylabel("Association  ln(OR)")
 
 # ---- Panel D: consolidated effect (median across specs) per pair, same ordering as (a)
 dord = cord
@@ -83,13 +85,15 @@ for i, row in dord.iterrows():
         zorder=3,
     )
 axD.set_xlim(-1, len(dord))
-axD.set_ylim(0, R.abslog.max() * 1.05)
+axD.set_ylim(-lim, lim)
+axD.axhline(0, color="#888888", lw=0.6, zorder=1)
 axD.set_xticks([])
 axD.set_xlabel("Correlate × disorder pairs")
-axD.set_ylabel("Consolidated strength  |ln(OR)|")
+axD.set_ylabel("Median association  ln(OR)")
 
 handles = [
-    Line2D([0], [0], marker="o", ls="", mfc=CMAP[b], mec="white", ms=7, label=b)
+    Line2D([0], [0], marker="o", ls="", mfc=CMAP[b], mec="white", ms=7,
+           label="Psychosocial" if b == "Culture/environment" else b)
     for b in ORDER
 ]
 axC.legend(

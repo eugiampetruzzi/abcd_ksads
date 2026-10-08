@@ -238,3 +238,13 @@ def test_build_primitive_cache_has_expected_keys():
                 for p in ("phobia_in", "phobia_out")}
     assert set(cache) == expected
     assert set(cache[("current", False, "phobia_in")]) == {"parent", "youth"}
+
+
+def test_combined_rules_drop_participants_assessed_by_one_informant():
+    parent = _caseness([("P1", "Depression", "positive"), ("P2", "Depression", "positive")])
+    youth = _caseness([("P1", "Depression", "administered_negative")])
+    cache = _cache(parent, youth)
+    either = mv.construct_status(cache, "depression", "ever_met", "either", False, "phobia_in")
+    both = mv.construct_status(cache, "depression", "ever_met", "both", False, "phobia_in")
+    assert either.to_dict() == {"P1": "positive", "P2": "not_administered"}
+    assert both.to_dict() == {"P1": "administered_negative", "P2": "not_administered"}
